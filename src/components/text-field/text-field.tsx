@@ -11,10 +11,12 @@ interface TextFieldProps {
   label: string;
 }
 
-export const TextField: React.FC<TextFieldProps> = (props: TextFieldProps) => {
+export const TextField: React.FC<TextFieldProps> = ({
+  label,
+}: TextFieldProps) => {
   return (
     <AriaTextField>
-      <Label>{props.label}</Label>
+      <Label>{label}</Label>
       <Input />
     </AriaTextField>
   );

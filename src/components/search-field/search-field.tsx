@@ -14,14 +14,16 @@ type SearchFieldProps = {
   value?: string;
 };
 
-export const SearchField: React.FC<SearchFieldProps> = (
-  props: SearchFieldProps
-) => {
+export const SearchField: React.FC<SearchFieldProps> = ({
+  label,
+  buttonLabel,
+  value,
+}: SearchFieldProps) => {
   return (
     <AriaSearchField>
-      <Label>{props.label}</Label>
-      <Input value={props?.label ?? undefined} />
-      <Button>{props.buttonLabel}</Button>
+      <Label>{label}</Label>
+      <Input value={value ?? undefined} />
+      <Button>{buttonLabel}</Button>
     </AriaSearchField>
   );
 };
