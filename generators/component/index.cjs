@@ -44,6 +44,11 @@ module.exports = {
       {
         type: 'add',
         path:
+          componentGeneratePath + '/{{kebabCase name}}/{{kebabCase name}}.scss',
+      },
+      {
+        type: 'add',
+        path:
           componentGeneratePath + '/{{kebabCase name}}/{{kebabCase name}}.tsx',
         templateFile: 'generators/component/component.tsx.hbs',
       },
