@@ -7,15 +7,18 @@ interface ButtonProps {
   label: string;
   onPress: () => void;
   variant: 'primary' | 'secondary';
+  color?: string;
 }
 
 export const Button: React.FC<ButtonProps> = ({
   label,
   onPress,
   variant = 'primary',
+  color,
 }: ButtonProps) => {
   return (
     <AriaButton
+      style={{ color: color }}
       className={variant === 'primary' ? 'primary' : 'secondary'}
       onPress={onPress}
     >
