@@ -1,13 +1,21 @@
 /// <reference types="vitest" />
 /// <reference types="vite/client" />
-import { defineConfig, UserConfig } from 'vite';
+import * as path from 'node:path';
+
 import react from '@vitejs/plugin-react';
+import { defineConfig, UserConfig } from 'vite';
 import viteTsconfigPaths from 'vite-tsconfig-paths';
 
 // https://vite.dev/config/
 export default defineConfig({
   base: './',
   plugins: [react(), viteTsconfigPaths()],
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src'),
+      '@styles': path.resolve(__dirname, './src/styles'),
+    },
+  },
   server: {
     port: 3000,
   },

@@ -1,0 +1,131 @@
+:root {
+  // Light Theme Colors (Default)
+  --color-primary-light: #0EC02B;
+  --color-primary-hover-light: #00B21D;
+  --color-primary-20-light: #{rgba(14, 192, 43, 0.2)};
+  --color-secondary-light: #0077FF;
+  --color-secondary-10-light: #{rgba(0, 119, 255, 0.1)};
+  --color-secondary-20-light: #{rgba(0, 119, 255, 0.2)};
+  --color-accent-light: #F7D24E;
+  --color-accent-hover-light: #EDC535;
+  --color-card-background-light: #FCFAFA70;
+
+  --color-background-light: #FFFFFF;
+  --color-background-alt-light: #FCFAFA;
+  --color-background-alt-50-light: #{rgba(252, 250, 250, 0.5)};
+
+  // Gradient Colors Light
+  --gradient-start-light: #F7F7F7;
+  --gradient-end-light: #F1EEE5;
+  --gradient-bg-light: linear-gradient(126.74deg, var(--gradient-start-light) 7.44%, var(--gradient-end-light) 97.99%);
+
+  --color-text-primary-light: #111111;
+  --color-text-secondary-light: #333333;
+  --color-text-tertiary-light: #4C4C4C;
+  --color-text-quaternary-light: #666666;
+  --color-text-placeholder-light: #6B7280;
+
+  --color-border-light: #E3DCC670;
+  --color-border-30-light: #{rgba(227, 220, 198, 0.3)};
+  --color-border-40-light: #{rgba(227, 220, 198, 0.4)};
+  --color-border-70-light: #{rgba(227, 220, 198, 0.7)};
+
+  // Dark Theme Colors
+  --color-primary-dark: #0EC02B;
+  --color-primary-hover-dark: #00B21D;
+  --color-primary-20-dark: #{rgba(14, 192, 43, 0.2)};
+  --color-secondary-dark: #E3DCC6;
+  --color-secondary-10-dark: #{rgba(227, 220, 198, 0.1)};
+  --color-secondary-20-dark: #{rgba(227, 220, 198, 0.2)};
+  --color-accent-dark: #F7D24E;
+  --color-accent-hover-dark: #EDC535;
+  --color-card-background-dark: #1A1A1A70;
+  --color-card-border-dark: #14141470;
+
+  --color-background-dark: #0A0A0A;
+  --color-background-alt-dark: #141414;
+  --color-surface-dark: #1A1A1A;
+  --color-surface-raised-dark: #202020;
+  --color-overlay-dark: #{rgba(255, 255, 255, 0.05)};
+
+  // Gradient Colors Dark
+  --gradient-start-dark: #0A0A0A;
+  --gradient-end-dark: #141414;
+  --gradient-overlay-dark: radial-gradient(circle at top right, #{rgba(255, 140, 55, 0.12)}, transparent 50%);
+  --gradient-bg-dark: linear-gradient(126.74deg, var(--gradient-start-dark) 7.44%, var(--gradient-end-dark) 97.99%);
+
+  --color-text-primary-dark: #FFFFFF;
+  --color-text-secondary-dark: #999999;
+  --color-text-tertiary-dark: #666666;
+  --color-text-quaternary-dark: #4D4D4D;
+  --color-text-placeholder-dark: #333333;
+
+  --color-border-dark: #{rgba(255, 255, 255, 0.1)};
+  --color-border-30-dark: #{rgba(255, 255, 255, 0.03)};
+  --color-border-40-dark: #{rgba(255, 255, 255, 0.04)};
+  --color-border-70-dark: #{rgba(255, 255, 255, 0.07)};
+
+  // Default theme variables (light)
+  color-scheme: light;
+
+  --color-primary: var(--color-primary-light);
+  --color-primary-hover: var(--color-primary-hover-light);
+  --color-primary-20: var(--color-primary-20-light);
+  --color-secondary: var(--color-secondary-light);
+  --color-secondary-10: var(--color-secondary-10-light);
+  --color-secondary-20: var(--color-secondary-20-light);
+  --color-accent: var(--color-accent-light);
+  --color-accent-hover: var(--color-accent-hover-light);
+  --color-card-background: var(--color-card-background-light);
+  --color-card-border: var(--color-border-light);
+
+  --color-background: var(--color-background-light);
+  --color-background-alt: var(--color-background-alt-light);
+  --color-background-alt-50: var(--color-background-alt-50-light);
+  --gradient-bg: var(--gradient-bg-light);
+
+  --color-text-primary: var(--color-text-primary-light);
+  --color-text-secondary: var(--color-text-secondary-light);
+  --color-text-tertiary: var(--color-text-tertiary-light);
+  --color-text-quaternary: var(--color-text-quaternary-light);
+  --color-text-placeholder: var(--color-text-placeholder-light);
+
+  --color-border: var(--color-border-light);
+  --color-border-30: var(--color-border-30-light);
+  --color-border-40: var(--color-border-40-light);
+  --color-border-70: var(--color-border-70-light);
+}
+
+// Dark theme class
+.dark {
+  color-scheme: dark;
+
+  --color-primary: var(--color-primary-dark);
+  --color-primary-hover: var(--color-primary-hover-dark);
+  --color-primary-20: var(--color-primary-20-dark);
+  --color-secondary: var(--color-secondary-dark);
+  --color-secondary-10: var(--color-secondary-10-dark);
+  --color-secondary-20: var(--color-secondary-20-dark);
+  --color-accent: var(--color-accent-dark);
+  --color-accent-hover: var(--color-accent-hover-dark);
+  --color-card-background: var(--color-card-background-dark);
+  --color-card-border: var(--color-card-border-dark);
+
+  --color-background: var(--color-background-dark);
+  --color-background-alt: var(--color-background-alt-dark);
+  --color-surface: var(--color-surface-dark);
+  --color-surface-raised: var(--color-surface-raised-dark);
+  --color-overlay: var(--color-overlay-dark);
+  --gradient-bg: var(--gradient-bg-dark);
+
+  --color-text-primary: var(--color-text-primary-dark);
+  --color-text-secondary: var(--color-text-secondary-dark);
+  --color-text-tertiary: var(--color-text-tertiary-dark);
+  --color-text-quaternary: var(--color-text-quaternary-dark);
+  --color-text-placeholder: var(--color-text-placeholder-dark);
+
+  --color-border: var(--color-border-dark);
+  --color-border-30: var(--color-border-30-dark);
+  --color-border-40: var(--color-border-40-dark);
+  --color-border-70: var(--color-border-70-dark);
+}

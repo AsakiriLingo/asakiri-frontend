@@ -6,20 +6,21 @@ import './button.scss';
 interface ButtonProps {
   label: string;
   onPress: () => void;
-  variant: 'primary' | 'secondary';
-  color?: string;
+  type?: 'primary' | 'secondary' | 'tertiary';
+  variant?: 'filled' | 'flat' | 'ghost';
+  size?: 'medium' | 'large';
 }
 
 export const Button: React.FC<ButtonProps> = ({
   label,
   onPress,
-  variant = 'primary',
-  color,
+  type = 'primary',
+  variant = 'filled',
+  size = 'large',
 }: ButtonProps) => {
   return (
     <AriaButton
-      style={{ color: color }}
-      className={variant === 'primary' ? 'primary' : 'secondary'}
+      className={`button--${type} button--${variant} button--${size}`}
       onPress={onPress}
     >
       {label}

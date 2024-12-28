@@ -28,6 +28,7 @@
       "@/*": ["./src/*"],
       "@/components": ["./src/components/*"],
       "@/features": ["./src/components/features/*"],
+      "@styles/*": ["styles/*"]
     }
   },
   "include": [
