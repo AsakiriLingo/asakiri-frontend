@@ -11,5 +11,5 @@ export default meta;
 type Story = StoryObj<typeof SearchField>;
 
 export const Default: Story = {
-  args: {}
+  args: {},
 };
