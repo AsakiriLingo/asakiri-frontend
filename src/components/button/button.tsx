@@ -5,10 +5,10 @@ import './button.scss';
 
 interface ButtonProps {
   label: string;
-  onPress: () => void;
+  onPress?: () => void;
   type?: 'primary' | 'secondary' | 'tertiary';
   variant?: 'filled' | 'flat' | 'ghost';
-  size?: 'medium' | 'large';
+  size?: 'small' | 'medium';
 }
 
 export const Button: React.FC<ButtonProps> = ({
@@ -16,11 +16,11 @@ export const Button: React.FC<ButtonProps> = ({
   onPress,
   type = 'primary',
   variant = 'filled',
-  size = 'large',
+  size = 'medium',
 }: ButtonProps) => {
   return (
     <AriaButton
-      className={`button--${type} button--${variant} button--${size}`}
+      className={`button button--${variant}--${type} button--${size}`}
       onPress={onPress}
     >
       {label}

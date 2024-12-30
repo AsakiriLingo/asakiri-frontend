@@ -1,0 +1,72 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  background: #ffffff80;
+  border-radius: 30px;
+  border: 1px solid black;
+  cursor: pointer;
+  font-family: var(--font-family-base) system-ui sans;
+
+  &--header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    text-align: left;
+    margin-bottom: 0.5rem;
+  }
+
+  &--teacher-details {
+    flex: 1;
+  }
+
+  &--teacher-name {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0;
+    color: black;
+  }
+
+  &--teacher-subtitle {
+    font-size: 0.875rem;
+    color: black;
+    margin: 0.25rem 0 0;
+  }
+
+  &--content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    &--course-title {
+      font-size: 1.25rem;
+      color: black;
+      margin: 0;
+    }
+    &--language {
+      display: flex;
+      gap: 4px;
+    }
+
+    &--language-taught {
+      color: black;
+    }
+    &--from-text {
+      color: black;
+    }
+    &--from-language {
+      color: black;
+    }
+    &--course-description {
+      color: black;
+    }
+
+  }
+
+  &--avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+}

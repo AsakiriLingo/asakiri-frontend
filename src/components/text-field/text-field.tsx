@@ -15,9 +15,9 @@ export const TextField: React.FC<TextFieldProps> = ({
   label,
 }: TextFieldProps) => {
   return (
-    <AriaTextField>
-      <Label>{label}</Label>
-      <Input />
+    <AriaTextField className={`text-field-base`}>
+      <Label className={`label`}>{label}</Label>
+      <Input className={`input`} />
     </AriaTextField>
   );
 };

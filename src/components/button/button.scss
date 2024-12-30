@@ -1,11 +1,73 @@
 @use "@styles/styles";
 
 .button{
-  &--primary{
-    background-color: var(--color-primary-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 1000px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  backface-visibility: hidden;
+  perspective: 1000px;
+  transition: outline 0.2s ease-in-out;
+  font-family: var(--font-family-base) system-ui sans-serif;
+
+  &:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
   }
 
-  &--secondary{
-    background-color: var(--color-secondary-light);
+  &--filled {
+
+    // Button Types
+    &--primary{
+      background-color: var(--primary);
+      color: var(--on-primary);
+      font-weight: var(--font-weight-alt);
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+
+    &--secondary {
+      background-color: var(--secondary);
+      color: var(--on-secondary);
+      font-weight: var(--font-weight-alt);
+    }
+
+    &--tertiary {
+      background-color: #FFFFFF80;
+      color: #1A1A1A;
+      font-weight: var(--font-weight-alt);
+    }
+
+
+  }
+
+  &--flat {
+
+    &--primary{
+      background-color: #0EC02B30;
+      color: #0EC02B;
+      font-weight: var(--font-weight-alt);
+
+      &:hover {
+        background-color: #0EC02B40;
+      }
+    }
+  }
+
+  // Button Sizes
+  &--small {
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  &--medium {
+    padding: var(--spacing-md) var(--spacing-md);
+    font-size: 16px;
+    line-height: 24px;
   }
 }

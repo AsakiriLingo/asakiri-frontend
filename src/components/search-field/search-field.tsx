@@ -1,3 +1,4 @@
+import { Search } from 'lucide-react';
 import React from 'react';
 import {
   SearchField as AriaSearchField,
@@ -9,21 +10,28 @@ import {
 import './search-field.scss';
 
 type SearchFieldProps = {
-  label: string;
-  buttonLabel: string;
+  label?: string;
+  buttonLabel?: string;
   value?: string;
+  placeholder?: string;
 };
 
 export const SearchField: React.FC<SearchFieldProps> = ({
   label,
-  buttonLabel,
   value,
+  placeholder,
 }: SearchFieldProps) => {
   return (
-    <AriaSearchField>
+    <AriaSearchField className={`search`}>
+      <Button className={`icon`}>
+        <Search size={20} className="search-icon" />
+      </Button>
       <Label>{label}</Label>
-      <Input value={value ?? undefined} />
-      <Button>{buttonLabel}</Button>
+      <Input
+        value={value ?? undefined}
+        className={`input`}
+        placeholder={placeholder}
+      />
     </AriaSearchField>
   );
 };
