@@ -3,7 +3,7 @@ import { Section } from '@/types/section.types.ts';
 interface Chapter {
   id: string;
   title: string;
-  description: string;
+  subTitle: string;
   serialNumber: number | null;
   sections: Array<Section>;
 }

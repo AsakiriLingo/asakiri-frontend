@@ -5,6 +5,7 @@ interface Course {
   id: string;
   title: string;
   author: Teacher;
+  shortDescription: string;
   description: string;
   thumbnail: string;
   courseLanguage: string;
@@ -13,9 +14,4 @@ interface Course {
   chapters: Array<Chapter>;
 }
 
-interface CourseCard
-  extends Omit<Course, 'id' | 'thumbnail' | 'chapters' | 'isPublished'> {
-  link: string | undefined;
-}
-
-export type { Course, CourseCard };
+export type { Course };

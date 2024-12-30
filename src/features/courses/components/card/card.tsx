@@ -2,18 +2,23 @@ import Avatar from 'boring-avatars';
 import React from 'react';
 import { Link } from 'react-aria-components';
 
-import { CourseCard } from '@/types/course.types.ts';
+import { Course } from '@/types/course.types.ts';
 
 import './card.scss';
 
-interface CardProps<T extends object> extends CourseCard {
+interface CardProps<T extends object>
+  extends Omit<
+    Course,
+    'id' | 'description' | 'thumbnail' | 'chapters' | 'isPublished'
+  > {
+  link: string;
   children?: React.ReactNode | ((item: T) => React.ReactNode);
 }
 
 export const Card = <T extends object>({
   title,
   link,
-  description,
+  shortDescription,
   author,
   courseLanguage,
   languageTaught,
@@ -41,7 +46,9 @@ export const Card = <T extends object>({
       </div>
       <div className="card--content">
         <h2 className="card--content--course-title">{title}</h2>
-        <div className="card--content--course-description">{description}</div>
+        <div className="card--content--course-description">
+          {shortDescription}
+        </div>
         <div className="card--content--language">
           <p className="card--content--language-taught">{languageTaught}</p>
           <p className="card--content--from-text">From</p>
