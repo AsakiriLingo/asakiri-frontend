@@ -1,165 +1,141 @@
+/* Tokens - Color */
 :root {
-  /* Primary Color */
-  --p-0: #000000;
-  --p-10: #065B19;
-  --p-20: #06761F;
-  --p-30: #0B9C2B;
-  --p-40: #0EC02B;
-  --p-50: #26C640;
-  --p-60: #3ECD55;
-  --p-70: #56D36B;
-  --p-80: #6ED980;
-  --p-90: #86DF95;
-  --p-95: #93E3A0;
-  --p-99: #FFFFFF;
-  --p-100: #FFFFFF;
-
-  /* Secondary Color */
-  --s-0: #FFFFFF;
-  --s-10: #9A7A09;
-  --s-20: #C39A09;
-  --s-30: #DBAE0D;
-  --s-40: #F7C40F;
-  --s-50: #F8CA27;
-  --s-60: #F9D03F;
-  --s-70: #F9D657;
-  --s-80: #FADC6F;
-  --s-90: #FBE187;
-  --s-95: #FBE493;
-  --s-99: #FFFFFF;
-  --s-100: #FFFFFF;
-
-  /* Neutral Colors */
-  --n-0: #000000;
-  --n-6: #141312;
-  --n-10: #201F1E;
-  --n-12: #252422;
-  --n-17: #2F2D2A;
-  --n-20: #33312E;
-  --n-22: #373532;
-  --n-24: #3B3937;
-  --n-30: #4A483F;
-  --n-40: #646256;
-  --n-50: #7E7A6E;
-  --n-60: #979388;
-  --n-70: #B1ADA2;
-  --n-80: #CAC5BA;
-  --n-87: #D8D3C9;
-  --n-90: #E0DCD2;
-  --n-92: #E5E1D8;
-  --n-94: #E9E6DE;
-  --n-95: #ECE9E2;
-  --n-96: #EEE9E3;
-  --n-98: #F6F4EF;
-  --n-99: #F9F9F9;
-  --n-100: #FFFFFF;
-
-  /* Error Colors */
-  --e-0: #000000;
-  --e-10: #850909;
-  --e-20: #A60B0B;
-  --e-30: #C71111;
-  --e-40: #E81414;
-  --e-50: #EA2C2C;
-  --e-60: #ED4444;
-  --e-70: #EF5C5C;
-  --e-80: #F17474;
-  --e-90: #F38C8C;
-  --e-95: #F4A3A3;
-  --e-99: #FFFFFF;
-  --e-100: #FFFFFF;
-
-
-  /* Neutral */
-  --neutral-0: #000000;
-  --neutral-10: #1A1A1A;
-  --neutral-20: #2C2C2C;
-  --neutral-30: #404040;
-  --neutral-40: #555555;
-  --neutral-50: #757575;
-  --neutral-60: #969696;
-  --neutral-70: #B8B8B8;
-  --neutral-80: #DADADA;
-  --neutral-90: #EBEBEB;
-  --neutral-95: #F5F5F5;
-  --neutral-99: #FCFCFC;
-  --neutral-100: #FFFFFF;
+  --colors-primary-p-0: rgba(0, 0, 0, 1);
+  --colors-primary-p-10: rgba(6, 91, 25, 1);
+  --colors-primary-p-20: rgba(6, 118, 31, 1);
+  --colors-primary-p-30: rgba(11, 156, 43, 1);
+  --colors-primary-p-40: rgba(14, 192, 43, 1);
+  --colors-primary-p-50: rgba(38, 198, 64, 1);
+  --colors-primary-p-60: rgba(62, 205, 85, 1);
+  --colors-primary-p-70: rgba(86, 211, 107, 1);
+  --colors-primary-p-80: rgba(110, 217, 128, 1);
+  --colors-primary-p-90: rgba(134, 223, 149, 1);
+  --colors-primary-p-95: rgba(147, 227, 160, 1);
+  --colors-primary-p-99: rgba(253, 254, 253, 1);
+  --colors-primary-p-100: rgba(255, 255, 255, 1);
+  --colors-secondary-s-0: rgba(0, 0, 0, 1);
+  --colors-secondary-s-10: rgba(154, 122, 9, 1);
+  --colors-secondary-s-20: rgba(195, 154, 9, 1);
+  --colors-secondary-s-30: rgba(219, 174, 13, 1);
+  --colors-secondary-s-40: rgba(247, 196, 15, 1);
+  --colors-secondary-s-50: rgba(248, 202, 39, 1);
+  --colors-secondary-s-60: rgba(249, 208, 63, 1);
+  --colors-secondary-s-70: rgba(249, 214, 87, 1);
+  --colors-secondary-s-80: rgba(250, 220, 111, 1);
+  --colors-secondary-s-90: rgba(251, 225, 135, 1);
+  --colors-secondary-s-95: rgba(251, 228, 147, 1);
+  --colors-secondary-s-99: rgba(255, 254, 253, 1);
+  --colors-secondary-s-100: rgba(255, 255, 255, 1);
+  --colors-error-e-0: rgba(0, 0, 0, 1);
+  --colors-error-e-10: rgba(133, 9, 9, 1);
+  --colors-error-e-20: rgba(166, 11, 11, 1);
+  --colors-error-e-30: rgba(199, 17, 17, 1);
+  --colors-error-e-40: rgba(232, 20, 20, 1);
+  --colors-error-e-50: rgba(234, 44, 44, 1);
+  --colors-error-e-60: rgba(237, 68, 68, 1);
+  --colors-error-e-70: rgba(239, 92, 92, 1);
+  --colors-error-e-80: rgba(241, 116, 116, 1);
+  --colors-error-e-90: rgba(243, 140, 140, 1);
+  --colors-error-e-95: rgba(244, 163, 163, 1);
+  --colors-error-e-99: rgba(255, 255, 255, 1);
+  --colors-error-e-100: rgba(255, 255, 255, 1);
+  --colors-neutral-n-0: rgba(0, 0, 0, 1);
+  --colors-neutral-n-6: rgba(20, 19, 18, 1);
+  --colors-neutral-n-10: rgba(32, 31, 30, 1);
+  --colors-neutral-n-12: rgba(37, 36, 34, 1);
+  --colors-neutral-n-17: rgba(47, 45, 42, 1);
+  --colors-neutral-n-20: rgba(51, 49, 46, 1);
+  --colors-neutral-n-22: rgba(55, 53, 50, 1);
+  --colors-neutral-n-24: rgba(59, 57, 55, 1);
+  --colors-neutral-n-30: rgba(74, 72, 63, 1);
+  --colors-neutral-n-40: rgba(100, 98, 86, 1);
+  --colors-neutral-n-50: rgba(126, 122, 110, 1);
+  --colors-neutral-n-60: rgba(151, 147, 136, 1);
+  --colors-neutral-n-70: rgba(177, 173, 162, 1);
+  --colors-neutral-n-80: rgba(202, 197, 186, 1);
+  --colors-neutral-n-87: rgba(216, 211, 201, 1);
+  --colors-neutral-n-90: rgba(224, 220, 210, 1);
+  --colors-neutral-n-92: rgba(229, 225, 216, 1);
+  --colors-neutral-n-94: rgba(233, 230, 222, 1);
+  --colors-neutral-n-95: rgba(236, 233, 226, 1);
+  --colors-neutral-n-96: rgba(238, 233, 227, 1);
+  --colors-neutral-n-98: rgba(246, 244, 239, 1);
+  --colors-neutral-n-99: rgba(249, 249, 249, 1);
+  --colors-neutral-n-100: rgba(255, 255, 255, 0.8);
 }
 
-.light {
-  /* Primary */
-  --primary: var(--p-40);
-  --on-primary: var(--n-100);
-  --primary-container: color-mix(in srgb, var(--primary-base) 15%, white);
-  --on-primary-container: color-mix(in srgb, var(--primary-base) 90%, black);
-
-  /* Secondary */
-  --secondary: var(--secondary-base);
-  --on-secondary: var(--neutral-10);
-  --secondary-container: color-mix(in srgb, var(--secondary-base) 15%, white);
-  --on-secondary-container: color-mix(in srgb, var(--secondary-base) 90%, black);
-
-  /* Surface */
-  --surface: var(--neutral-100);
-  --surface-dim: var(--neutral-90);
-  --surface-bright: var(--neutral-100);
-
-  /* Surface Containers */
-  --surface-container-lowest: var(--neutral-100);
-  --surface-container-low: var(--neutral-99);
-  --surface-container: var(--neutral-95);
-  --surface-container-high: var(--neutral-90);
-  --surface-container-highest: var(--neutral-80);
-
-  /* Content */
-  --on-surface: var(--neutral-10);
-  --on-surface-variant: var(--neutral-30);
-
-  /* Outline */
-  --outline: var(--neutral-50);
-  --outline-variant: var(--neutral-80);
-
-  /* Inverse */
-  --inverse-surface: var(--neutral-20);
-  --inverse-on-surface: var(--neutral-95);
-  --inverse-primary: color-mix(in srgb, var(--primary-base) 80%, white);
+/* Primitives - Light */
+.light-theme {
+  --primary: var(--colors-primary-p-40);
+  --on-primary: var(--colors-primary-p-100);
+  --primary-container: var(--colors-primary-p-90);
+  --on-primary-container: var(--colors-primary-p-10);
+  --primary-fixed: var(--colors-primary-p-90);
+  --on-primary-fixed: var(--colors-primary-p-10);
+  --primary-fixed-dim: var(--colors-primary-p-80);
+  --on-primary-fixed-dim: var(--colors-primary-p-10);
+  --secondary: var(--colors-secondary-s-40);
+  --on-secondary: var(--colors-secondary-s-0);
+  --secondary-container: var(--colors-secondary-s-90);
+  --on-secondary-container: var(--colors-secondary-s-0);
+  --secondary-fixed: var(--colors-secondary-s-90);
+  --on-secondary-fixed: var(--colors-secondary-s-10);
+  --secondary-fixed-dim: var(--colors-secondary-s-80);
+  --on-secondary-fixed-dim: var(--colors-secondary-s-0);
+  --surface: var(--colors-neutral-n-98);
+  --surface-bright: var(--colors-neutral-n-98);
+  --surface-dim: var(--colors-neutral-n-87);
+  --surface-container-lowest: var(--colors-neutral-n-100);
+  --surface-container-low: var(--colors-neutral-n-96);
+  --surface-container: var(--colors-neutral-n-94);
+  --surface-containeri-high: var(--colors-neutral-n-92);
+  --surface-container-highest: var(--colors-neutral-n-90);
+  --on-surface: var(--colors-neutral-n-10);
+  --on-surface-variant: var(--colors-neutral-n-30);
+  --outline: var(--colors-neutral-n-50);
+  --outline-variant: var(--colors-neutral-n-80);
+  --inverse-surface: var(--colors-neutral-n-20);
+  --on-inverse-surface: var(--colors-neutral-n-95);
+  --error: var(--colors-error-e-40);
+  --on-error: var(--colors-error-e-100);
+  --error-container: var(--colors-error-e-90);
+  --on-error-container: var(--colors-error-e-20);
 }
 
-.dark {
-  /* Primary */
-  --primary: color-mix(in srgb, var(--primary-base) 80%, white);
-  --on-primary: var(--neutral-100);
-  --primary-container: color-mix(in srgb, var(--primary-base) 30%, black);
-  --on-primary-container: color-mix(in srgb, var(--primary-base) 90%, white);
-
-  /* Secondary */
-  --secondary: color-mix(in srgb, var(--secondary-base) 80%, white);
-  --on-secondary: color-mix(in srgb, var(--secondary-base) 20%, black);
-  --secondary-container: color-mix(in srgb, var(--secondary-base) 30%, black);
-  --on-secondary-container: color-mix(in srgb, var(--secondary-base) 90%, white);
-
-  /* Surface */
-  --surface: var(--neutral-10);
-  --surface-dim: var(--neutral-10);
-  --surface-bright: var(--neutral-20);
-
-  /* Surface Containers */
-  --surface-container-lowest: var(--neutral-0);
-  --surface-container-low: var(--neutral-10);
-  --surface-container: var(--neutral-20);
-  --surface-container-high: var(--neutral-30);
-  --surface-container-highest: var(--neutral-40);
-
-  /* Content */
-  --on-surface: var(--neutral-90);
-  --on-surface-variant: var(--neutral-80);
-
-  /* Outline */
-  --outline: var(--neutral-60);
-  --outline-variant: var(--neutral-30);
-
-  /* Inverse */
-  --inverse-surface: var(--neutral-90);
-  --inverse-on-surface: var(--neutral-20);
-  --inverse-primary: var(--primary-base);
+/* Primitives - Dark */
+.dark-theme {
+  --primary: var(--colors-primary-p-80);
+  --on-primary: var(--colors-primary-p-20);
+  --primary-container: var(--colors-primary-p-30);
+  --on-primary-container: var(--colors-primary-p-90);
+  --primary-fixed: var(--colors-primary-p-90);
+  --on-primary-fixed: var(--colors-primary-p-10);
+  --primary-fixed-dim: var(--colors-primary-p-80);
+  --on-primary-fixed-dim: var(--colors-primary-p-10);
+  --secondary: var(--colors-secondary-s-80);
+  --on-secondary: var(--colors-secondary-s-10);
+  --secondary-container: var(--colors-secondary-s-30);
+  --on-secondary-container: var(--colors-secondary-s-95);
+  --secondary-fixed: var(--colors-secondary-s-90);
+  --on-secondary-fixed: var(--colors-secondary-s-10);
+  --secondary-fixed-dim: var(--colors-secondary-s-80);
+  --on-secondary-fixed-dim: var(--colors-secondary-s-0);
+  --surface: var(--colors-neutral-n-6);
+  --surface-bright: var(--colors-neutral-n-10);
+  --surface-dim: var(--colors-neutral-n-6);
+  --surface-container-lowest: var(--colors-neutral-n-6);
+  --surface-container-low: var(--colors-neutral-n-10);
+  --surface-container: var(--colors-neutral-n-12);
+  --surface-containeri-high: var(--colors-neutral-n-17);
+  --surface-container-highest: var(--colors-neutral-n-22);
+  --on-surface: var(--colors-neutral-n-90);
+  --on-surface-variant: var(--colors-neutral-n-80);
+  --outline: var(--colors-neutral-n-60);
+  --outline-variant: var(--colors-neutral-n-30);
+  --inverse-surface: var(--colors-neutral-n-90);
+  --on-inverse-surface: var(--colors-neutral-n-20);
+  --error: var(--colors-error-e-80);
+  --on-error: var(--colors-error-e-10);
+  --error-container: var(--colors-error-e-30);
+  --on-error-container: var(--colors-error-e-100);
 }

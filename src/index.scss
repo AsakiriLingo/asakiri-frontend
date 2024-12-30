@@ -1,15 +1,11 @@
-@use "@/styles/colors";
+@use "@/styles/styles";
 
 :root {
   body {
     margin: 100px;
-    background: var(--gradient-bg);
-    color: var(--color-text-primary);
-    font-family: var(--font-family-base), system-ui sans-serif;
-    line-height: var(--line-height-base);
+    background: var(--surface-bright, linear-gradient(127deg, #F7F7F7 7.44%, #F1EEE5 97.99%));
+    font-family: var(--font-primary), "Noto Sans", system-ui sans;
     padding: 0;
-    transition: background var(--transition-base),
-    color var(--transition-base);
   }
   a {
     text-decoration: inherit;

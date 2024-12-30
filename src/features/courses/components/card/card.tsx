@@ -41,12 +41,12 @@ export const Card = <T extends object>({
       </div>
       <div className="card--content">
         <h2 className="card--content--course-title">{title}</h2>
-        <div className="card--content--language">
-          <p className="card--content--from-language">{languageTaught}</p>
-          <p className="card--content--from-text">From</p>
-          <p className="card--content--language-taught">{courseLanguage}</p>
-        </div>
         <div className="card--content--course-description">{description}</div>
+        <div className="card--content--language">
+          <p className="card--content--language-taught">{languageTaught}</p>
+          <p className="card--content--from-text">From</p>
+          <p className="card--content--from-language">{courseLanguage}</p>
+        </div>
       </div>
     </div>
   );

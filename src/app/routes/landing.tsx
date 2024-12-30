@@ -6,7 +6,7 @@ import { Card } from '@/features/courses/components/card';
 const LandingRoute: React.FC = () => {
   return (
     <>
-      <Head description={'Welcome to asakiri'}></Head>
+      <Head description={'Welcome to Asakiri'}></Head>
       <Card
         link="https://google.com"
         title="Japanese with Misa"

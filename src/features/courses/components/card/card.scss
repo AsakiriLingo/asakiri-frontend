@@ -1,12 +1,14 @@
+@use "@styles/styles";
+
 .card {
   display: flex;
   flex-direction: column;
-  padding: 1rem;
-  background: #ffffff80;
-  border-radius: 30px;
-  border: 1px solid black;
+  padding: var(--padding-lg);
+  background: var(--surface-container-lowest);
+  border-radius: var(--radius-xl);
   cursor: pointer;
-  font-family: var(--font-family-base) system-ui sans;
+  gap: var(--gap-xs);
+  font-family: var(--font-primary), "Noto Sans", system-ui;
 
   &--header {
     display: flex;
@@ -21,44 +23,51 @@
   }
 
   &--teacher-name {
-    font-size: 1rem;
-    font-weight: 600;
+    @extend .heading-4;
     margin: 0;
-    color: black;
+    color: var(--on-surface);
   }
 
   &--teacher-subtitle {
-    font-size: 0.875rem;
-    color: black;
-    margin: 0.25rem 0 0;
+    @extend .body-small;
+    margin: 0;
+    color: var(--on-surface);
   }
 
   &--content {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: var(--gap-xxs);
 
     &--course-title {
-      font-size: 1.25rem;
-      color: black;
+      @extend .heading-4;
+      color: var(--on-surface);
       margin: 0;
     }
     &--language {
+      color: var(--on-surface-variant);
       display: flex;
       gap: 4px;
     }
 
     &--language-taught {
-      color: black;
+      @extend .body-small-variant;
+      margin:0;
+      color: var(--on-surface);
     }
     &--from-text {
-      color: black;
+      @extend .body-small;
+      margin:0;
+      color: var(--on-surface-variant);
     }
     &--from-language {
-      color: black;
+      @extend .body-small-variant;
+      margin:0;
+      color: var(--on-surface);
     }
     &--course-description {
-      color: black;
+      @extend .body-small;
+      color: var(--on-surface-variant);
     }
 
   }

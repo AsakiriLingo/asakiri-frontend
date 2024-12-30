@@ -1,8 +1,14 @@
 :root {
-  --spacing-xxs: 0.25rem;
-  --spacing-xs: 0.5rem;
-  --spacing-sm: 0.75rem;
-  --spacing-md: 1rem;
-  --spacing-lg: 1.25rem;
-  --spacing-xl: 1.5rem;
+  --padding-xs: 12px;
+  --padding-sm: 16px;
+  --padding-md: 20px;
+  --padding-lg: 24px;
+  --padding-xl: 30px;
+
+  --gap-xxs: 4px;
+  --gap-xs: 8px;
+  --gap-sm: 12px;
+  --gap-md: 16px;
+  --gap-lg: 20px;
+  --gap-xl: 24px;
 }
