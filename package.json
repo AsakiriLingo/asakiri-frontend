@@ -20,6 +20,9 @@
   "dependencies": {
     "@auth0/auth0-react": "^2.2.4",
     "@tanstack/react-query-devtools": "^5.62.8",
+    "@tiptap/pm": "^2.11.0",
+    "@tiptap/react": "^2.11.0",
+    "@tiptap/starter-kit": "^2.11.0",
     "axios": "^1.7.9",
     "boring-avatars": "^1.11.2",
     "i18next": "^24.1.2",

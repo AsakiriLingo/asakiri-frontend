@@ -6,13 +6,13 @@ import { Course } from '@/types/course.types.ts';
 
 import './card.scss';
 
-interface CardProps<T extends object>
+interface CardProps
   extends Omit<Course, 'id' | 'description' | 'chapters' | 'isPublished'> {
   link: string;
-  children?: React.ReactNode | ((item: T) => React.ReactNode);
+  children?: React.ReactNode;
 }
 
-export const Card = <T extends object>({
+export const Card: React.FC<CardProps> = ({
   title,
   link,
   shortDescription,
@@ -20,7 +20,7 @@ export const Card = <T extends object>({
   courseLanguage,
   languageTaught,
   thumbnail,
-}: CardProps<T>) => {
+}: CardProps) => {
   const randomNum: number = +(Math.random() + 4).toFixed(2);
   const card = (
     <div className="card">
