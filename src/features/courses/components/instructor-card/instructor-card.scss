@@ -1,0 +1,15 @@
+@use "@styles/styles";
+
+.instructor-card {
+  padding: var(--padding-lg);
+  background-color: var(--surface-container-lowest);
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+  font-family: "Noto Sans", sans-serif;
+
+  &--title {
+    @extend .heading-3;
+    color: var(--on-surface);
+  }
+}

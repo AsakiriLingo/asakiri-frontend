@@ -22,7 +22,7 @@ export const SearchField: React.FC<SearchFieldProps> = ({
   placeholder,
 }: SearchFieldProps) => {
   return (
-    <AriaSearchField className={`search`}>
+    <AriaSearchField className={`search-field`}>
       <Button className={`icon`}>
         <Search size={20} className="search-icon" />
       </Button>

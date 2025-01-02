@@ -1,0 +1,59 @@
+@use "@styles/styles";
+
+.hero-card {
+  display: flex;
+  gap: var(--gap-lg);
+  align-items: center;
+  justify-content: center;
+  vertical-align: center;
+  background-color: var(--surface-container-lowest);
+  padding: var(--padding-lg);
+  border-radius: var(--radius-xl);
+  font-family: "Noto Sans", sans-serif;
+
+  &--thumbnail {
+    width: 500px;
+    height: 220px;
+    object-fit: cover;
+    border-radius: var(--radius-md);
+  }
+
+  &--content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-sm);
+
+    &--title {
+      @extend .heading-3;
+      margin: 0;
+      color: var(--on-surface);
+    }
+
+    &--description {
+      @extend .body;
+      margin: 0;
+      color: var(--on-surface-variant);
+    }
+
+  }
+  &--meta {
+    @extend .body;
+    display: flex;
+    align-content: center;
+    gap: var(--gap-sm);
+  }
+  &--course-rating {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-xs);
+    color: var(--on-surface);
+  }
+
+  &--course-cost {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-xs);
+    color: var(--on-surface);
+  }
+
+}

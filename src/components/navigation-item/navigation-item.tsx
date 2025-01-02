@@ -14,9 +14,10 @@ export const NavigationItem: React.FC<NavigationItemProps> = ({
   isActive,
 }: NavigationItemProps): JSX.Element => {
   return (
-    <div>
-      {title}
-      {route}
+    <div className="nav-menu">
+      <a className="nav-item" href={route}>
+        {title}
+      </a>
       {isActive}
     </div>
   );

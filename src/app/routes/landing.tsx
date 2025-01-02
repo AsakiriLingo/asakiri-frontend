@@ -1,26 +1,33 @@
 import React from 'react';
 
+import { mockCourseData } from './mock-data';
+
+import { NavBar } from '@/components/nav-bar';
 import { Head } from '@/components/seo';
 import { Card } from '@/features/courses/components/card';
+import './landing.scss';
 
 const LandingRoute: React.FC = () => {
   return (
     <>
       <Head description={'Welcome to Asakiri'}></Head>
-      <Card
-        link="https://google.com"
-        title="Japanese with Misa"
-        author={{
-          id: '1',
-          name: 'Misa Sensei',
-          subTitle: 'Japanese Teacher',
-          avatar: '',
-          description: 'Japanese language instructor',
-        }}
-        description="Tristique scelerisque sit duis eget mi at. Malesuada nulla cursus laoreet id aliquam. Et nisi pulvinar dictum mattis."
-        courseLanguage="English"
-        languageTaught="Japanese"
-      ></Card>
+      <NavBar />
+      <div className="course-grid-container">
+        <div className="course-grid">
+          {mockCourseData.map((course) => (
+            <Card
+              key={course.author.id}
+              link={course.link}
+              title={course.title}
+              author={course.author}
+              shortDescription={course.shortDescription}
+              courseLanguage={course.courseLanguage}
+              languageTaught={course.languageTaught}
+              thumbnail={course.thumbnail}
+            />
+          ))}
+        </div>
+      </div>
     </>
   );
 };

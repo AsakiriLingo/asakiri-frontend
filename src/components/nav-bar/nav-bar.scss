@@ -1,0 +1,29 @@
+@use "@styles/styles";
+
+.nav-container {
+  padding: var(--padding-sm) var(--padding-xl);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  align-content: center;
+}
+
+.left-container, .right-container {
+  display: flex;
+  gap: var(--gap-md);
+  width: fit-content;
+  align-items: center;
+}
+
+.routes {
+  display: flex;
+  gap: var(--gap-md);
+
+}
+
+.search-field-container {
+  width: 350px;
+  height: 48px;
+  margin: 0;
+}
+

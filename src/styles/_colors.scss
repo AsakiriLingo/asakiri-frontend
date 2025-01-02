@@ -65,13 +65,13 @@
 }
 
 /* Primitives - Light */
-.light-theme {
+.theme-light {
   --primary: var(--colors-primary-p-40);
   --on-primary: var(--colors-primary-p-100);
   --primary-container: var(--colors-primary-p-90);
   --on-primary-container: var(--colors-primary-p-10);
-  --primary-fixed: var(--colors-primary-p-90);
-  --on-primary-fixed: var(--colors-primary-p-10);
+  --primary-fixed: var(--colors-primary-p-95);
+  --on-primary-fixed: var(--colors-primary-p-30);
   --primary-fixed-dim: var(--colors-primary-p-80);
   --on-primary-fixed-dim: var(--colors-primary-p-10);
   --secondary: var(--colors-secondary-s-40);
@@ -103,13 +103,13 @@
 }
 
 /* Primitives - Dark */
-.dark-theme {
-  --primary: var(--colors-primary-p-80);
-  --on-primary: var(--colors-primary-p-20);
+.theme-dark {
+  --primary: var(--colors-primary-p-60);
+  --on-primary: var(--colors-primary-p-10);
   --primary-container: var(--colors-primary-p-30);
   --on-primary-container: var(--colors-primary-p-90);
-  --primary-fixed: var(--colors-primary-p-90);
-  --on-primary-fixed: var(--colors-primary-p-10);
+  --primary-fixed: var(--colors-primary-p-10);
+  --on-primary-fixed: var(--colors-primary-p-40);
   --primary-fixed-dim: var(--colors-primary-p-80);
   --on-primary-fixed-dim: var(--colors-primary-p-10);
   --secondary: var(--colors-secondary-s-80);
