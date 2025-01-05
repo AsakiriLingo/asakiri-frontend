@@ -65,7 +65,7 @@ export const HeroCard: React.FC<HeroCardProps> = ({
           </div>
           <p className="hero-card--content--description">{description}</p>
           <div>
-            <Button label="Join Course" size="small" />
+            <Button size="small"> Join Course </Button>
           </div>
         </div>
       </header>

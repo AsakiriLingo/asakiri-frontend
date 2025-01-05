@@ -51,8 +51,10 @@ export const NavBar: React.FC = () => {
       </div>
       <div className="right-container">
         <ThemeSwitcher />
-        <Button label="Sign In" variant="flat" size="small" />
-        <Button label="Sign Up" size="small" />
+        <Button variant="flat" size="small">
+          Sign In
+        </Button>
+        <Button size="small">Sign Up</Button>
       </div>
     </nav>
   );

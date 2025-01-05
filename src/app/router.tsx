@@ -15,6 +15,7 @@ import { RouterProvider } from 'react-router/dom';
 
 const Home = lazy(() => import('./routes/landing.tsx'));
 const CourseDetails = lazy(() => import('./routes/course-details.tsx'));
+const CourseEditor = lazy(() => import('./routes/course-editor.tsx'));
 
 // interface ProjectsComponent {
 //   default: React.ComponentType;
@@ -30,6 +31,10 @@ const createAppRouter = () =>
     {
       path: '/course-details',
       element: <CourseDetails />,
+    },
+    {
+      path: '/course-creator',
+      element: <CourseEditor />,
     },
   ]);
 

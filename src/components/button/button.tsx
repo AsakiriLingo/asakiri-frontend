@@ -4,15 +4,15 @@ import { Button as AriaButton } from 'react-aria-components';
 import './button.scss';
 
 interface ButtonProps {
-  label: string;
   onPress?: () => void;
   type?: 'primary' | 'secondary' | 'tertiary';
   variant?: 'filled' | 'flat' | 'ghost';
   size?: 'small' | 'medium';
+  children?: React.ReactNode;
 }
 
 export const Button: React.FC<ButtonProps> = ({
-  label,
+  children,
   onPress,
   type = 'primary',
   variant = 'filled',
@@ -23,7 +23,7 @@ export const Button: React.FC<ButtonProps> = ({
       className={`button button--${variant}--${type} button--${size}`}
       onPress={onPress}
     >
-      {label}
+      {children}
     </AriaButton>
   );
 };
