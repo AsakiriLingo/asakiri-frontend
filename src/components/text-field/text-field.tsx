@@ -1,23 +1,24 @@
 import React from 'react';
-import {
-  Input,
-  Label,
-  TextField as AriaTextField,
-} from 'react-aria-components';
+import { Input, TextField as AriaTextField } from 'react-aria-components';
 
 import './text-field.scss';
 
 interface TextFieldProps {
-  label: string;
+  text?: string;
+  onChange?: (value: string) => void;
 }
 
 export const TextField: React.FC<TextFieldProps> = ({
-  label,
+  text,
+  onChange,
 }: TextFieldProps) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    onChange?.(e.target.value);
+  };
+
   return (
-    <AriaTextField className={`text-field-base`}>
-      <Label className={`label`}>{label}</Label>
-      <Input className={`input`} />
+    <AriaTextField className="text-field-base">
+      <Input className="input" value={text} onChange={handleChange} />
     </AriaTextField>
   );
 };

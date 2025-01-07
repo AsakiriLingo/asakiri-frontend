@@ -1,0 +1,50 @@
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  height: 100%;
+  padding: var(--padding-xs);
+  transition: width 0.3s ease;
+  justify-items: center;
+  align-items: center;
+
+  &--closed {
+    width: 100px;
+
+    .sidebar__content {
+      opacity: 0;
+      visibility: hidden;
+    }
+  }
+
+  &--open {
+    .toggle--icon {
+      transform: rotate(0deg);
+    }
+  }
+
+  &__content {
+    padding: var(--padding-md);
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+}
+
+.toggle {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  background-color: var(--surface-container-lowest);
+  border: none;
+  padding: var(--padding-xs);
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 1000;
+
+  &--icon {
+    color: var(--primary);
+    transition: transform 0.3s ease;
+    transform: rotate(180deg);
+  }
+}

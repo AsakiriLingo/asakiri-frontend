@@ -1,0 +1,219 @@
+@use "@styles/styles";
+
+.tiptap-editor {
+  margin: 0 auto;
+  padding: 1rem;
+  position: relative;
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--radius-md);
+
+  .editor-menu {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.5rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--outline-variant);
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+    width: max-content;
+    position: relative;
+
+    .menu-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.5rem;
+      border: none;
+      background: none;
+      border-radius: 0.375rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      color: var(--on-surface-variant);
+      position: relative;
+
+      &:hover {
+        background-color: var(--surface-bright);
+      }
+
+      &.is-active {
+        background-color: var(--surface-bright);
+        color: var(--primary);
+      }
+
+      &.paragraph {
+        color:var(--primary);
+
+      }
+
+      &.tooltip-button {
+        &[disabled] {
+          opacity: 0.6;
+          cursor: default;
+        }
+
+        &::before {
+          content: attr(data-tooltip);
+          position: absolute;
+          bottom: 100%;
+          left: 50%;
+          transform: translateX(-50%) translateY(-4px);
+          padding: 4px 8px;
+          background-color: #333;
+          color: white;
+          font-size: 12px;
+          border-radius: 4px;
+          white-space: nowrap;
+          opacity: 0;
+          visibility: hidden;
+          transition: all 0.2s ease;
+          pointer-events: none;
+          z-index: 1000;
+        }
+
+        &::after {
+          content: '';
+          position: absolute;
+          bottom: 100%;
+          left: 50%;
+          transform: translateX(-50%) translateY(4px);
+          border-width: 4px;
+          border-style: solid;
+          border-color: #333 transparent transparent transparent;
+          opacity: 0;
+          visibility: hidden;
+          transition: all 0.2s ease;
+          pointer-events: none;
+          z-index: 1000;
+        }
+
+        &:hover::before,
+        &:hover::after {
+          opacity: 1;
+          visibility: visible;
+          transform: translateX(-50%) translateY(0);
+        }
+      }
+
+      .icon {
+        width: 1.25rem;
+        height: 1.25rem;
+      }
+    }
+
+    .popover {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      margin-top: 0.5rem;
+      z-index: 1000;
+      min-width: 260px;
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: -4px;
+        left: 1rem;
+        width: 8px;
+        height: 8px;
+        background: white;
+        transform: rotate(45deg);
+      }
+
+      form {
+        input {
+          @extend .body;
+          width: 100%;
+          padding: 0.5rem;
+          border: 1px solid var(--outline-variant);
+          border-radius: var(--radius-sm);
+          transition: all 0.2s ease;
+
+          &:focus {
+            outline: none;
+            border-color: var(--primary);
+          }
+
+          &::placeholder {
+            color: var(--on-surface-variant);
+          }
+        }
+      }
+    }
+  }
+
+  .ProseMirror {
+    border: none;
+    outline: none;
+    min-height: 200px;
+
+    > * + * {
+      margin-top: 0.75em;
+    }
+
+    p {
+      @extend .body;
+      margin-bottom: var(--gap-sm);
+      color: var(--on-surface);
+    }
+
+    h1 {
+      @extend .heading-3;
+      margin-bottom: var(--gap-sm);
+      color: var(--on-surface);
+    }
+
+    h2 {
+      @extend .heading-4;
+      margin-bottom: var(--gap-sm);
+      color: var(--on-surface-variant);
+    }
+
+    ul, ol {
+      @extend .body;
+      padding: 0 1rem;
+      color: var(--on-surface);
+    }
+
+    ul {
+      list-style: disc;
+      color: var(--on-surface);
+    }
+
+    ol {
+      list-style: decimal;
+      color: var(--on-surface);
+    }
+
+    .editor-link {
+      color: #2563eb;
+      text-decoration: underline;
+      cursor: pointer;
+
+      &:hover {
+        color: #1d4ed8;
+      }
+    }
+
+    .editor-youtube {
+      width: 100%;
+      height: fit-content;
+      border-radius: var(--radius-sm);
+      border: none;
+      aspect-ratio: 16/9;
+
+      iframe {
+        width: 100%;
+        border: none;
+      }
+    }
+
+    p.is-editor-empty:first-child::before {
+      color: #9ca3af;
+      content: attr(data-placeholder);
+      float: left;
+      height: 0;
+      pointer-events: none;
+    }
+  }
+}

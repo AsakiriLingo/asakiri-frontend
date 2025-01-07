@@ -1,0 +1,50 @@
+@use '@styles/styles';
+
+.content-card {
+  background-color: var(--surface-container-lowest);
+  padding: var(--padding-md);
+  border-radius: var(--radius-lg);
+  font-family: 'Noto Sans', sans-serif;
+  min-width: 900px;
+
+  &--header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: var(--gap-sm);
+    gap: var(--gap-xl);
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-sm);
+    width: 100%;
+  }
+
+  &__actions {
+    display: flex;
+    gap: var(--gap-md);
+  }
+}
+
+.chapter--title {
+  @extend .heading-3;
+  color: var(--on-surface);
+  margin: 0;
+}
+
+.chapter--subtitle {
+  @extend .body;
+  color: var(--on-surface);
+}
+
+.section--title {
+  @extend .heading-4;
+  color: var(--on-surface);
+  margin: 0;
+}
+
+.section--subtitle {
+  @extend .body;
+  color: var(--on-surface);
+}

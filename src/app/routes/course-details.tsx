@@ -1,14 +1,17 @@
 import React from 'react';
 
+import { CourseSidebar } from '@/components/course-sidebar';
 import { NavBar } from '@/components/nav-bar';
 import { Head } from '@/components/seo';
-import './course-details.scss';
 import { HeroCard } from '@/features/courses/components/hero-card';
 import { InstructorCard } from '@/features/courses/components/instructor-card';
+
+import './course-details.scss';
 
 const CourseDetailsRoute: React.FC = () => {
   return (
     <>
+      <CourseSidebar />
       <Head description={'Course Content'}></Head>
       <NavBar />
       <header className="hero-container">
