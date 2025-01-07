@@ -5,7 +5,6 @@ import { Button } from '@/components/button';
 import { ContentCard } from '@/components/content-card';
 import { CourseSidebar } from '@/components/course-sidebar';
 import { SideBarCard } from '@/components/side-bar-card';
-import { Editor } from '@/features/course-creation/components/editor';
 import { CourseViewData } from '@/mocks/course';
 import './course-editor.scss';
 
@@ -54,39 +53,41 @@ export const CourseEditor: React.FC = () => {
                 variant="chapter"
                 title="Introduction to Japanese"
                 subtitle="Basic Concepts and Greetings"
+                isEditable={true}
+                content={'Test content'}
                 onTitleChange={(newTitle) =>
-                  console.log('New title:', newTitle)
+                  console.log('New title:', newTitle?.target.value)
                 }
                 onSubtitleChange={(newSubtitle) =>
-                  console.log('New subtitle:', newSubtitle)
+                  console.log('New Subtitle:', newSubtitle?.target.value)
                 }
               />
               <ContentCard
                 variant="section"
                 title="Sentence Building ぶんのつくり"
                 subtitle="Understanding Japanese Sentences"
+                isEditable={true}
+                content={'Test content'}
                 onTitleChange={(newTitle) =>
-                  console.log('New title:', newTitle)
+                  console.log('New title:', newTitle?.target.value)
                 }
                 onSubtitleChange={(newSubtitle) =>
-                  console.log('New subtitle:', newSubtitle)
+                  console.log('New Subtitle:', newSubtitle?.target.value)
                 }
-              >
-                <Editor content="" />
-              </ContentCard>
+              />
               <ContentCard
                 variant="section"
                 title="Sentence Building ぶんのつくり"
                 subtitle="Understanding Japanese Sentences"
+                isEditable={true}
+                content={'Test content'}
                 onTitleChange={(newTitle) =>
-                  console.log('New title:', newTitle)
+                  console.log('New title:', newTitle?.target.value)
                 }
                 onSubtitleChange={(newSubtitle) =>
-                  console.log('New subtitle:', newSubtitle)
+                  console.log('New Subtitle:', newSubtitle?.target.value)
                 }
-              >
-                <Editor content="" />
-              </ContentCard>
+              />
               <div>
                 <Button size="small" onPress={() => {}}>
                   <Plus />
