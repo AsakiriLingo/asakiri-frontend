@@ -1,4 +1,4 @@
-import { Save, Trash2 } from 'lucide-react';
+import { Pencil, Save, Trash2 } from 'lucide-react';
 import React, { useState } from 'react';
 
 import { Button } from '@/components/button';
@@ -59,12 +59,17 @@ export const ContentCard: React.FC<ContentCardProps> = ({
               <Button size="small" variant="ghost" type="tertiary">
                 <Trash2 size={24} />
               </Button>
-              <Button size="small" type="primary" variant="ghost">
-                <Save size={24} onClick={onSave} />
+              <Button
+                size="small"
+                type="primary"
+                variant="ghost"
+                onPress={onSave}
+              >
+                <Save size={24} />
               </Button>
             </div>
           </header>
-          {variant === 'chapter' && (
+          {variant === 'section' && (
             <div>
               <Editor content={content} />
             </div>
@@ -73,18 +78,13 @@ export const ContentCard: React.FC<ContentCardProps> = ({
       ) : (
         <>
           <header className="content-card--header">
-            {isEditable && (
-              <div onClick={() => setIsEditEnabled((state) => !state)}>
-                Edit
-              </div>
-            )}
             <div className="content-card__content">
               <div
                 className={
                   variant === 'chapter' ? 'chapter--title' : 'section--title'
                 }
               >
-                <TextField text={title} onChange={onTitleChange} />
+                {title}
               </div>
               <div
                 className={
@@ -93,16 +93,20 @@ export const ContentCard: React.FC<ContentCardProps> = ({
                     : 'section--subtitle'
                 }
               >
-                <TextField text={subtitle} onChange={onSubtitleChange} />
+                {subtitle}
               </div>
             </div>
             <div className="content-card__actions">
-              <Button size="small" variant="ghost" type="tertiary">
-                <Trash2 size={24} />
-              </Button>
-              <Button size="small" type="primary" variant="ghost">
-                <Save size={24} />
-              </Button>
+              {isEditable && (
+                <Button
+                  onPress={() => setIsEditEnabled((state) => !state)}
+                  size="small"
+                  type="primary"
+                  variant="ghost"
+                >
+                  <Pencil size={24} />
+                </Button>
+              )}
             </div>
           </header>
           <ContentView content={content} />

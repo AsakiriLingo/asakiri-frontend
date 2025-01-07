@@ -20,7 +20,7 @@ export const CourseEditor: React.FC = () => {
         </div>
 
         <Button variant="filled" type="primary" size="small" onPress={() => {}}>
-          Settings
+          Course Settings
         </Button>
       </div>
       <div className="course-editor">
@@ -54,7 +54,7 @@ export const CourseEditor: React.FC = () => {
                 title="Introduction to Japanese"
                 subtitle="Basic Concepts and Greetings"
                 isEditable={true}
-                content={'Test content'}
+                content={''}
                 onTitleChange={(newTitle) =>
                   console.log('New title:', newTitle?.target.value)
                 }
@@ -88,7 +88,7 @@ export const CourseEditor: React.FC = () => {
                   console.log('New Subtitle:', newSubtitle?.target.value)
                 }
               />
-              <div>
+              <div className="course-editor__add-more">
                 <Button size="small" onPress={() => {}}>
                   <Plus />
                 </Button>

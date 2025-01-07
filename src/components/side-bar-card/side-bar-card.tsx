@@ -49,25 +49,17 @@ export const SideBarCard: React.FC<SideBarCardProps> = ({
           <ChevronDown className="chapter-icon" />
         )}
       </div>
-
-      {isExpanded && (
-        <div className="sections">
-          {sections.map((section) => (
-            <div
-              className="section"
-              key={section.id}
-              role="button"
-              tabIndex={0}
-            >
-              <FileText className="section-icon" />
-              <div className="section-content">
-                <div className="section-title">{section.title}</div>
-                <div className="section-subtitle">{section.subTitle}</div>
-              </div>
+      <div className={`sections ${isExpanded ? 'expanded' : ''}`}>
+        {sections.map((section) => (
+          <div className="section" key={section.id} role="button" tabIndex={0}>
+            <FileText className="section-icon" />
+            <div className="section-content">
+              <div className="section-title">{section.title}</div>
+              <div className="section-subtitle">{section.subTitle}</div>
             </div>
-          ))}
-        </div>
-      )}
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

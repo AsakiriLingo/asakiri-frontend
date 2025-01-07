@@ -1,15 +1,16 @@
 .sidebar {
   display: flex;
   flex-direction: column;
-  width: 300px;
+  width: 400px;
   height: 100%;
   padding: var(--padding-xs);
   transition: width 0.3s ease;
   justify-items: center;
-  align-items: center;
+  align-items: stretch;
 
   &--closed {
-    width: 100px;
+    width: 0;
+    padding: 0;
 
     .sidebar__content {
       opacity: 0;
@@ -28,6 +29,9 @@
     opacity: 1;
     visibility: visible;
     transition: opacity 0.3s ease, visibility 0.3s ease;
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
   }
 }
 
@@ -46,5 +50,33 @@
     color: var(--primary);
     transition: transform 0.3s ease;
     transform: rotate(180deg);
+  }
+}
+
+@media only screen and (max-width: 960px) {
+  .sidebar {
+    position: fixed;
+    width: 100%;
+    background-color: var(--surface-container-low);
+
+    &--closed {
+      width: 0;
+      padding: 0;
+    }
+
+    &--open {
+      padding: 0;
+    }
+
+    &.sidebar--open {
+      width: 100%;
+
+      .sidebar__content {
+        opacity: 1;
+        visibility: visible;
+        align-items: stretch;
+        width: 94%;
+      }
+    }
   }
 }

@@ -9,5 +9,5 @@ interface ContentViewProps {
 export const ContentView: React.FC<ContentViewProps> = ({
   content,
 }: ContentViewProps) => {
-  return <div>{content}</div>;
+  return <div className="content-viewer">{content}</div>;
 };

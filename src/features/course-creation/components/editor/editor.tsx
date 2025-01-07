@@ -14,6 +14,7 @@ import {
   PlayCircle,
   Type,
   AudioLines,
+  Table,
 } from 'lucide-react';
 import React, { useState, useRef, useEffect } from 'react';
 
@@ -212,7 +213,7 @@ export const Editor: React.FC<EditorProps> = ({ content, onChange }) => {
           }}
           className="menu-button tooltip-button"
           disabled
-          data-tooltip="Coming soon"
+          data-tooltip="Image upload coming soon"
         >
           <Image className="icon" />
         </button>
@@ -222,14 +223,23 @@ export const Editor: React.FC<EditorProps> = ({ content, onChange }) => {
           }}
           className="menu-button tooltip-button"
           disabled
-          data-tooltip="Coming soon"
+          data-tooltip="Audio upload coming soon"
         >
           <AudioLines className="icon" />
         </button>
         <button
+          onClick={() => {}}
+          className="menu-button tooltip-button"
+          disabled
+          data-tooltip="Table coming soon"
+        >
+          <Table className="icon" />
+        </button>
+        <button
           ref={youtubeButtonRef}
           onClick={() => setShowYoutubePopover(!showYoutubePopover)}
-          className="menu-button"
+          className="menu-button tooltip-button"
+          data-tooltip="Youtube video"
         >
           <PlayCircle className="icon" />
         </button>

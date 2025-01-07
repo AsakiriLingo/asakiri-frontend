@@ -5,9 +5,7 @@
   align-items: center;
   justify-content: space-between;
   padding: var(--padding-md);
-  position: sticky;
   top: 0;
-  background-color: var(--surface-bright);
   z-index: 1000;
   font-family: "Noto Sans", sans-serif;
   color: var(--on-surface);
@@ -23,16 +21,21 @@
   min-height: 100vh;
   background-color: var(--surface-bright);
   font-family: 'Noto Sans', sans-serif;
+  display: flex;
+
+  &__add-more {
+   z-index: 0;
+    display: flex;
+  }
 
   &__sidebar {
-    width: 300px;
+    max-width: 400px;
     height: 100%;
     flex-shrink: 0;
-    position: fixed;
+    z-index: 1000;
     scroll-behavior: smooth;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
-    padding-right: var(--padding-md);
 
     scrollbar-width: none;
 
@@ -67,6 +70,7 @@
     flex-direction: column;
     gap: var(--gap-md);
     align-items: center;
+    width:100%;
   }
 
   &__title {
@@ -78,7 +82,8 @@
   &__content {
     display: flex;
     justify-content: center;
-    height: calc(100vh - 90px);
+    width: 100%;
+    padding: var(--padding-lg);
   }
 
   &__main {
@@ -86,27 +91,8 @@
     flex-direction: column;
     gap: var(--gap-md);
     max-width: 900px;
-    padding: var(--padding-md);
+    padding: 0 var(--padding-md);
     align-items: center;
     width: 100%;
-  }
-
-  &__add-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    background-color: var(--primary);
-    color: var(--on-primary);
-    border: none;
-    cursor: pointer;
-    margin: var(--padding-md) auto;
-    transition: background-color 0.2s ease;
-
-    &:hover {
-      background-color: var(--primary-hover);
-    }
   }
 }
