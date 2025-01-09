@@ -1,0 +1,23 @@
+.bottom-nav-bar {
+  position: fixed;
+  display: flex;
+  bottom: 0;
+  align-content: space-between;
+  background-color: var(--surface-container-low);
+  width: 95%;
+  justify-content: space-between;
+  padding: var(--padding-sm) var(--padding-md);
+}
+
+.nav-item {
+  display: flex;
+  align-content: space-between;
+  background-color: var(--surface-container-low);
+  border: none;
+}
+
+@media only screen and (min-width: 960px) {
+  .bottom-nav-bar {
+    display: none;
+  }
+}

@@ -2,6 +2,7 @@ import React from 'react';
 
 import { mockCourseData } from './mock-data';
 
+import { BottomNavBar } from '@/components/bottom-nav-bar';
 import { NavBar } from '@/components/nav-bar';
 import { Head } from '@/components/seo';
 import { Card } from '@/features/courses/components/card';
@@ -9,7 +10,7 @@ import './landing.scss';
 
 const LandingRoute: React.FC = () => {
   return (
-    <>
+    <div className="landing">
       <Head description={'Welcome to Asakiri'}></Head>
       <NavBar />
       <div className="course-grid-container">
@@ -28,7 +29,8 @@ const LandingRoute: React.FC = () => {
           ))}
         </div>
       </div>
-    </>
+      <BottomNavBar />
+    </div>
   );
 };
 
