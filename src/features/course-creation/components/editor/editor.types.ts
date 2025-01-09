@@ -1,8 +1,8 @@
 export interface EditorProps {
   content: string;
-  placeholder: string;
-  editable: boolean;
-  autoFocus: boolean;
+  placeholder?: string;
+  editable?: boolean;
+  autoFocus?: boolean;
   onChange?: (html: string) => void;
 }
 
