@@ -5,9 +5,14 @@
   flex-direction: column;
   gap: var(--gap-sm);
   width: 100%;
+
+  .label {
+    @extend .label-bold;
+    color: var(--on-surface);
+  }
 }
 
-.input {
+.text-input {
   @extend .body;
   padding: var(--padding-sm) var(--padding-md);
   border-radius: var(--radius-md);
@@ -20,7 +25,18 @@
   }
 }
 
-.label {
-  @extend .label;
+.text-area{
+  @extend .body;
+  padding: var(--padding-sm) var(--padding-md);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--outline-variant);
   color: var(--on-surface);
+  background-color: transparent;
+  height: 200px;
+
+  &:focus {
+    outline: 2px solid var(--primary);
+  }
 }
+
+

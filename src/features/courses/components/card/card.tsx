@@ -50,9 +50,12 @@ export const Card: React.FC<CardProps> = ({
           {shortDescription}
         </div>
         <div className="card--content--language">
-          <p className="card--content--language-taught">{languageTaught}</p>
-          <p className="card--content--from-text">From</p>
-          <p className="card--content--from-language">{courseLanguage}</p>
+          <p className="card--content--language-taught">{languageTaught} - </p>
+          <p className="card--content--from-text">Language Taught</p>
+        </div>
+        <div className="card--content--language">
+          <p className="card--content--from-language">{courseLanguage} - </p>
+          <p className="card--content--from-text">Course Language</p>
         </div>
       </div>
       <div className="card--footer">

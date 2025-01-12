@@ -10,7 +10,7 @@ interface ModalProps {
 export const Modal: React.FC<ModalProps> = ({ children }: ModalProps) => {
   return (
     <>
-      <AriaModal>{children}</AriaModal>
+      <AriaModal className="modal">{children}</AriaModal>
     </>
   );
 };

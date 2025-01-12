@@ -1,35 +1,56 @@
-import React, { useState } from 'react';
+import React, { useState, ChangeEvent } from 'react';
 import {
   Input,
   Label,
   TextField as AriaTextField,
+  TextArea,
 } from 'react-aria-components';
 
 import './text-field.scss';
 
 interface TextFieldProps {
   text?: string;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (value: string) => void;
   label?: string;
+  isTextArea?: boolean;
 }
 
 export const TextField: React.FC<TextFieldProps> = ({
   text,
   onChange,
   label,
+  isTextArea = false,
 }: TextFieldProps) => {
   const [textValue, setTextValue] = useState<string>(() => text ?? '');
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setTextValue(e.target.value);
-    if (onChange) {
-      onChange(e);
-    }
+    onChange?.(e.target.value);
+  };
+
+  const handleTextAreaChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    setTextValue(e.target.value);
+    onChange?.(e.target.value);
   };
 
   return (
     <AriaTextField className="text-field-base">
-      <Label htmlFor={label}>{label}</Label>
-      <Input className="input" value={textValue} onChange={handleChange} />
+      <Label htmlFor={label} className="label">
+        {label}
+      </Label>
+      {isTextArea ? (
+        <TextArea
+          className="text-area"
+          value={textValue}
+          onChange={handleTextAreaChange}
+        />
+      ) : (
+        <Input
+          className="text-input"
+          value={textValue}
+          onChange={handleInputChange}
+        />
+      )}
     </AriaTextField>
   );
 };
