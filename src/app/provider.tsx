@@ -6,6 +6,8 @@ import { ReactQueryDevtools } from 'react-query/devtools';
 
 import { AuthProvider } from '../features/auth/providers/auth-provider.tsx';
 
+import { Toaster } from '@/components/toast';
+
 interface AppProviderProps {
   children: React.ReactNode;
 }
@@ -16,6 +18,7 @@ export const AppProvider = ({ children }: AppProviderProps) => {
   return (
     <Suspense fallback={null}>
       <ErrorBoundary fallback={null}>
+        <Toaster />
         <HelmetProvider>
           <AuthProvider>
             <QueryClientProvider client={queryClient}>
