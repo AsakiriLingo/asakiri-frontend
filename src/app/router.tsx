@@ -18,6 +18,7 @@ const CourseDetails = lazy(() => import('./routes/course-details.tsx'));
 const CourseEditor = lazy(() => import('./routes/course-editor.tsx'));
 const CourseSettings = lazy(() => import('./routes/course-settings.tsx'));
 const CourseTeaching = lazy(() => import('./routes/teach.tsx'));
+const CourseLearning = lazy(() => import('./routes/my-learning.tsx'));
 
 // interface ProjectsComponent {
 //   default: React.ComponentType;
@@ -45,6 +46,10 @@ const createAppRouter = () =>
     {
       path: '/teach',
       element: <CourseTeaching />,
+    },
+    {
+      path: '/my-learning',
+      element: <CourseLearning />,
     },
   ]);
 
