@@ -1,11 +1,12 @@
 import React from 'react';
-import './course-settings.scss';
-import { DialogTrigger } from 'react-aria-components';
 
 import { Button } from '@/components/button';
+import { DialogTrigger } from '@/components/dialog-trigger';
 import { Modal } from '@/components/modal';
 import { TextField } from '@/components/text-field';
 import { LanguageList } from '@/features/course-creation/components/language-list';
+
+import './course-settings.scss';
 
 export const CourseSettings: React.FC = () => {
   return (

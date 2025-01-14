@@ -7,6 +7,8 @@ interface DialogTriggerProps {
   children?: React.ReactNode;
 }
 
-export const DialogTrigger: React.FC = ({ children }: DialogTriggerProps) => {
+export const DialogTrigger: React.FC<DialogTriggerProps> = ({
+  children,
+}: DialogTriggerProps) => {
   return <AriaDialogTrigger>{children}</AriaDialogTrigger>;
 };
