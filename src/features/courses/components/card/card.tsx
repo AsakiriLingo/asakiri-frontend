@@ -6,8 +6,7 @@ import { Course } from '@/types/course.types.ts';
 
 import './card.scss';
 
-interface CardProps
-  extends Omit<Course, 'id' | 'description' | 'chapters' | 'isPublished'> {
+interface CardProps extends Omit<Course, 'id' | 'description' | 'chapters'> {
   link: string;
   children?: React.ReactNode;
 }
@@ -20,6 +19,7 @@ export const Card: React.FC<CardProps> = ({
   courseLanguage,
   languageTaught,
   thumbnail,
+  isPublished = false,
 }: CardProps) => {
   const randomNum: number = +(Math.random() + 4).toFixed(2);
   const card = (
@@ -93,9 +93,9 @@ export const Card: React.FC<CardProps> = ({
               />
             </svg>
             <div className="card--course-cost--number">Free</div>
+            <div className="card--course-cost--number">{isPublished}</div>
           </div>
         </div>
-        {/*<div className="card--footer--right">Learn More</div>*/}
       </div>
     </div>
   );
