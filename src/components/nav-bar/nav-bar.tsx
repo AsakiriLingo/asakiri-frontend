@@ -2,10 +2,11 @@ import React from 'react';
 
 import { Button } from '@/components/button';
 import { NavigationItem } from '@/components/navigation-item';
-import './nav-bar.scss';
 import { SearchField } from '@/components/search-field';
 import ThemeSwitcher from '@/components/theme-switcher/theme-switcher.tsx';
 import { useAuthStore } from '@/features/auth/stores/auth-store.ts';
+
+import './nav-bar.scss';
 
 export const NavBar: React.FC = () => {
   const { isAuthenticated, loginWithRedirect } = useAuthStore();
