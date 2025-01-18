@@ -1,0 +1,27 @@
+@use "@styles/styles";
+
+.value-card-main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: var(--surface-container-lowest);
+  padding: var(--padding-md);
+  border-radius: var(--radius-md);
+  color: var(--on-surface);
+}
+
+.value-card-heading{
+  @extend .heading-4;
+  margin-bottom: 0;
+}
+
+.value-card-subheading {
+  @extend .body;
+  font-weight: 400;
+}
+
+.cards-container {
+  display: flex;
+}

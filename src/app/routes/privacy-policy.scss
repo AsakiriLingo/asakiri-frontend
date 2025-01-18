@@ -1,0 +1,16 @@
+@use '@styles/styles';
+
+.main {
+  display: flex;
+  justify-content: center;
+}
+
+.container {
+  width: 900px;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--surface-container-lowest);
+  border-radius: var(--radius-lg);
+  padding: var(--padding-lg);
+  color: var(--on-surface);
+}

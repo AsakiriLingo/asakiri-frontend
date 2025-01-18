@@ -25,7 +25,7 @@ export const TextArea: React.FC<TextAreaProps> = ({
     onChange?.(e);
   };
   return (
-    <AriaTextField>
+    <AriaTextField className="text-area-base">
       <Label htmlFor={label} className="label">
         {label}
       </Label>

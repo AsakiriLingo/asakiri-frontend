@@ -4,29 +4,23 @@ import React from 'react';
 import './avatar.scss';
 
 interface AvatarProps {
-  imageUrl: string | undefined | null;
-  firstName: string;
-  lastName: string;
+  imageUrl?: string | undefined | null;
+  username: string;
+  size?: number;
 }
 
-export const Avatar: React.FC<AvatarProps> = ({
-  imageUrl,
-  firstName,
-  lastName,
-}) => {
+export const Avatar: React.FC<AvatarProps> = ({ imageUrl, username, size }) => {
   return (
     <div>
       {imageUrl ? (
-        <img
-          className="avatar"
-          src={imageUrl}
-          alt={`${firstName} ${lastName}`}
-        />
+        <img className="avatar" src={imageUrl} alt={`${username}`} />
       ) : (
         <BoringAvatar
-          size={42}
-          name={`${firstName} ${lastName}`}
-          colors={['#264653', '#2a9d8f', '#e9c46a', '#f4a261', '#e76f51']}
+          variant="beam"
+          size={size}
+          name={`${username}`}
+          colors={['#0EC02B', '#F7C40F', '#EEE9E3', '#E82014', '#3ECE55']}
+          className="avatar"
         />
       )}
     </div>

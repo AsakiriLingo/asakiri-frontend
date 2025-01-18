@@ -1,0 +1,29 @@
+@use "@styles/styles";
+
+.about-value-main {
+  display: flex;
+  flex-direction: column;
+  max-width: 1360px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: var(--padding-md);
+  border-radius: var(--radius-md);
+  color: var(--on-surface);
+}
+
+.about-values-header {
+  @extend .heading-1;
+  margin-bottom: 0;
+}
+
+.about-values-subheader {
+  @extend .body-large;
+  font-weight: 400;
+  margin-bottom: var(--gap-lg);
+}
+
+.cards-container {
+  display: flex;
+  gap: var(--gap-md);
+}
