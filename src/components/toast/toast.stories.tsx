@@ -1,14 +1,14 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { Toast } from './toast';
+import { Toaster } from './toast';
 
-const meta: Meta<typeof Toast> = {
-  component: Toast,
+const meta: Meta<typeof Toaster> = {
+  component: Toaster,
 };
 
 export default meta;
 
-type Story = StoryObj<typeof Toast>;
+type Story = StoryObj<typeof Toaster>;
 
 export const Default: Story = {
   args: {},

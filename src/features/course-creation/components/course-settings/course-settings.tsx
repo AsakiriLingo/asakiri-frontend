@@ -3,6 +3,7 @@ import React from 'react';
 import { Button } from '@/components/button';
 import { DialogTrigger } from '@/components/dialog-trigger';
 import { Modal } from '@/components/modal';
+import { TextArea } from '@/components/text-area';
 import { TextField } from '@/components/text-field';
 import { LanguageList } from '@/features/course-creation/components/language-list';
 
@@ -25,7 +26,7 @@ export const CourseSettings: React.FC = () => {
       <div className="settings-container">
         <TextField label="Course Name" />
         <TextField label="Course Short Description" />
-        <TextField label="Course Description" isTextArea={true} />
+        <TextArea label="Course Description" />
         <div className="section-container">
           <div className="label-bold">Language Taught</div>
           <div>

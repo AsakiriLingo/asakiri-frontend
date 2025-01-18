@@ -6,8 +6,10 @@ import { Course } from '@/types/course.types.ts';
 
 import './card.scss';
 
-interface CardProps extends Omit<Course, 'id' | 'description' | 'chapters'> {
+interface CardProps
+  extends Omit<Course, 'id' | 'description' | 'chapters' | 'isPublished'> {
   link: string;
+  isPublished?: boolean;
   children?: React.ReactNode;
 }
 
