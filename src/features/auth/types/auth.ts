@@ -13,9 +13,9 @@ interface AuthState {
 
 interface AuthStore extends AuthState {
   setAuthState: (state: Partial<AuthState>) => void;
-  getAccessToken: () => Promise<string | null>;
-  loginWithRedirect: () => Promise<void>;
-  logout: () => Promise<void>;
+  getAccessToken: (callback: () => Promise<string>) => Promise<string | null>;
+  loginWithRedirect: (() => Promise<void>) | null;
+  logout: (() => Promise<void>) | null;
 }
 
 export type { AuthUser, AuthState, AuthStore };

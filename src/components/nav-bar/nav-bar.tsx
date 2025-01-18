@@ -5,12 +5,18 @@ import { NavigationItem } from '@/components/navigation-item';
 import './nav-bar.scss';
 import { SearchField } from '@/components/search-field';
 import ThemeSwitcher from '@/components/theme-switcher/theme-switcher.tsx';
+import { useAuthStore } from '@/features/auth/stores/auth-store.ts';
 
 export const NavBar: React.FC = () => {
+  const { isAuthenticated, loginWithRedirect } = useAuthStore();
   const routes = [
     { title: 'Home', route: '/home' },
     { title: 'Teach on Asakiri', route: '/teach' },
   ];
+
+  const handleSignIn = async () => {
+    await loginWithRedirect()
+  };
   return (
     <nav className="nav-container">
       <div className="left-container">
@@ -49,13 +55,15 @@ export const NavBar: React.FC = () => {
           <SearchField placeholder="Search for Courses or Teachers" />
         </div>
       </div>
-      <div className="right-container">
-        <ThemeSwitcher />
-        <Button variant="flat" size="small">
-          Sign In
-        </Button>
-        <Button size="small">Sign Up</Button>
-      </div>
+      {!isAuthenticated && (
+        <div className="right-container">
+          <ThemeSwitcher />
+          <Button variant="flat" size="small" onPress={handleSignIn}>
+            Sign In
+          </Button>
+          <Button size="small">Sign Up</Button>
+        </div>
+      )}
     </nav>
   );
 };

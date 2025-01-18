@@ -1,4 +1,3 @@
-import { useAuth0 } from '@auth0/auth0-react';
 import { create } from 'zustand';
 
 import { AuthStore } from '../types/auth.ts';
@@ -10,8 +9,7 @@ export const useAuthStore = create<AuthStore>((set) => ({
   accessToken: null,
 
   setAuthState: (state) => set(state),
-  getAccessToken: async () => {
-    const { getAccessTokenSilently } = useAuth0();
+  getAccessToken: async (getAccessTokenSilently: () => Promise<string>) => {
     try {
       const token = await getAccessTokenSilently();
       set({ accessToken: token });
@@ -21,13 +19,6 @@ export const useAuthStore = create<AuthStore>((set) => ({
       return null;
     }
   },
-  loginWithRedirect: async () => {
-    const { loginWithRedirect } = useAuth0();
-    await loginWithRedirect();
-  },
-  logout: async () => {
-    const { logout } = useAuth0();
-    await logout({ logoutParams: { returnTo: window.location.origin } });
-    set({ isAuthenticated: false, user: null, accessToken: null });
-  },
+  loginWithRedirect: null,
+  logout: null,
 }));
