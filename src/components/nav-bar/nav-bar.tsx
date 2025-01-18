@@ -15,7 +15,7 @@ export const NavBar: React.FC = () => {
   ];
 
   const handleSignIn = async () => {
-    await loginWithRedirect();
+    await loginWithRedirect?.();
   };
   return (
     <nav className="nav-container">
