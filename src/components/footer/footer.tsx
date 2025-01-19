@@ -54,23 +54,23 @@ export const Footer: React.FC = () => {
               </div>
               <div className="footer-links">
                 <Image
-                  src="./icons/email.svg"
-                  width="16px"
-                  height="16px"
-                  alt="Email icon"
-                />
-                <a href="mailto:email@example.com" target="_blank">
-                  Email
-                </a>
-              </div>
-              <div className="footer-links">
-                <Image
                   src="./discord-logo.svg"
                   width="16px"
                   height="16px"
                   alt="Discord icon"
                 />
                 <a href="https://discord.gg/5Hj7ytSX" target="_blank">
+                  Discord
+                </a>
+              </div>
+              <div className="footer-links">
+                <Image
+                  src="./icons/email.svg"
+                  width="16px"
+                  height="16px"
+                  alt="Email icon"
+                />
+                <a href="mailto:email@example.com" target="_blank">
                   Email
                 </a>
               </div>
