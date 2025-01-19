@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { BottomNavBar } from '@/components/bottom-nav-bar';
+import { Footer } from '@/components/footer';
 import { NavBar } from '@/components/nav-bar';
 import { Head } from '@/components/seo';
 import './about.scss';
@@ -18,6 +19,7 @@ const AboutRoute: React.FC = () => {
           <AboutValues />
         </div>
       </div>
+      <Footer />
       <BottomNavBar />
     </>
   );

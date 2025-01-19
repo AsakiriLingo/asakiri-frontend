@@ -12,8 +12,9 @@ import './nav-bar.scss';
 export const NavBar: React.FC = () => {
   const { isAuthenticated, loginWithRedirect } = useAuthStore();
   const routes = [
-    { title: 'Home', route: '/home' },
-    { title: 'Teach on Asakiri', route: '/teach' },
+    { title: 'Home', route: './' },
+    { title: 'Teach on Asakiri', route: './teach' },
+    { title: 'My Learning', route: './my-learning' },
   ];
 
   const handleSignIn = async () => {
@@ -22,12 +23,14 @@ export const NavBar: React.FC = () => {
   return (
     <nav className="nav-container">
       <div className="left-container">
-        <Image
-          width="39px"
-          height="41px"
-          src="/asakiri-logo.svg"
-          alt="Asakiri Logo"
-        ></Image>
+        <a className="logo" href="./">
+          <Image
+            width="39px"
+            height="41px"
+            src="/asakiri-logo.svg"
+            alt="Asakiri Logo"
+          ></Image>
+        </a>
         <div className="routes">
           {routes.map((route, index) => (
             <NavigationItem

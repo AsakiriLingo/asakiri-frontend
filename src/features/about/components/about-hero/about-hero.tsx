@@ -16,7 +16,9 @@ export const AboutHero: React.FC = () => {
         </h3>
       </div>
 
-      <Button>Join Our Mission</Button>
+      <Button isLink={true} href="https://ko-fi.com/asakiri" target="_blank">
+        Join Our Mission
+      </Button>
     </div>
   );
 };

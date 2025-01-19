@@ -19,7 +19,14 @@ export const CourseEditor: React.FC = () => {
           <h1 className="course-editor__title">Foundations of Japanese</h1>
         </div>
 
-        <Button variant="filled" type="primary" size="small" onPress={() => {}}>
+        <Button
+          variant="filled"
+          type="primary"
+          size="small"
+          onPress={() => {}}
+          isLink={true}
+          href="./course-settings"
+        >
           Course Settings
         </Button>
       </div>

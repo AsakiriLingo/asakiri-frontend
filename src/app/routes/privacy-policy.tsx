@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { Footer } from '@/components/footer';
 import { NavBar } from '@/components/nav-bar';
 import { Head } from '@/components/seo';
 import './privacy-policy.scss';
@@ -165,6 +166,7 @@ const ProfileSettingsRoute: React.FC = () => {
           </p>
         </div>
       </div>
+      <Footer />
     </>
   );
 };

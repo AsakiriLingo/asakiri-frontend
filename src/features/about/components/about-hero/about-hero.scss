@@ -3,7 +3,7 @@
 .about-hero-main {
   display: flex;
   flex-direction: column;
-  max-width: 1360px;
+  width: 1360px;
   justify-content: center;
   align-items: center;
   text-align: center;
@@ -24,4 +24,13 @@
 
 .subheader-container {
   width: 800px;
+}
+
+@media (max-width: 1024px) {
+  .about-hero-main {
+    width: 97%;
+  }
+  .subheader-container {
+    width: 100%;
+  }
 }

@@ -3,10 +3,10 @@ import React from 'react';
 import { mockCourseData } from './mock-data';
 
 import { BottomNavBar } from '@/components/bottom-nav-bar';
+import { Footer } from '@/components/footer';
 import { NavBar } from '@/components/nav-bar';
 import { Head } from '@/components/seo';
 import { Card } from '@/features/courses/components/card';
-
 import './landing.scss';
 
 const LandingRoute: React.FC = () => {
@@ -30,6 +30,7 @@ const LandingRoute: React.FC = () => {
           ))}
         </div>
       </div>
+      <Footer />
       <BottomNavBar />
     </div>
   );

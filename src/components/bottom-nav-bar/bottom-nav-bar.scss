@@ -1,18 +1,28 @@
+@use "@styles/styles";
+
+.bottom-nav-main {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
 .bottom-nav-bar {
   position: fixed;
   display: flex;
-  bottom: 0;
-  align-content: space-between;
+  bottom: 10px;
+  align-items: center;
   background-color: var(--surface-container-low);
-  width: 95%;
   justify-content: space-between;
-  padding: var(--padding-sm) var(--padding-md);
+  padding: var(--padding-sm) var(--padding-lg);
+  width: 300px;
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--outline-variant);
 }
 
-.nav-item {
+.bottom-nav-item {
   display: flex;
   align-content: space-between;
-  background-color: var(--surface-container-low);
+  background-color: transparent;
   border: none;
 }
 
