@@ -19,7 +19,6 @@
   p {
     @extend .body-large;
     margin: 0;
-    max-width: 250px;
   }
 }
 
@@ -50,8 +49,8 @@
 
 .footer-content {
   display: flex;
-  padding: 0 1rem;
-  justify-content: flex-start;
+  padding: 0 20rem;
+  justify-content: space-between;
   gap: 8rem;
 }
 
@@ -95,6 +94,7 @@
 
 @media only screen and (max-width: 730px) {
   .footer-content{
+    padding: 0 var(--gap-xs);
     flex-direction: column;
     gap: var(--gap-lg);
   }

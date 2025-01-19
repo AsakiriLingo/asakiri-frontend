@@ -10,13 +10,15 @@
   position: fixed;
   display: flex;
   bottom: 10px;
+  right: 10px;
   align-items: center;
   background-color: var(--surface-container-low);
   justify-content: space-between;
   padding: var(--padding-sm) var(--padding-lg);
-  width: 300px;
+  height: 150px;
   border-radius: var(--radius-xl);
   border: 1px solid var(--outline-variant);
+  flex-direction: column;
 }
 
 .bottom-nav-item {
