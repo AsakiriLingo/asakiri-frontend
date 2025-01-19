@@ -30,8 +30,8 @@ const LandingRoute: React.FC = () => {
           ))}
         </div>
       </div>
-      <Footer />
       <BottomNavBar />
+      <Footer />
     </div>
   );
 };

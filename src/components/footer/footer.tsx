@@ -20,6 +20,7 @@ export const Footer: React.FC = () => {
               <div className="footer-logo-text">
                 <h3 className="footer-heading">Asakiri</h3>
                 <p>Community Driven Language Learning</p>
+                <p>&copy; 2025 Asakiri. All rights reserved.</p>
               </div>
             </div>
             <div className="footer-section">
@@ -76,10 +77,7 @@ export const Footer: React.FC = () => {
               </div>
             </div>
           </div>
-          <div className="footer-bottom">
-            <p>&copy; 2025 Asakiri. All rights reserved.</p>
-            <KofiWidget username="asakiri" />
-          </div>
+          <KofiWidget username="asakiri" />
         </div>
       </footer>
     </>
