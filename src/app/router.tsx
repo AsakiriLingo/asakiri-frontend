@@ -39,11 +39,15 @@ const createAppRouter = () =>
       element: <CourseDetails />,
     },
     {
-      path: '/course-creator',
+      path: '/course-editor/:id',
       element: <CourseEditor />,
     },
     {
-      path: '/course-settings',
+      path: '/course-settings/:id',
+      element: <CourseSettings />,
+    },
+    {
+      path: '/course-creator',
       element: <CourseSettings />,
     },
     {
