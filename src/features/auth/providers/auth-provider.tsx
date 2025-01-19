@@ -1,4 +1,4 @@
-import { Auth0Provider, useAuth0 } from '@auth0/auth0-react';
+import { AppState, Auth0Provider, useAuth0 } from '@auth0/auth0-react';
 import React, { useEffect } from 'react';
 import { env } from 'src/config/env.ts';
 
@@ -38,6 +38,13 @@ const AuthStateSync = ({ children }: { children: React.ReactNode }) => {
 };
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+  const onRedirectCallback = (appState: AppState | undefined) => {
+    window.location.replace(
+      appState && appState.targetUrl
+        ? appState.targetUrl
+        : window.location.pathname
+    );
+  };
   return (
     <Auth0Provider
       domain={env.AUTH0_DOMAIN}
@@ -46,6 +53,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         redirect_uri: window.location.origin,
         audience: env.AUTH0_AUDIENCE,
       }}
+      cacheLocation="localstorage"
+      useRefreshTokens={true}
+      onRedirectCallback={onRedirectCallback}
     >
       <AuthStateSync>{children}</AuthStateSync>
     </Auth0Provider>

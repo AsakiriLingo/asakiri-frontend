@@ -1,18 +1,15 @@
-// interceptors.ts
-import { GetTokenSilentlyOptions } from '@auth0/auth0-react';
 import { AxiosInstance, InternalAxiosRequestConfig, AxiosError } from 'axios';
 
 export const setupInterceptors = (
   axiosInstance: AxiosInstance,
   isAuthenticated: boolean,
-  getAccessTokenSilently: (options?: GetTokenSilentlyOptions) => Promise<string>
+  accessToken: string | null
 ) => {
   const requestInterceptor = axiosInstance.interceptors.request.use(
     async (config: InternalAxiosRequestConfig) => {
-      if (isAuthenticated) {
+      if (isAuthenticated && accessToken) {
         try {
-          const token = await getAccessTokenSilently();
-          config.headers.Authorization = `Bearer ${token}`;
+          config.headers.Authorization = `Bearer ${accessToken}`;
         } catch (error) {
           console.error('Error getting token:', error);
         }
