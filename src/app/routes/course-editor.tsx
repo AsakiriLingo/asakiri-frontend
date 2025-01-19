@@ -16,7 +16,7 @@ export const CourseEditor: React.FC = () => {
           <Button type="secondary" size="small" onPress={() => {}}>
             Back
           </Button>
-          <h1 className="course-editor__title">Foundations of Japanese</h1>
+          <h1 className="course-editor__title">Course Settings</h1>
         </div>
 
         <Button

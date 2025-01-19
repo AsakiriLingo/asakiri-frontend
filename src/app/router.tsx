@@ -17,6 +17,7 @@ const Home = lazy(() => import('./routes/landing.tsx'));
 const CourseDetails = lazy(() => import('./routes/course-details.tsx'));
 const CourseEditor = lazy(() => import('./routes/course-editor.tsx'));
 const CourseSettings = lazy(() => import('./routes/course-settings.tsx'));
+const CourseCreator = lazy(() => import('./routes/course-creator.tsx'));
 const CourseTeaching = lazy(() => import('./routes/teach.tsx'));
 const CourseLearning = lazy(() => import('./routes/my-learning.tsx'));
 const ProfileSettingsPage = lazy(() => import('./routes/profile-settings.tsx'));
@@ -48,7 +49,7 @@ const createAppRouter = () =>
     },
     {
       path: '/course-creator',
-      element: <CourseSettings />,
+      element: <CourseCreator />,
     },
     {
       path: '/teach',

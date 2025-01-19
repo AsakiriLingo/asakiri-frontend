@@ -1,0 +1,28 @@
+@use '@styles/styles';
+
+.creator-container  {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-md);
+  background-color: var(--surface-container-lowest);
+  width: 900px;
+  padding: var(--gap-lg);
+  border-radius: var(--radius-md);
+}
+
+.creator-section-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-sm);
+}
+
+.label {
+  @extend .label-bold;
+  color: var(--on-surface);
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
