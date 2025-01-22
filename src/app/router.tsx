@@ -3,16 +3,6 @@ import { useQueryClient } from 'react-query';
 import { createBrowserRouter } from 'react-router';
 import { RouterProvider } from 'react-router/dom';
 
-// const convert = (queryClient: QueryClient) => (m: object) => {
-//   const { clientLoader, clientAction, default: Component, ...rest } = m;
-//   return {
-//     ...rest,
-//     loader: clientLoader?.(queryClient),
-//     action: clientAction?.(queryClient),
-//     Component,
-//   };
-// };
-
 const Home = lazy(() => import('./routes/landing/landing.tsx'));
 const CourseDetails = lazy(
   () => import('@/app/routes/course-view/details/details.tsx')
@@ -39,11 +29,6 @@ const AboutPage = lazy(
 const PrivacyPolicyPage = lazy(
   () => import('@/app/routes/static-pages/privacy-policy/privacy-policy.tsx')
 );
-
-// interface ProjectsComponent {
-//   default: React.ComponentType;
-//   loader: LoaderFunction;
-// }
 
 const createAppRouter = () =>
   createBrowserRouter([

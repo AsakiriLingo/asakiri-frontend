@@ -13,6 +13,8 @@ export const LanguageList: React.FC<LanguageListProps> = ({ heading }) => {
     <div className="language-list__container">
       {heading && <h2 className="heading">{heading}</h2>}
       <SearchField placeholder="Search for Languages" />
+      <div>English</div>
+      <div>German</div>
     </div>
   );
 };

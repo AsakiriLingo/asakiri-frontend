@@ -12,6 +12,7 @@ interface ButtonProps {
   isLink?: boolean;
   href?: string;
   target?: string;
+  actionType?: 'submit' | 'button' | 'reset';
 }
 
 export const Button: React.FC<ButtonProps> = ({
@@ -23,6 +24,7 @@ export const Button: React.FC<ButtonProps> = ({
   isLink,
   href,
   target,
+  actionType = 'button',
 }: ButtonProps) => {
   if (isLink && href) {
     return (
@@ -38,6 +40,7 @@ export const Button: React.FC<ButtonProps> = ({
   }
   return (
     <AriaButton
+      type={actionType}
       className={`button button--${variant}--${type} button--${size}`}
       onPress={onPress}
     >

@@ -1,8 +1,8 @@
 import { Plus } from 'lucide-react';
 import React from 'react';
+import { ContentCard } from 'src/features/course-creation/components/content-card';
 
 import { Button } from '@/components/button';
-import { ContentCard } from '@/components/content-card';
 import { CourseSidebar } from '@/components/course-sidebar';
 import { SideBarCard } from '@/components/side-bar-card';
 import { CourseViewData } from '@/mocks/course.ts';

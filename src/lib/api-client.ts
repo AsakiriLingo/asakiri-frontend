@@ -3,11 +3,14 @@ import { AxiosInstance, InternalAxiosRequestConfig, AxiosError } from 'axios';
 export const setupInterceptors = (
   axiosInstance: AxiosInstance,
   isAuthenticated: boolean,
-  accessToken: string | null
+  getAccessToken: () => Promise<string | undefined>
 ) => {
   const requestInterceptor = axiosInstance.interceptors.request.use(
     async (config: InternalAxiosRequestConfig) => {
-      if (isAuthenticated && accessToken) {
+      if (isAuthenticated) {
+        const accessToken = await getAccessToken();
+        console.log('@@ inside accessToken: ', accessToken);
+        console.log('@@ isAuthenticated: ', isAuthenticated);
         try {
           config.headers.Authorization = `Bearer ${accessToken}`;
         } catch (error) {

@@ -18,8 +18,6 @@ const AuthStateSync = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     setAuthState({ isAuthenticated, user, isLoading });
     useAuthStore.setState({
-      getAccessToken: () =>
-        useAuthStore.getState().getAccessToken(getAccessTokenSilently),
       loginWithRedirect,
       logout: () =>
         logout({ logoutParams: { returnTo: window.location.origin } }),

@@ -27,9 +27,30 @@ export const ContentCard: React.FC<ContentCardProps> = ({
   onTitleChange,
   onSubtitleChange,
 }: ContentCardProps) => {
+  const [cardTitle, setCardTitle] = useState(title);
+  const [cardSubtitle, setCardSubtitle] = useState(subtitle);
+  const [cardContent, setCardContent] = useState(content);
   const [isEditEnabled, setIsEditEnabled] = useState(false);
   const onSave = () => {
     setIsEditEnabled(false);
+  };
+
+  const onCardTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCardTitle(e.target.value);
+    if (onTitleChange) {
+      onTitleChange(e);
+    }
+  };
+
+  const onCardSubtitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCardSubtitle(e.target.value);
+    if (onSubtitleChange) {
+      onSubtitleChange(e);
+    }
+  };
+
+  const onCardContentChange = (html: string) => {
+    setCardContent(html);
   };
 
   return (
@@ -43,7 +64,7 @@ export const ContentCard: React.FC<ContentCardProps> = ({
                   variant === 'chapter' ? 'chapter--title' : 'section--title'
                 }
               >
-                <TextField text={title} onChange={onTitleChange} />
+                <TextField text={cardTitle} onChange={onCardTitleChange} />
               </div>
               <div
                 className={
@@ -52,7 +73,10 @@ export const ContentCard: React.FC<ContentCardProps> = ({
                     : 'section--subtitle'
                 }
               >
-                <TextField text={subtitle} onChange={onSubtitleChange} />
+                <TextField
+                  text={cardSubtitle}
+                  onChange={onCardSubtitleChange}
+                />
               </div>
             </div>
             <div className="content-card__actions">
@@ -71,7 +95,7 @@ export const ContentCard: React.FC<ContentCardProps> = ({
           </header>
           {variant === 'section' && (
             <div>
-              <Editor content={content} />
+              <Editor content={cardContent} onChange={onCardContentChange} />
             </div>
           )}
         </>
@@ -84,7 +108,7 @@ export const ContentCard: React.FC<ContentCardProps> = ({
                   variant === 'chapter' ? 'chapter--title' : 'section--title'
                 }
               >
-                {title}
+                {cardTitle}
               </div>
               <div
                 className={
@@ -93,7 +117,7 @@ export const ContentCard: React.FC<ContentCardProps> = ({
                     : 'section--subtitle'
                 }
               >
-                {subtitle}
+                {cardSubtitle}
               </div>
             </div>
             <div className="content-card__actions">
@@ -109,7 +133,7 @@ export const ContentCard: React.FC<ContentCardProps> = ({
               )}
             </div>
           </header>
-          <ContentView content={content} />
+          {variant === 'section' && <ContentView content={cardContent} />}
         </>
       )}
     </div>
