@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Button } from '@/components/button';
 import { Head } from '@/components/seo';
-import './course-settings.scss';
+import './settings.scss';
 import { CourseSettings } from '@/features/course-creation/components/course-settings';
 
 const CourseSettingsRoute: React.FC = () => {

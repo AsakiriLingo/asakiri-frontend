@@ -6,7 +6,7 @@ import { Head } from '@/components/seo';
 import { HeroCard } from '@/features/courses/components/hero-card';
 import { InstructorCard } from '@/features/courses/components/instructor-card';
 
-import './course-details.scss';
+import './details.scss';
 
 const CourseDetailsRoute: React.FC = () => {
   return (

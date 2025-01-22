@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Button } from '@/components/button';
 import { Head } from '@/components/seo';
-import './course-creator.scss';
+import './creator.scss';
 import { CourseCreator } from '@/features/course-creation/components/course-creator';
 
 const CourseSettingsRoute: React.FC = () => {

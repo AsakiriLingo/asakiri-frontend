@@ -5,10 +5,10 @@ import { Button } from '@/components/button';
 import { ContentCard } from '@/components/content-card';
 import { CourseSidebar } from '@/components/course-sidebar';
 import { SideBarCard } from '@/components/side-bar-card';
-import { CourseViewData } from '@/mocks/course';
-import './course-editor.scss';
+import { CourseViewData } from '@/mocks/course.ts';
+import './editor.scss';
 
-export const CourseEditor: React.FC = () => {
+export const Editor: React.FC = () => {
   return (
     <>
       <div className="header">
@@ -109,4 +109,4 @@ export const CourseEditor: React.FC = () => {
   );
 };
 
-export default CourseEditor;
+export default Editor;

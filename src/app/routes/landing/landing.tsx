@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { mockCourseData } from './mock-data';
+import { mockCourseData } from './mock-data.ts';
 
 import { BottomNavBar } from '@/components/bottom-nav-bar';
 import { Footer } from '@/components/footer';

@@ -1,4 +1,4 @@
-import { Course } from '@/types/course.types';
+import { Course } from '@/types/course.types.ts';
 
 type CardData = Omit<
   Course,

@@ -13,16 +13,32 @@ import { RouterProvider } from 'react-router/dom';
 //   };
 // };
 
-const Home = lazy(() => import('./routes/landing.tsx'));
-const CourseDetails = lazy(() => import('./routes/course-details.tsx'));
-const CourseEditor = lazy(() => import('./routes/course-editor.tsx'));
-const CourseSettings = lazy(() => import('./routes/course-settings.tsx'));
-const CourseCreator = lazy(() => import('./routes/course-creator.tsx'));
-const CourseTeaching = lazy(() => import('./routes/teach.tsx'));
-const CourseLearning = lazy(() => import('./routes/my-learning.tsx'));
-const ProfileSettingsPage = lazy(() => import('./routes/profile-settings.tsx'));
-const AboutPage = lazy(() => import('./routes/about.tsx'));
-const PrivacyPolicyPage = lazy(() => import('./routes/privacy-policy.tsx'));
+const Home = lazy(() => import('./routes/landing/landing.tsx'));
+const CourseDetails = lazy(
+  () => import('@/app/routes/course-view/details/details.tsx')
+);
+const CourseEditor = lazy(
+  () => import('@/app/routes/course-creation/editor/editor.tsx')
+);
+const CourseSettings = lazy(
+  () => import('@/app/routes/course-creation/settings/settings.tsx')
+);
+const CourseCreator = lazy(
+  () => import('@/app/routes/course-creation/creator/creator.tsx')
+);
+const CourseTeaching = lazy(
+  () => import('@/app/routes/teacher/teach/teach.tsx')
+);
+const CourseLearning = lazy(
+  () => import('@/app/routes/learner/my-learning/my-learning.tsx')
+);
+const ProfileSettingsPage = lazy(() => import('./routes/profile/profile.tsx'));
+const AboutPage = lazy(
+  () => import('@/app/routes/static-pages/about/about.tsx')
+);
+const PrivacyPolicyPage = lazy(
+  () => import('@/app/routes/static-pages/privacy-policy/privacy-policy.tsx')
+);
 
 // interface ProjectsComponent {
 //   default: React.ComponentType;
@@ -36,19 +52,19 @@ const createAppRouter = () =>
       element: <Home />,
     },
     {
-      path: '/course-details',
+      path: 'course/details',
       element: <CourseDetails />,
     },
     {
-      path: '/course-editor/:id',
+      path: 'course/editor/:id',
       element: <CourseEditor />,
     },
     {
-      path: '/course-settings/:id',
+      path: 'course/editor/settings/:id',
       element: <CourseSettings />,
     },
     {
-      path: '/course-creator',
+      path: 'course/create',
       element: <CourseCreator />,
     },
     {
@@ -60,7 +76,7 @@ const createAppRouter = () =>
       element: <CourseLearning />,
     },
     {
-      path: '/profile-settings',
+      path: '/profile',
       element: <ProfileSettingsPage />,
     },
     {
