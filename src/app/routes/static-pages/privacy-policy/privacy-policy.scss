@@ -1,0 +1,41 @@
+@use '@styles/styles';
+
+.main {
+  display: flex;
+  justify-content: center;
+}
+
+.container {
+  width: 900px;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--surface-container-lowest);
+  border-radius: var(--radius-lg);
+  padding: var(--padding-lg);
+  color: var(--on-surface);
+  margin: var(--gap-lg);
+}
+
+h1 {
+  @extend .heading-1;
+}
+
+h2 {
+  @extend .heading-2;
+}
+
+h3 {
+  @extend .heading-3;
+}
+
+h4 {
+  @extend .heading-4;
+}
+
+p {
+  @extend .body-large;
+}
+
+ul li {
+  @extend .body-large;
+}

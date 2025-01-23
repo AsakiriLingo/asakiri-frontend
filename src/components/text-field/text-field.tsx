@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, ChangeEvent } from 'react';
 import {
   Input,
   Label,
@@ -11,6 +11,7 @@ interface TextFieldProps {
   text?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   label?: string;
+  isTextArea?: boolean;
 }
 
 export const TextField: React.FC<TextFieldProps> = ({
@@ -19,17 +20,22 @@ export const TextField: React.FC<TextFieldProps> = ({
   label,
 }: TextFieldProps) => {
   const [textValue, setTextValue] = useState<string>(() => text ?? '');
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setTextValue(e.target.value);
-    if (onChange) {
-      onChange(e);
-    }
+    onChange?.(e);
   };
 
   return (
     <AriaTextField className="text-field-base">
-      <Label htmlFor={label}>{label}</Label>
-      <Input className="input" value={textValue} onChange={handleChange} />
+      <Label htmlFor={label} className="label">
+        {label}
+      </Label>
+      <Input
+        className="text-input"
+        value={textValue}
+        onChange={handleInputChange}
+      />
     </AriaTextField>
   );
 };

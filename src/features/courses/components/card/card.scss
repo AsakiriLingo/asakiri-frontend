@@ -3,7 +3,6 @@
 .card {
   display: flex;
   flex-direction: column;
-  flex: 1;
   padding: var(--padding-md);
   background: var(--surface-container-lowest);
   border-radius: var(--radius-xl);
@@ -11,7 +10,9 @@
   gap: var(--gap-sm);
   font-family: var(--font-primary), "Noto Sans", system-ui;
   transition: transform ease-in-out;
-  overflow: hidden;
+  align-items: stretch;
+  justify-items: stretch;
+  min-height: fit-content;
 
   &:hover {
     transform: scale(1.01);
@@ -101,7 +102,7 @@
     &--language-taught {
       @extend .body-small-variant;
       margin:0;
-      color: var(--on-surface);
+      color: var(--on-primary-fixed);
     }
     &--from-text {
       @extend .body-small;
@@ -111,7 +112,7 @@
     &--from-language {
       @extend .body-small-variant;
       margin:0;
-      color: var(--on-surface);
+      color: var(--on-surface-variant);
     }
     &--course-description {
       @extend .body-small;

@@ -8,14 +8,14 @@ interface AuthState {
   isAuthenticated: boolean;
   user: AuthUser | null;
   isLoading: boolean;
-  accessToken: string | null;
+  // accessToken: string | null;
 }
 
 interface AuthStore extends AuthState {
   setAuthState: (state: Partial<AuthState>) => void;
-  getAccessToken: () => Promise<string | null>;
-  loginWithRedirect: () => Promise<void>;
-  logout: () => Promise<void>;
+  getAccessToken: () => Promise<string | undefined>;
+  loginWithRedirect: (() => Promise<void>) | null;
+  logout: (() => Promise<void>) | null;
 }
 
 export type { AuthUser, AuthState, AuthStore };

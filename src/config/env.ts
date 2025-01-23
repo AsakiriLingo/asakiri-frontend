@@ -2,14 +2,18 @@ import * as z from 'zod';
 
 const createEnv = () => {
   const EnvSchema = z.object({
-    API_URL: z.string(),
     APP_URL: z.string().optional().default('http://localhost:3000'),
+    AUTH0_AUDIENCE: z.string(),
+    AUTH0_CLIENT_ID: z.string(),
+    AUTH0_DOMAIN: z.string(),
+    API_BASE_URL: z.string(),
   });
 
   const envVars = Object.entries(import.meta.env).reduce<
     Record<string, string>
   >((acc, curr) => {
     const [key, value] = curr;
+    console.log('@@ key: value', key, value);
     if (key.startsWith('VITE_APP_')) {
       acc[key.replace('VITE_APP_', '')] = value;
     }

@@ -1,0 +1,13 @@
+@use '@styles/styles';
+
+.user-verification-card {
+  padding: var(--padding-md);
+  background-color: var(--surface-container-low);
+  border-radius: var(--radius-md);
+}
+
+.heading {
+  @extend .heading-3;
+  color: var(--on-surface);
+  margin-bottom: var(--gap-md);
+}

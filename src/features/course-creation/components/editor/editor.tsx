@@ -74,7 +74,7 @@ export const Editor: React.FC<EditorProps> = ({
   });
 
   return (
-    <div className="tiptap-editor">
+    <div className={`tiptap-editor ${!editable ? 'readonly' : ''}`}>
       {editable && (
         <div className="editor-menu">
           <TextFormatting editor={editor} />

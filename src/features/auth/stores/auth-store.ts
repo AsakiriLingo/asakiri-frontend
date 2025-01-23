@@ -7,18 +7,14 @@ export const useAuthStore = create<AuthStore>((set) => ({
   isAuthenticated: false,
   user: null,
   isLoading: true,
-  accessToken: null,
 
   setAuthState: (state) => set(state),
   getAccessToken: async () => {
-    const { getAccessTokenSilently } = useAuth0();
     try {
-      const token = await getAccessTokenSilently();
-      set({ accessToken: token });
-      return token;
-    } catch (error) {
-      console.error('Error getting access token:', error);
-      return null;
+      const { getAccessTokenSilently } = useAuth0();
+      return await getAccessTokenSilently();
+    } catch (error: unknown) {
+      console.error(error);
     }
   },
   loginWithRedirect: async () => {
@@ -28,6 +24,6 @@ export const useAuthStore = create<AuthStore>((set) => ({
   logout: async () => {
     const { logout } = useAuth0();
     await logout({ logoutParams: { returnTo: window.location.origin } });
-    set({ isAuthenticated: false, user: null, accessToken: null });
+    set({ isAuthenticated: false, user: null });
   },
 }));

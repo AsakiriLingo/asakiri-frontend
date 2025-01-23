@@ -1,4 +1,4 @@
-@use "@styles/styles";
+@use '@styles/styles';
 
 .tiptap-editor {
   margin: 0 auto;
@@ -6,6 +6,23 @@
   position: relative;
   border: 1px solid var(--outline-variant);
   border-radius: var(--radius-md);
+
+  &.readonly {
+    padding: 0;
+    border: none;
+
+    .ProseMirror {
+      padding: 0;
+
+      p, h1, h2, ul, ol {
+        cursor: default;
+      }
+
+      .editor-link {
+        cursor: pointer;
+      }
+    }
+  }
 
   .editor-menu {
     display: flex;
@@ -42,7 +59,6 @@
 
       &.paragraph {
         color: var(--primary);
-
       }
 
       &.tooltip-button {
@@ -103,21 +119,12 @@
     .popover {
       position: absolute;
       top: 100%;
-      left: 0;
+      left: 32%;
       margin-top: 0.5rem;
       z-index: 1000;
-      min-width: 260px;
-
-      &::before {
-        content: '';
-        position: absolute;
-        top: -4px;
-        left: 1rem;
-        width: 8px;
-        height: 8px;
-        background: white;
-        transform: rotate(45deg);
-      }
+      background-color: var(--surface-container-lowest);
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--radius-md);
 
       form {
         input {
@@ -144,7 +151,6 @@
   .ProseMirror {
     border: none;
     outline: none;
-    min-height: 200px;
 
     > * + * {
       margin-top: 0.75em;
@@ -152,23 +158,24 @@
 
     p {
       @extend .body;
-      margin-bottom: var(--gap-sm);
+      margin-bottom: 0;
       color: var(--on-surface);
     }
 
     h1 {
       @extend .heading-3;
-      margin-bottom: var(--gap-sm);
+      margin-bottom: 0;
       color: var(--on-surface);
     }
 
     h2 {
       @extend .heading-4;
-      margin-bottom: var(--gap-sm);
+      margin-bottom: 0;
       color: var(--on-surface-variant);
     }
 
-    ul, ol {
+    ul,
+    ol {
       @extend .body;
       padding: 0 1rem;
       color: var(--on-surface);
@@ -191,7 +198,8 @@
       table-layout: fixed;
       width: 100%;
 
-      td, th {
+      td,
+      th {
         border: 2px solid var(--outline-variant);
         box-sizing: border-box;
         min-width: 100px;
@@ -212,7 +220,7 @@
 
       .selectedCell:after {
         background: rgba(200, 200, 255, 0.4);
-        content: "";
+        content: '';
         left: 0;
         right: 0;
         top: 0;
@@ -257,9 +265,13 @@
 }
 
 .color-popover {
+  background-color: var(--surface-container-low) !important;
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--radius-md);
+  left: 50% !important;
+
   .color-grid {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    display: flex;
     gap: 0.5rem;
     padding: 0.5rem;
   }
@@ -268,7 +280,7 @@
     width: 24px;
     height: 24px;
     border: 1px solid var(--outline-variant);
-    border-radius: 4px;
+    border-radius: 50%;
     cursor: pointer;
     transition: transform 0.2s;
 

@@ -1,5 +1,4 @@
-@use "@styles/styles";
-
+@use '@styles/styles';
 
 .nav-menu {
   display: flex;
@@ -10,10 +9,10 @@
 .nav-item {
   font-size: 16px;
   line-height: 24px;
-  background-color: var(--surface-container-low);
+  background-color: var(--surface-container-lowest);
   color: var(--on-surface-variant);
   padding: var(--padding-xs) var(--padding-sm);
-  font-family: "Noto Sans", sans-serif;
+  font-family: 'Noto Sans', sans-serif;
   border-radius: var(--radius-xl);
 
   :active {

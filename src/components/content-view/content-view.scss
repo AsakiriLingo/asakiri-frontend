@@ -1,4 +1,44 @@
-.content-viewer {
-  font-family: "Noto Sans", sans-serif;
+@use '@styles/styles';
+
+.view-card {
+  background-color: var(--surface-container-lowest);
+  padding: var(--padding-md);
+  border-radius: var(--radius-lg);
+  width: 100%;
+  font-family: 'Noto Sans', sans-serif;
+
+  &--header {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--gap-xl);
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+}
+
+.chapter--title {
+  @extend .heading-3;
   color: var(--on-surface);
+  margin: 0;
+}
+
+.chapter--subtitle {
+  @extend .body;
+  color: var(--on-surface-variant);
+}
+
+.section--title {
+  @extend .heading-4;
+  color: var(--on-surface);
+  margin: 0;
+}
+
+.section--subtitle {
+  @extend .body;
+  color: var(--on-surface-variant);
 }

@@ -1,5 +1,6 @@
-import { Sun, Moon } from 'lucide-react';
 import React, { createContext, useContext, useEffect, useState } from 'react';
+
+import { Image } from '@/components/image';
 import './theme-switcher.scss';
 
 type Theme = 'light' | 'dark';
@@ -54,9 +55,9 @@ const ThemeSwitcher = () => {
       aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} theme`}
     >
       {theme === 'light' ? (
-        <Moon className="theme-switcher__icon" />
+        <Image width="24px" height="24px" src="./icons/moon.svg" alt="moon" />
       ) : (
-        <Sun className="theme-switcher__icon" />
+        <Image width="24px" height="24px" src="./icons/sun.svg" alt="moon" />
       )}
     </button>
   );

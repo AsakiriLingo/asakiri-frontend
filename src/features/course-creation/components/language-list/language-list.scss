@@ -1,0 +1,18 @@
+@use '@styles/styles';
+
+.language-list__container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-md);
+  background-color: var(--surface-container-low);
+  width: 900px;
+  padding: var(--gap-lg);
+  border-radius: var(--radius-md);
+}
+
+.heading {
+  @extend .heading-3;
+  color: var(--on-surface);
+  margin: 0;
+}
+

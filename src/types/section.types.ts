@@ -2,7 +2,8 @@ interface Section {
   id: string;
   title: string;
   subTitle: string;
-  content: string;
+  content_html: string;
+  content_json: Record<string, string | object>;
   serialNumber: number;
 }
 
