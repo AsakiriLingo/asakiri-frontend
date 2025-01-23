@@ -2,7 +2,6 @@ import { Pencil, Save, Trash2 } from 'lucide-react';
 import React, { useState } from 'react';
 
 import { Button } from '@/components/button';
-import { ContentView } from '@/components/content-view';
 import { TextField } from '@/components/text-field';
 import { Editor } from '@/features/course-creation/components/editor';
 
@@ -133,7 +132,9 @@ export const ContentCard: React.FC<ContentCardProps> = ({
               )}
             </div>
           </header>
-          {variant === 'section' && <ContentView content={cardContent} />}
+          {variant === 'section' && (
+            <Editor content={cardContent} editable={false} />
+          )}
         </>
       )}
     </div>

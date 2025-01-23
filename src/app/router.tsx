@@ -10,6 +10,9 @@ const CourseDetails = lazy(
 const CourseEditor = lazy(
   () => import('@/app/routes/course-creation/editor/editor.tsx')
 );
+const CourseViewer = lazy(
+  () => import('@/app/routes/course-view/viewer/viewer.tsx')
+);
 const CourseSettings = lazy(
   () => import('@/app/routes/course-creation/settings/settings.tsx')
 );
@@ -43,6 +46,10 @@ const createAppRouter = () =>
     {
       path: 'course/editor/:id',
       element: <CourseEditor />,
+    },
+    {
+      path: 'course/viewer/:id',
+      element: <CourseViewer />,
     },
     {
       path: 'course/editor/settings/:id',

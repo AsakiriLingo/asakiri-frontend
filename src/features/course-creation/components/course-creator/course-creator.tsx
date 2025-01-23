@@ -12,7 +12,7 @@ import { useCourseCreationAPI } from '@/features/course-creation/api/course-crea
 import { LanguageList } from '@/features/course-creation/components/language-list';
 import { createCourseFormSchema } from '@/features/course-creation/config/form.ts';
 
-import './course-creator.scss';
+import './viewer.scss';
 
 type FormData = z.infer<typeof createCourseFormSchema>;
 

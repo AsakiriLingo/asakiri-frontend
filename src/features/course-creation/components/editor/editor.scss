@@ -7,6 +7,23 @@
   border: 1px solid var(--outline-variant);
   border-radius: var(--radius-md);
 
+  &.readonly {
+    padding: 0;
+    border: none;
+
+    .ProseMirror {
+      padding: 0;
+
+      p, h1, h2, ul, ol {
+        cursor: default;
+      }
+
+      .editor-link {
+        cursor: pointer;
+      }
+    }
+  }
+
   .editor-menu {
     display: flex;
     align-items: center;
@@ -134,7 +151,6 @@
   .ProseMirror {
     border: none;
     outline: none;
-    min-height: 200px;
 
     > * + * {
       margin-top: 0.75em;
@@ -142,19 +158,19 @@
 
     p {
       @extend .body;
-      margin-bottom: var(--gap-sm);
+      margin-bottom: 0;
       color: var(--on-surface);
     }
 
     h1 {
       @extend .heading-3;
-      margin-bottom: var(--gap-sm);
+      margin-bottom: 0;
       color: var(--on-surface);
     }
 
     h2 {
       @extend .heading-4;
-      margin-bottom: var(--gap-sm);
+      margin-bottom: 0;
       color: var(--on-surface-variant);
     }
 
