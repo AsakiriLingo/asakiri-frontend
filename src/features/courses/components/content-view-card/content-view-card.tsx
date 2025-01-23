@@ -1,8 +1,7 @@
 import React from 'react';
+import { Editor } from 'src/components/editor';
 
-import { Editor } from '@/features/course-creation/components/editor';
-
-import './content-view.scss';
+import './content-view-card.scss';
 
 interface ContentViewProps {
   title?: string;

@@ -1,11 +1,11 @@
 import { Pencil, Save, Trash2 } from 'lucide-react';
 import React, { useState } from 'react';
+import { Editor } from 'src/components/editor';
 
 import { Button } from '@/components/button';
 import { TextField } from '@/components/text-field';
-import { Editor } from '@/features/course-creation/components/editor';
 
-import './content-card.scss';
+import './content-edit-card.scss';
 
 interface ContentCardProps {
   title: string;
@@ -17,7 +17,7 @@ interface ContentCardProps {
   onSubtitleChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export const ContentCard: React.FC<ContentCardProps> = ({
+export const ContentEditCard: React.FC<ContentCardProps> = ({
   title,
   subtitle,
   variant = 'chapter',

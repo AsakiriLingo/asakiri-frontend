@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 
-import { COLORS } from '../editor.constants';
-import { ColorPopoverProps } from '../editor.types';
+import { COLORS } from '../editor.constants.ts';
+import { ColorPopoverProps } from '../editor.types.ts';
 
 export const ColorPopover: React.FC<ColorPopoverProps> = ({
   onClose,

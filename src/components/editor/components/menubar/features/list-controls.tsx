@@ -1,8 +1,8 @@
 import { List, ListOrdered } from 'lucide-react';
 import React from 'react';
 
-import { MenuButton } from '../menu-button';
-import { FeatureProps } from '../menubar.types';
+import { MenuButton } from '../menu-button.tsx';
+import { FeatureProps } from '../menubar.types.ts';
 
 export const ListControls: React.FC<FeatureProps> = ({ editor }) => {
   return (

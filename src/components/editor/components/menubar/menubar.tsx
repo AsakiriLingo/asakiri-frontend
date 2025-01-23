@@ -1,14 +1,14 @@
 import { Editor } from '@tiptap/react';
 import React from 'react';
 
-import { AudioControl } from './features/audio-controls';
-import { ColorControls } from './features/color-controls';
-import { ImageControl } from './features/image-control';
-import { LinkControl } from './features/link-control';
-import { ListControls } from './features/list-controls';
-import { TableControls } from './features/table-controls';
-import { TextFormatting } from './features/text-formatting';
-import { YouTubeControl } from './features/youtube-control';
+import { AudioControl } from './features/audio-controls.tsx';
+import { ColorControls } from './features/color-controls.tsx';
+import { ImageControl } from './features/image-control.tsx';
+import { LinkControl } from './features/link-control.tsx';
+import { ListControls } from './features/list-controls.tsx';
+import { TableControls } from './features/table-controls.tsx';
+import { TextFormatting } from './features/text-formatting.tsx';
+import { YouTubeControl } from './features/youtube-control.tsx';
 
 interface MenuBarProps {
   editor: Editor | null;

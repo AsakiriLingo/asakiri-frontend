@@ -1,4 +1,4 @@
-import { ColorOption } from '@/features/course-creation/components/editor/editor.types.ts';
+import { ColorOption } from '@/components/editor/editor.types.ts';
 
 export const COLORS: ColorOption[] = [
   { name: 'Black', color: '#000000' },

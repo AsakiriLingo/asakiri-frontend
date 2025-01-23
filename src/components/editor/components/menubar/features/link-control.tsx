@@ -1,9 +1,9 @@
 import { Link2 } from 'lucide-react';
 import React, { useRef, useState } from 'react';
 
-import { Popover } from '../../popover';
-import { MenuButton } from '../menu-button';
-import { FeatureProps } from '../menubar.types';
+import { Popover } from '../../popover.tsx';
+import { MenuButton } from '../menu-button.tsx';
+import { FeatureProps } from '../menubar.types.ts';
 
 export const LinkControl: React.FC<FeatureProps> = ({ editor }) => {
   const [showLinkPopover, setShowLinkPopover] = useState(false);

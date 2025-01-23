@@ -1,9 +1,9 @@
 import { Palette } from 'lucide-react';
 import React, { useRef, useState } from 'react';
 
-import { ColorPopover } from '../../color-popover';
-import { MenuButton } from '../menu-button';
-import { FeatureProps } from '../menubar.types';
+import { ColorPopover } from '../../color-popover.tsx';
+import { MenuButton } from '../menu-button.tsx';
+import { FeatureProps } from '../menubar.types.ts';
 
 export const ColorControls: React.FC<FeatureProps> = ({ editor }) => {
   const [showColorPopover, setShowColorPopover] = useState(false);

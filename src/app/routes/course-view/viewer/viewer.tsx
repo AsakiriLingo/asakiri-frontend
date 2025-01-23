@@ -1,7 +1,7 @@
 import React from 'react';
+import { ContentViewCard } from 'src/features/courses/components/content-view-card';
 
 import { Button } from '@/components/button';
-import { ContentViewCard } from '@/components/content-view';
 import { CourseSidebar } from '@/components/course-sidebar';
 import { SideBarCard } from '@/components/side-bar-card';
 import { CourseViewData } from '@/mocks/course.ts';

@@ -1,6 +1,6 @@
 import { Plus } from 'lucide-react';
 import React from 'react';
-import { ContentCard } from 'src/features/course-creation/components/content-card';
+import { ContentEditCard } from 'src/features/course-creation/components/content-edit-card';
 
 import { Button } from '@/components/button';
 import { CourseSidebar } from '@/components/course-sidebar';
@@ -56,7 +56,7 @@ export const Editor: React.FC = () => {
         <div className="course-editor__content">
           <main className="course-editor__main">
             <div className="course-editor__container">
-              <ContentCard
+              <ContentEditCard
                 variant="chapter"
                 title="Introduction to Japanese"
                 subtitle="Basic Concepts and Greetings"
@@ -69,7 +69,7 @@ export const Editor: React.FC = () => {
                   console.log('New Subtitle:', newSubtitle?.target.value)
                 }
               />
-              <ContentCard
+              <ContentEditCard
                 variant="section"
                 title="Sentence Building ぶんのつくり"
                 subtitle="Understanding Japanese Sentences"
@@ -82,7 +82,7 @@ export const Editor: React.FC = () => {
                   console.log('New Subtitle:', newSubtitle?.target.value)
                 }
               />
-              <ContentCard
+              <ContentEditCard
                 variant="section"
                 title="Sentence Building ぶんのつくり"
                 subtitle="Understanding Japanese Sentences"
