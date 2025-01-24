@@ -14,12 +14,14 @@ interface SideBarCardProps {
   title: string;
   subTitle: string;
   sections: Array<Section>;
+  isDeletable?: boolean;
 }
 
 export const SideBarCard: React.FC<SideBarCardProps> = ({
   title,
   subTitle,
   sections,
+  isDeletable = false,
 }: SideBarCardProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -40,9 +42,11 @@ export const SideBarCard: React.FC<SideBarCardProps> = ({
           <div className="chapter-title">{title}</div>
           <div className="chapter-subtitle">{subTitle}</div>
         </div>
-        <Button size="small" variant="ghost" type="tertiary">
-          <Trash2 size={16} />
-        </Button>
+        {isDeletable && (
+          <Button size="small" variant="ghost" type="tertiary">
+            <Trash2 size={16} />
+          </Button>
+        )}
         {isExpanded ? (
           <ChevronUp className="chapter-icon" />
         ) : (

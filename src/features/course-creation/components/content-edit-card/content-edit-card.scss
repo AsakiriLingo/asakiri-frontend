@@ -4,6 +4,7 @@
   background-color: var(--surface-container-lowest);
   padding: var(--padding-md);
   border-radius: var(--radius-lg);
+  border: 1px solid var(--outline-variant);
   width: 100%;
   font-family: 'Noto Sans', sans-serif;
 
@@ -27,7 +28,7 @@
 }
 
 .chapter--title {
-  @extend .heading-3;
+  @extend .heading-2;
   color: var(--on-surface);
   margin: 0;
 }
@@ -38,7 +39,7 @@
 }
 
 .section--title {
-  @extend .heading-4;
+  @extend .heading-3;
   color: var(--on-surface);
   margin: 0;
 }
@@ -47,3 +48,4 @@
   @extend .body;
   color: var(--on-surface-variant);
 }
+

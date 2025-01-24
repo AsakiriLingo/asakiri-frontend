@@ -1,3 +1,5 @@
+@use '@styles/styles';
+
 .sidebar-container {
   font-family: 'Noto Sans', sans-serif;
 }
@@ -10,6 +12,7 @@
   padding: var(--padding-sm);
   border-radius: var(--radius-lg);
   background-color: var(--surface-container-lowest);
+  border: 1px solid var(--outline-variant);
   cursor: pointer;
   transition: background-color 0.2s ease;
 
@@ -18,13 +21,12 @@
   }
 
   &-title {
-    font-size: var(--font-size-md);
-    font-weight: var(--font-weight-bold);
+    @extend .label-bold;
     color: var(--on-surface);
   }
 
   &-subtitle {
-    font-size: var(--font-size-sm);
+    @extend .body;
     color: var(--on-surface-variant);
   }
 
@@ -46,6 +48,7 @@
   padding: 0;
   margin-top: var(--padding-xs);
   margin-left: var(--gap-lg);
+  border: 1px solid var(--outline-variant);
 
   overflow: hidden;
   max-height: 0;
@@ -83,13 +86,12 @@
   }
 
   &-title {
-    font-size: var(--font-size-sm);
-    font-weight: var(--font-weight-medium);
+    @extend .label-bold;
     color: var(--on-surface);
   }
 
   &-subtitle {
-    font-size: var(--font-size-xs);
+    @extend .body;
     color: var(--on-surface-variant);
   }
 }
