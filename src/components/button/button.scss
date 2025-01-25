@@ -46,6 +46,13 @@
       border: 1px solid var(--outline-variant);
     }
 
+    &--error {
+      @extend .label-bold;
+      background-color: var(--error);
+      color: var(--on-error);
+      border: 1px solid var(--error);
+    }
+
 
   }
 

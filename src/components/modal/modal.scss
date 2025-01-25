@@ -22,13 +22,12 @@
 }
 
 .modal {
-  box-shadow: 0 8px 20px rgba(0 0 0 / 0.1);
   border-radius: var(--radius-md);
   background: var(--surface-dim);
   color: var(--on-surface);
   border: none;
   outline: none;
-  width: 900px;
+  //width: 900px;
   z-index: 9999;
 
   &[data-entering] {

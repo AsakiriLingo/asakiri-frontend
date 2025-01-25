@@ -1,0 +1,25 @@
+@use '@styles/styles';
+
+.dialog {
+  padding: var(--padding-md);
+  background: var(--surface-container-low);
+  border-radius: var(--radius-md);
+  max-width: 600px;
+
+  &--header {
+    @extend .heading-3;
+    color: var(--on-surface);
+    margin-bottom: 0;
+  }
+
+  &--text {
+    @extend .body-large;
+    color: var(--on-surface);
+  }
+
+  &--footer {
+    display: flex;
+    gap: var(--gap-sm);
+    justify-content: flex-end;
+  }
+}

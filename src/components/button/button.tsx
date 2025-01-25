@@ -5,7 +5,7 @@ import './button.scss';
 
 interface ButtonProps {
   onPress?: () => void;
-  type?: 'primary' | 'secondary' | 'tertiary';
+  type?: 'primary' | 'secondary' | 'tertiary' | 'error';
   variant?: 'filled' | 'flat' | 'ghost';
   size?: 'small' | 'medium';
   children?: React.ReactNode;
