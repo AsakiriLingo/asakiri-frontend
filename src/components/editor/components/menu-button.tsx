@@ -1,6 +1,6 @@
 import { forwardRef } from 'react';
 
-import { MenuButtonProps } from './menubar.types.ts';
+import { MenuButtonProps } from '../types/menubar.types.ts';
 
 export const MenuButton = forwardRef<HTMLButtonElement, MenuButtonProps>(
   ({ isActive, onClick, children, tooltipText, disabled }, ref) => {

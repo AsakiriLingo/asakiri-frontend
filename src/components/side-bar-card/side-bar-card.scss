@@ -12,7 +12,7 @@
   padding: var(--padding-sm);
   border-radius: var(--radius-lg);
   background-color: var(--surface-container-lowest);
-  border: 1px solid var(--outline-variant);
+  border: 1px solid var(--outline-alt);
   cursor: pointer;
   transition: background-color 0.2s ease;
 
@@ -48,7 +48,7 @@
   padding: 0;
   margin-top: var(--padding-xs);
   margin-left: var(--gap-lg);
-  border: 1px solid var(--outline-variant);
+  border: 1px solid var(--outline-alt);
 
   overflow: hidden;
   max-height: 0;
@@ -71,6 +71,9 @@
   transition: background-color 0.2s ease;
 
   &-icon {
+    background-color: var(--surface-container-low);
+    padding: var(--padding-xs);
+    border-radius: var(--radius-lg);
     color: var(--primary);
     width: 18px;
     height: 18px;

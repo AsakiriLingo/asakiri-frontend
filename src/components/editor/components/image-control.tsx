@@ -1,8 +1,9 @@
 import { Image } from 'lucide-react';
 import React from 'react';
 
-import { MenuButton } from '../menu-button.tsx';
-import { FeatureProps } from '../menubar.types.ts';
+import { FeatureProps } from '../types/menubar.types.ts';
+
+import { MenuButton } from './menu-button.tsx';
 
 export const ImageControl: React.FC<FeatureProps> = ({ editor }) => {
   return (

@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 
-import { PopoverProps } from '../editor.types.ts';
+import { PopoverProps } from '../types/editor.types.ts';
 
 export const Popover: React.FC<PopoverProps> = ({
   onClose,

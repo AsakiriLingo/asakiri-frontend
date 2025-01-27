@@ -13,6 +13,7 @@
   align-items: stretch;
   justify-items: stretch;
   min-height: fit-content;
+  border: 1px solid var(--outline-alt);
 
   &:hover {
     transform: scale(1.01);

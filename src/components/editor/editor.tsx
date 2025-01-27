@@ -10,15 +10,15 @@ import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import React from 'react';
 
-import { AudioControl } from './components/menubar/features/audio-controls.tsx';
-import { ColorControls } from './components/menubar/features/color-controls.tsx';
-import { ImageControl } from './components/menubar/features/image-control.tsx';
-import { LinkControl } from './components/menubar/features/link-control.tsx';
-import { ListControls } from './components/menubar/features/list-controls.tsx';
-import { TableControls } from './components/menubar/features/table-controls.tsx';
-import { TextFormatting } from './components/menubar/features/text-formatting.tsx';
-import { YouTubeControl } from './components/menubar/features/youtube-control.tsx';
-import { EditorProps } from './editor.types.ts';
+import { AudioControl } from './components/audio-controls.tsx';
+import { ColorControls } from './components/color-controls.tsx';
+import { ImageControl } from './components/image-control.tsx';
+import { LinkControl } from './components/link-control.tsx';
+import { ListControls } from './components/list-controls.tsx';
+import { TableControls } from './components/table-controls.tsx';
+import { TextFormatting } from './components/text-formatting.tsx';
+import { YouTubeControl } from './components/youtube-control.tsx';
+import { EditorProps } from './types/editor.types.ts';
 
 import './editor.scss';
 
