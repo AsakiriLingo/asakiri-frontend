@@ -1,0 +1,26 @@
+@use '@styles/styles';
+
+.cookie-body {
+  display: flex;
+  background-color: var(--surface-container-low);
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: var(--padding-md);
+  border-radius: var(--radius-md);
+  width: 500px;
+  flex-direction: column;
+  gap: var(--gap-md);
+  border: 1px solid var(--outline-variant);
+}
+
+.cookie-text {
+  @extend .body-large;
+  margin: 0;
+  color: var(--on-surface);
+}
+
+.cookie-buttons {
+  display: flex;
+  gap: var(--gap-md);
+}
