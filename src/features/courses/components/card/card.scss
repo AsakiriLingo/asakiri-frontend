@@ -88,6 +88,7 @@
     gap: var(--gap-xxs);
     flex: 1;
     overflow: hidden;
+    min-height: 130px;
 
     &--course-title {
       @extend .heading-4;
@@ -128,4 +129,10 @@
     border-radius: 50%;
     object-fit: cover;
   }
+}
+
+@media (max-width: 1024px) {
+  .card--content {
+  min-height: fit-content;
+}
 }
