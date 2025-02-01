@@ -63,12 +63,6 @@ export const Editor: React.FC = () => {
                 subtitle="Basic Concepts and Greetings"
                 isEditable={true}
                 content={''}
-                onTitleChange={(newTitle) =>
-                  console.log('New title:', newTitle?.target.value)
-                }
-                onSubtitleChange={(newSubtitle) =>
-                  console.log('New Subtitle:', newSubtitle?.target.value)
-                }
               />
               <ContentEditCard
                 variant="section"

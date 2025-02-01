@@ -6,4 +6,9 @@ const createCourseFormSchema = z.object({
   description: z.string().max(10000),
 });
 
-export { createCourseFormSchema };
+const editCourseFormSchema = z.object({
+  title: z.string().min(150),
+  subtitle: z.string().min(150),
+});
+
+export { createCourseFormSchema, editCourseFormSchema };

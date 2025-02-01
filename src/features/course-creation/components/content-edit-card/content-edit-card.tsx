@@ -1,11 +1,17 @@
+import { zodResolver } from '@hookform/resolvers/zod';
 import { Pencil, Save, Trash2 } from 'lucide-react';
 import React, { useState } from 'react';
+import { useForm, Controller } from 'react-hook-form';
 import { Editor } from 'src/components/editor';
+import { z } from 'zod';
 
 import { Button } from '@/components/button';
 import { TextField } from '@/components/text-field';
+import { editCourseFormSchema } from '@/features/course-creation/config/form.ts';
 
 import './content-edit-card.scss';
+
+type FormData = z.infer<typeof editCourseFormSchema>;
 
 interface ContentCardProps {
   title: string;
@@ -13,8 +19,6 @@ interface ContentCardProps {
   variant: 'chapter' | 'section';
   content: string;
   isEditable: boolean;
-  onTitleChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onSubtitleChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export const ContentEditCard: React.FC<ContentCardProps> = ({
@@ -23,47 +27,58 @@ export const ContentEditCard: React.FC<ContentCardProps> = ({
   variant = 'chapter',
   content,
   isEditable,
-  onTitleChange,
-  onSubtitleChange,
 }: ContentCardProps) => {
   const [cardTitle, setCardTitle] = useState(title);
   const [cardSubtitle, setCardSubtitle] = useState(subtitle);
   const [cardContent, setCardContent] = useState(content);
   const [isEditEnabled, setIsEditEnabled] = useState(false);
-  const onSave = () => {
-    setIsEditEnabled(false);
-  };
 
-  const onCardTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCardTitle(e.target.value);
-    if (onTitleChange) {
-      onTitleChange(e);
-    }
-  };
-
-  const onCardSubtitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCardSubtitle(e.target.value);
-    if (onSubtitleChange) {
-      onSubtitleChange(e);
-    }
-  };
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm<FormData>({
+    resolver: zodResolver(editCourseFormSchema),
+  });
 
   const onCardContentChange = (html: string) => {
     setCardContent(html);
   };
 
+  const onSave = async (data: FormData) => {
+    setIsEditEnabled(false);
+    console.log(data.subtitle);
+    if (false) {
+      setCardTitle('test');
+      setCardSubtitle('test');
+    }
+  };
+
   return (
-    <div className="content-card">
+    <form onSubmit={handleSubmit(onSave)} className="content-card">
       {isEditEnabled ? (
         <>
-          <header className="content-card--header">
+          <div className="content-card--header">
             <div className="content-card__content">
               <div
                 className={
                   variant === 'chapter' ? 'chapter--title' : 'section--title'
                 }
               >
-                <TextField text={cardTitle} onChange={onCardTitleChange} />
+                <Controller
+                  name={'title'}
+                  control={control}
+                  rules={{ required: true, maxLength: 150 }}
+                  render={({ field }) => (
+                    <TextField
+                      text={field.value}
+                      onChange={(e) => field.onChange(e)}
+                    />
+                  )}
+                />
+                {errors.title && (
+                  <span className="error">{errors.title.message}</span>
+                )}
               </div>
               <div
                 className={
@@ -72,10 +87,20 @@ export const ContentEditCard: React.FC<ContentCardProps> = ({
                     : 'section--subtitle'
                 }
               >
-                <TextField
-                  text={cardSubtitle}
-                  onChange={onCardSubtitleChange}
+                <Controller
+                  name={'subtitle'}
+                  control={control}
+                  rules={{ required: true, maxLength: 150 }}
+                  render={({ field }) => (
+                    <TextField
+                      text={field.value}
+                      onChange={(e) => field.onChange(e)}
+                    />
+                  )}
                 />
+                {errors.subtitle && (
+                  <span className="error">{errors.subtitle.message}</span>
+                )}
               </div>
             </div>
             <div className="content-card__actions">
@@ -86,12 +111,12 @@ export const ContentEditCard: React.FC<ContentCardProps> = ({
                 size="small"
                 type="primary"
                 variant="ghost"
-                onPress={onSave}
+                actionType="submit"
               >
                 <Save size={24} />
               </Button>
             </div>
-          </header>
+          </div>
           {variant === 'section' && (
             <div>
               <Editor content={cardContent} onChange={onCardContentChange} />
@@ -137,6 +162,6 @@ export const ContentEditCard: React.FC<ContentCardProps> = ({
           )}
         </>
       )}
-    </div>
+    </form>
   );
 };
