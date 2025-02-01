@@ -4,7 +4,6 @@ export interface Language {
   code: string;
 }
 
-export type LanguageArray = Language[];
 export type LanguageGroups = Record<string, Language[]>;
 
 export const languages: Language[] = [
@@ -33070,10 +33069,4 @@ export const getAlphabeticalLanguages = (): LanguageGroups => {
   });
 
   return alphabeticalGroups;
-};
-
-// Get languages starting with a specific letter
-export const getLanguagesByLetter = (letter: string): Language[] => {
-  const groups = getAlphabeticalLanguages();
-  return groups[letter.toLowerCase()] || [];
 };
