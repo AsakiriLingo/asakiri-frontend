@@ -4,6 +4,9 @@ export interface Language {
   code: string;
 }
 
+export type LanguageArray = Language[];
+export type LanguageGroups = Record<string, Language[]>;
+
 export const languages: Language[] = [
   {
     en: 'Ghotuo',
@@ -33048,3 +33051,29 @@ export const languages: Language[] = [
     code: 'zzj',
   },
 ];
+
+// Function to get alphabetically separated languages
+export const getAlphabeticalLanguages = (): LanguageGroups => {
+  const alphabeticalGroups: LanguageGroups = {};
+
+  languages.forEach((language) => {
+    const firstLetter = language.en[0].toLowerCase();
+    if (!alphabeticalGroups[firstLetter]) {
+      alphabeticalGroups[firstLetter] = [];
+    }
+    alphabeticalGroups[firstLetter].push(language);
+  });
+
+  // Sort each group internally by English name
+  Object.keys(alphabeticalGroups).forEach((letter) => {
+    alphabeticalGroups[letter].sort((a, b) => a.en.localeCompare(b.en));
+  });
+
+  return alphabeticalGroups;
+};
+
+// Get languages starting with a specific letter
+export const getLanguagesByLetter = (letter: string): Language[] => {
+  const groups = getAlphabeticalLanguages();
+  return groups[letter.toLowerCase()] || [];
+};

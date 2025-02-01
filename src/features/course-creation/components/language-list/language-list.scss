@@ -1,6 +1,8 @@
+@use '@styles/styles';
+
 .language-list {
   width: auto;
-  height: 500px;
+  height: 700px;
   overflow-y: scroll;
   margin: 0 auto;
   padding: 20px;
@@ -21,25 +23,25 @@
     gap: 8px;
     margin-bottom: 20px;
     padding-bottom: 12px;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid var(--outline-variant);
     flex-wrap: wrap;
   }
 
   &__letter {
     font-size: 14px;
-    color: #666;
+    color: var(--on-surface);
     background: none;
     border: none;
     padding: 4px 8px;
     cursor: pointer;
 
-    &--active {
-      color: #22c55e;
-      font-weight: 500;
+    &--available {
+      color: var(--on-surface);
     }
 
-    &--available {
-      color: #333;
+    &--active {
+      color: var(--primary);
+      font-weight: 700;
     }
 
     &:disabled {
