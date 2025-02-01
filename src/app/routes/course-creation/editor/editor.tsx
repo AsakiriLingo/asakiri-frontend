@@ -70,12 +70,6 @@ export const Editor: React.FC = () => {
                 subtitle="Understanding Japanese Sentences"
                 isEditable={true}
                 content={'Test content'}
-                onTitleChange={(newTitle) =>
-                  console.log('New title:', newTitle?.target.value)
-                }
-                onSubtitleChange={(newSubtitle) =>
-                  console.log('New Subtitle:', newSubtitle?.target.value)
-                }
               />
               <ContentEditCard
                 variant="section"
@@ -83,12 +77,6 @@ export const Editor: React.FC = () => {
                 subtitle="Understanding Japanese Sentences"
                 isEditable={true}
                 content={'Test content'}
-                onTitleChange={(newTitle) =>
-                  console.log('New title:', newTitle?.target.value)
-                }
-                onSubtitleChange={(newSubtitle) =>
-                  console.log('New Subtitle:', newSubtitle?.target.value)
-                }
               />
               <div className="course-editor__add-more">
                 <Button size="small" onPress={() => {}}>

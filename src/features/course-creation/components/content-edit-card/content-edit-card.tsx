@@ -28,9 +28,9 @@ export const ContentEditCard: React.FC<ContentCardProps> = ({
   content,
   isEditable,
 }: ContentCardProps) => {
-  const [cardTitle, setCardTitle] = useState(title);
-  const [cardSubtitle, setCardSubtitle] = useState(subtitle);
-  const [cardContent, setCardContent] = useState(content);
+  // const [cardTitle, setCardTitle] = useState(title);
+  // const [cardSubtitle, setCardSubtitle] = useState(subtitle);
+  // const [cardContent, setCardContent] = useState(content);
   const [isEditEnabled, setIsEditEnabled] = useState(false);
 
   const {
@@ -39,19 +39,24 @@ export const ContentEditCard: React.FC<ContentCardProps> = ({
     formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(editCourseFormSchema),
+    defaultValues: {
+      title,
+      subtitle,
+      content,
+    },
   });
 
-  const onCardContentChange = (html: string) => {
-    setCardContent(html);
-  };
+  // const onCardContentChange = (html: string) => {
+  //   setCardContent(html);
+  // };
 
   const onSave = async (data: FormData) => {
     setIsEditEnabled(false);
     console.log(data.subtitle);
-    if (false) {
-      setCardTitle('test');
-      setCardSubtitle('test');
-    }
+    // if (false) {
+    //   setCardTitle('test');
+    //   setCardSubtitle('test');
+    // }
   };
 
   return (
@@ -119,7 +124,18 @@ export const ContentEditCard: React.FC<ContentCardProps> = ({
           </div>
           {variant === 'section' && (
             <div>
-              <Editor content={cardContent} onChange={onCardContentChange} />
+              <Controller
+                name={'content'}
+                control={control}
+                rules={{ required: true }}
+                render={({ field }) => (
+                  <Editor
+                    content={field.value}
+                    onChange={(e) => field.onChange(e)}
+                  />
+                )}
+              />
+              {/*<Editor content={cardContent} onChange={onCardContentChange} />*/}
             </div>
           )}
         </>
@@ -132,7 +148,7 @@ export const ContentEditCard: React.FC<ContentCardProps> = ({
                   variant === 'chapter' ? 'chapter--title' : 'section--title'
                 }
               >
-                {cardTitle}
+                {title}
               </div>
               <div
                 className={
@@ -141,7 +157,7 @@ export const ContentEditCard: React.FC<ContentCardProps> = ({
                     : 'section--subtitle'
                 }
               >
-                {cardSubtitle}
+                {subtitle}
               </div>
             </div>
             <div className="content-card__actions">
@@ -158,7 +174,7 @@ export const ContentEditCard: React.FC<ContentCardProps> = ({
             </div>
           </header>
           {variant === 'section' && (
-            <Editor content={cardContent} editable={false} />
+            <Editor content={content} editable={false} />
           )}
         </>
       )}
