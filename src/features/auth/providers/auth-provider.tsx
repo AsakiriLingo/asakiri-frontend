@@ -18,18 +18,28 @@ const AuthStateSync = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     setAuthState({ isAuthenticated, user, isLoading });
     useAuthStore.setState({
+      getAccessToken: async () => {
+        try {
+          const token = await getAccessTokenSilently();
+          useAuthStore.setState({ accessToken: token });
+          return token;
+        } catch (error) {
+          console.error('Error getting access token:', error);
+          return null;
+        }
+      },
       loginWithRedirect,
       logout: () =>
         logout({ logoutParams: { returnTo: window.location.origin } }),
     });
   }, [
-    user,
     isAuthenticated,
+    user,
     isLoading,
-    setAuthState,
     getAccessTokenSilently,
     loginWithRedirect,
     logout,
+    setAuthState,
   ]);
 
   return <>{children}</>;

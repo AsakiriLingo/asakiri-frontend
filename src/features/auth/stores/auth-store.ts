@@ -7,15 +7,13 @@ export const useAuthStore = create<AuthStore>((set) => ({
   isAuthenticated: false,
   user: null,
   isLoading: true,
+  accessToken: null,
 
   setAuthState: (state) => set(state),
   getAccessToken: async () => {
-    try {
-      const { getAccessTokenSilently } = useAuth0();
-      return await getAccessTokenSilently();
-    } catch (error: unknown) {
-      console.error(error);
-    }
+    // This will be replaced in useInitAuth
+    console.error('getAccessToken not initialized');
+    return null;
   },
   loginWithRedirect: async () => {
     const { loginWithRedirect } = useAuth0();

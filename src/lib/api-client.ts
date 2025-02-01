@@ -3,7 +3,7 @@ import { AxiosInstance, InternalAxiosRequestConfig, AxiosError } from 'axios';
 export const setupInterceptors = (
   axiosInstance: AxiosInstance,
   isAuthenticated: boolean,
-  getAccessToken: () => Promise<string | undefined>
+  getAccessToken: () => Promise<string | null | undefined>
 ) => {
   const requestInterceptor = axiosInstance.interceptors.request.use(
     async (config: InternalAxiosRequestConfig) => {
