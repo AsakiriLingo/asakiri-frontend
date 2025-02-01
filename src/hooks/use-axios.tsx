@@ -24,8 +24,6 @@ export const useAxios = (): AxiosInstance => {
       getAccessToken
     );
 
-    // console.log('@@ axios: ', accessToken);
-
     return () => {
       axiosInstance.interceptors.request.eject(requestInterceptor);
       axiosInstance.interceptors.response.eject(responseInterceptor);
