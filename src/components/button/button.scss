@@ -43,7 +43,7 @@
       @extend .label-bold;
       background-color: var(--surface-container-lowest);
       color: var(--on-surface-variant);
-      border: 1px solid var(--outline-variant);
+      border: 1px solid var(--outline-alt);
     }
 
     &--error {
