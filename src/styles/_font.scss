@@ -52,20 +52,20 @@ body {
 
 .heading-2 {
   font-size: var(--text-3xl);
-  font-weight: var(--font-bold);
+  font-weight: var(--font-regular);
   line-height: var(--leading-tight);
 }
 
 .heading-3 {
   font-family: var(--font-primary) system-ui, sans-serif;
   font-size: var(--text-2xl);
-  font-weight: var(--font-semibold);
+  font-weight: var(--font-regular);
   line-height: var(--leading-tight);
 }
 
 .heading-4 {
   font-size: var(--text-lg);
-  font-weight: var(--font-semibold);
+  font-weight: var(--font-regular);
   line-height: var(--leading-tight);
 }
 
