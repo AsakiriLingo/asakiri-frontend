@@ -26,6 +26,11 @@ export const Viewer: React.FC = () => {
                 key={chapter.id}
                 title={chapter.title}
                 subTitle={chapter.subTitle}
+                sections={chapter.sections.map((section) => ({
+                  id: section.id,
+                  title: section.title,
+                  subTitle: section.subTitle,
+                }))}
               />
             ))}
           </CourseSidebar>

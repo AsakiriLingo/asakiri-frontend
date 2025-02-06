@@ -2,12 +2,6 @@
 
 .sidebar-container {
   font-family: 'Noto Sans', sans-serif;
-  :hover {
-    background-color: var(--surface-bright);
-  }
-  :active {
-    background-color: var(--surface-container-lowest);
-  }
 }
 
 .chapter {
@@ -16,28 +10,91 @@
   align-items: flex-start;
   gap: var(--padding-xs);
   padding: var(--padding-sm);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-lg);
+  background-color: var(--surface-container-lowest);
+  border: 1px solid var(--outline-alt);
   cursor: pointer;
-  background-color: transparent;
-  border: none;
-  text-align: left;
   transition: background-color 0.2s ease;
-  width: fit-content;
 
   &-content {
     flex: 1;
-    width: 100%;
   }
 
   &-title {
     @extend .label-bold;
     color: var(--on-surface);
-    max-width: 170px;
   }
 
   &-subtitle {
     @extend .body;
     color: var(--on-surface-variant);
-    max-width: 170px;
+  }
+
+  &-icon {
+    color: var(--on-surface);
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    margin-top: 4px;
+  }
+}
+
+.sections {
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radius-lg);
+  background-color: var(--surface-container-lowest);
+  gap: var(--padding-xs);
+  padding: 0;
+  margin-top: var(--padding-xs);
+  margin-left: var(--gap-lg);
+  border: 1px solid var(--outline-alt);
+
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transition: all 0.3s ease-in-out;
+
+  &.expanded {
+    padding: var(--padding-sm);
+    max-height:2000px;
+    margin-bottom: var(--padding-xs);
+    opacity: 1;
+  }
+}
+
+.section {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--padding-xs);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+
+  &-icon {
+    background-color: var(--surface-container-low);
+    padding: var(--padding-xs);
+    border-radius: var(--radius-lg);
+    color: var(--primary);
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  &-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-xxs);
+    flex: 1;
+  }
+
+  &-title {
+    @extend .label-bold;
+    color: var(--on-surface);
+  }
+
+  &-subtitle {
+    @extend .body;
+    color: var(--on-surface-variant);
   }
 }

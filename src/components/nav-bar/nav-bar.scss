@@ -1,13 +1,11 @@
 @use "@styles/styles";
 
 .nav-container {
-  padding: var(--padding-xs) var(--padding-xl);
+  padding: var(--padding-sm) var(--padding-xl);
   display: flex;
   justify-content: space-between;
   align-items: center;
   align-content: center;
-  background-color: var(--surface-container-lowest);
-  border-bottom: 1px solid var(--outline-alt);
 }
 
 .left-container, .right-container {

@@ -40,16 +40,16 @@
   --colors-error-e-99: rgba(255, 255, 255, 1);
   --colors-error-e-100: rgba(255, 255, 255, 1);
   --colors-neutral-n-0: rgba(0, 0, 0, 1);
-  --colors-neutral-n-6: #1D2328;
-  --colors-neutral-n-10: #181A19;
-  --colors-neutral-n-12: #181C1F;
+  --colors-neutral-n-6: rgba(20, 19, 18, 1);
+  --colors-neutral-n-10: rgba(32, 31, 30, 1);
+  --colors-neutral-n-12: rgba(37, 36, 34, 1);
   --colors-neutral-n-17: rgba(47, 45, 42, 1);
-  --colors-neutral-n-20: #35393C;
+  --colors-neutral-n-20: rgba(51, 49, 46, 1);
   --colors-neutral-n-22: rgba(55, 53, 50, 1);
   --colors-neutral-n-24: rgba(59, 57, 55, 1);
   --colors-neutral-n-30: rgba(74, 72, 63, 1);
   --colors-neutral-n-40: rgba(100, 98, 86, 1);
-  --colors-neutral-n-50: #6D6E77;
+  --colors-neutral-n-50: rgba(126, 122, 110, 1);
   --colors-neutral-n-60: rgba(151, 147, 136, 1);
   --colors-neutral-n-70: rgba(177, 173, 162, 1);
   --colors-neutral-n-80: rgba(202, 197, 186, 1);
@@ -59,9 +59,9 @@
   --colors-neutral-n-94: rgba(233, 230, 222, 1);
   --colors-neutral-n-95: rgba(236, 233, 226, 1);
   --colors-neutral-n-96: rgba(238, 233, 227, 1);
-  --colors-neutral-n-98: #E5E7E9;
-  --colors-neutral-n-99: #F6F8FA;
-  --colors-neutral-n-100: #FFFFFF;
+  --colors-neutral-n-98: rgba(246, 244, 239, 1);
+  --colors-neutral-n-99: rgba(249, 249, 249, 1);
+  --colors-neutral-n-100: rgba(255, 255, 255, 0.7);
 }
 
 /* Primitives - Light */
@@ -83,7 +83,11 @@
   --secondary-fixed-dim: var(--colors-secondary-s-80);
   --on-secondary-fixed-dim: var(--colors-secondary-s-0);
   --surface: var(--colors-neutral-n-98);
-  --surface-bright: var(--colors-neutral-n-99);
+  --surface-bright: linear-gradient(
+    127deg,
+    var(--colors-neutral-n-99) 7.44%,
+    var(--colors-neutral-n-98) 97.99%
+  );
   --surface-dim: var(--colors-neutral-n-87);
   --surface-container-lowest: var(--colors-neutral-n-100);
   --surface-container-low: var(--colors-neutral-n-98);
@@ -122,9 +126,9 @@
   --secondary-fixed-dim: var(--colors-secondary-s-80);
   --on-secondary-fixed-dim: var(--colors-secondary-s-0);
   --surface: var(--colors-neutral-n-6);
-  --surface-bright: var(--colors-neutral-n-12);
+  --surface-bright: var(--colors-neutral-n-6);
   --surface-dim: var(--colors-neutral-n-6);
-  --surface-container-lowest: var(--colors-neutral-n-6);
+  --surface-container-lowest: var(--colors-neutral-n-10);
   --surface-container-low: var(--colors-neutral-n-10);
   --surface-container: var(--colors-neutral-n-12);
   --surface-container-high: var(--colors-neutral-n-17);
