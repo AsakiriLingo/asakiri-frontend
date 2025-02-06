@@ -39,10 +39,15 @@ export const Editor: React.FC = () => {
                 title={chapter.title}
                 subTitle={chapter.subTitle}
                 isDeletable={true}
+                sections={chapter.sections.map((section) => ({
+                  id: section.id,
+                  title: section.title,
+                  subTitle: section.subTitle,
+                }))}
               />
             ))}
             <div>
-              <Button size="small" onPress={() => {}} type="tertiary">
+              <Button size="small" onPress={() => {}}>
                 <Plus />
               </Button>
             </div>
@@ -74,7 +79,7 @@ export const Editor: React.FC = () => {
                 content={'Test content'}
               />
               <div className="course-editor__add-more">
-                <Button size="small" onPress={() => {}} type="tertiary">
+                <Button size="small" onPress={() => {}}>
                   <Plus />
                 </Button>
               </div>
@@ -82,6 +87,7 @@ export const Editor: React.FC = () => {
           </main>
         </div>
       </div>
+      );
     </>
   );
 };
