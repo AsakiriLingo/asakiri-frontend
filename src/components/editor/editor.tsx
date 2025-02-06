@@ -1,93 +1,119 @@
-import { Color } from '@tiptap/extension-color';
-import Link from '@tiptap/extension-link';
-import TableExtension from '@tiptap/extension-table';
-import { TableCell } from '@tiptap/extension-table-cell';
-import { TableHeader } from '@tiptap/extension-table-header';
-import { TableRow } from '@tiptap/extension-table-row';
-import TextStyle from '@tiptap/extension-text-style';
-import Youtube from '@tiptap/extension-youtube';
-import { useEditor, EditorContent } from '@tiptap/react';
-import StarterKit from '@tiptap/starter-kit';
-import React from 'react';
+import Quill from 'quill';
+import React, { useEffect, useRef } from 'react';
+import 'quill/dist/quill.snow.css';
 
-import { AudioControl } from './components/audio-controls.tsx';
-import { ColorControls } from './components/color-controls.tsx';
-import { ImageControl } from './components/image-control.tsx';
-import { LinkControl } from './components/link-control.tsx';
-import { ListControls } from './components/list-controls.tsx';
-import { TableControls } from './components/table-controls.tsx';
-import { TextFormatting } from './components/text-formatting.tsx';
-import { YouTubeControl } from './components/youtube-control.tsx';
-import { EditorProps } from './types/editor.types.ts';
+interface EditorProps {
+  content: string;
+  placeholder?: string;
+  editable?: boolean;
+  autoFocus?: boolean;
+  onChange?: (html: string) => void;
+  onImageUpload?: (file: File) => Promise<string>;
+}
 
-import './editor.scss';
+const TOOLBAR_OPTIONS = [
+  [{ header: [1, 2, false] }],
+  ['bold', 'italic', 'underline', 'strike'],
+  ['blockquote'],
+  [{ background: [] }],
+  ['link'],
+  [{ list: 'ordered' }, { list: 'bullet' }],
+  [
+    {
+      color: [
+        'var(--on-surface)',
+        'var(--colors-error-e-40)',
+        'var(--colors-primary-p-40)',
+        'var(--colors-secondary-s-40)',
+        'var(--colors-primary-p-60)',
+      ],
+    },
+  ],
+  ['image'],
+  ['clean'],
+  ['table'],
+  ['video'],
+];
 
 export const Editor: React.FC<EditorProps> = ({
   content,
   onChange,
-  placeholder = 'Start typing...',
+  onImageUpload,
+  placeholder = '',
   editable = true,
   autoFocus = false,
 }) => {
-  const editor = useEditor({
-    extensions: [
-      StarterKit,
-      Link.configure({
-        openOnClick: false,
-        HTMLAttributes: {
-          class: 'editor-link',
-          rel: 'noopener noreferrer',
-          target: '_blank',
+  const editorRef = useRef<HTMLDivElement>(null);
+  const quillRef = useRef<Quill | null>(null);
+  useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (editorRef.current && !quillRef.current) {
+      const imageHandler = () => {
+        const input = document.createElement('input');
+        input.setAttribute('type', 'file');
+        input.setAttribute('accept', 'image/*');
+        input.click();
+
+        input.onchange = async () => {
+          const file = input.files?.[0];
+          if (file && onImageUpload) {
+            try {
+              const url = await onImageUpload(file);
+              const range = quillRef.current?.getSelection();
+              if (range && quillRef.current) {
+                quillRef.current.insertEmbed(range.index, 'image', url);
+              }
+            } catch (error) {
+              console.error('Error uploading image:', error);
+            }
+          }
+        };
+      };
+
+      const quill = new Quill(editorRef.current, {
+        modules: {
+          toolbar: editable
+            ? {
+                container: TOOLBAR_OPTIONS,
+                handlers: {
+                  image: imageHandler,
+                },
+              }
+            : false,
         },
-      }),
-      Youtube.configure({
-        controls: true,
-        nocookie: true,
-        modestBranding: true,
-        HTMLAttributes: {
-          class: 'editor-youtube',
-        },
-      }),
-      TableExtension.configure({
-        resizable: true,
-        cellMinWidth: 100,
-      }),
-      TableRow,
-      TableHeader,
-      TableCell,
-      TextStyle,
-      Color,
-    ],
-    content,
-    editable,
-    autofocus: autoFocus,
-    editorProps: {
-      attributes: {
-        class: 'tiptap-editor-content',
-        'data-placeholder': placeholder,
-      },
-    },
-    onUpdate: ({ editor }) => {
-      const html = editor.getHTML();
-      onChange?.(html);
-    },
-  });
+        placeholder,
+        readOnly: !editable,
+        theme: 'snow',
+      });
+
+      if (content) {
+        quill.root.innerHTML = content;
+      }
+
+      if (autoFocus) {
+        quill.focus();
+      }
+
+      quill.on('text-change', () => {
+        const html = quill.root.innerHTML;
+        onChange?.(html);
+      });
+
+      quillRef.current = quill;
+    }
+  }, []);
+
+  useEffect(() => {
+    if (quillRef.current && content !== quillRef.current.root.innerHTML) {
+      quillRef.current.root.innerHTML = content;
+    }
+  }, [content]);
 
   return (
-    <div className={`tiptap-editor ${!editable ? 'readonly' : ''}`}>
-      {editable && (
-        <div className="editor-menu">
-          <TextFormatting editor={editor} />
-          <ListControls editor={editor} />
-          <LinkControl editor={editor} />
-          <ImageControl editor={editor} />
-          <AudioControl editor={editor} />
-          <YouTubeControl editor={editor} />
-          <TableControls editor={editor} />
-          <ColorControls editor={editor} />
-        </div>
-      )}
-      <EditorContent editor={editor} />
+    <div className={`quill-editor ${!editable ? 'readonly' : ''}`}>
+      <div ref={editorRef} />
     </div>
   );
 };
+
+export default Editor;
