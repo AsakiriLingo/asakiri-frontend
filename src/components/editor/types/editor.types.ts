@@ -4,6 +4,7 @@ export interface EditorProps {
   editable?: boolean;
   autoFocus?: boolean;
   onChange?: (html: string) => void;
+  onUploadFile?: (file: File) => Promise<string>;
 }
 
 export interface PopoverProps {
@@ -21,4 +22,12 @@ export interface ColorOption {
 export interface ColorPopoverProps
   extends Omit<PopoverProps, 'onSubmit' | 'placeholder'> {
   onSelectColor: (color: string) => void;
+}
+
+declare module '@tiptap/core' {
+  interface Commands<ReturnType> {
+    fileHandler: {
+      insertFile: (file: File) => ReturnType;
+    };
+  }
 }

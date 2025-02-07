@@ -21,6 +21,7 @@
     "@auth0/auth0-react": "^2.2.4",
     "@hookform/resolvers": "^3.10.0",
     "@tanstack/react-query-devtools": "^5.62.8",
+    "@tiptap-pro/extension-file-handler": "^2.17.3",
     "@tiptap/extension-color": "^2.11.0",
     "@tiptap/extension-link": "^2.11.0",
     "@tiptap/extension-table": "^2.11.0",
