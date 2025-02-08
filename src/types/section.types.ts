@@ -1,10 +1,7 @@
-interface Section {
+export interface Section {
   id: string;
+  chapter_id: string;
   title: string;
-  subTitle: string;
-  content_html: string;
-  content_json: Record<string, string | object>;
-  serialNumber: number;
+  content: string;
+  order: number;
 }
-
-export type { Section };

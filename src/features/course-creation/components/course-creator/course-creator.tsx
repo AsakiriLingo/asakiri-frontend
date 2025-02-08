@@ -1,118 +1,163 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import { z } from 'zod';
 
 import { Button } from '@/components/button';
-import { DialogTrigger } from '@/components/dialog-trigger';
-import { Modal } from '@/components/modal';
 import { TextArea } from '@/components/text-area';
 import { TextField } from '@/components/text-field';
-import { useCourseCreationAPI } from '@/features/course-creation/api/course-creation.ts';
-import { LanguageList } from '@/features/course-creation/components/language-list';
-import { createCourseFormSchema } from '@/features/course-creation/config/form.ts';
-
-import './course-creator.scss';
+import { toast } from '@/components/toast';
+import { useAuthStore } from '@/features/auth/stores/auth-store';
+import { useCourseCreationAPI } from '@/features/course-creation/api/course-creation';
+import {
+  SUPPORTED_LANGUAGES,
+  createCourseFormSchema,
+} from '@/features/course-creation/config/constants';
 
 type FormData = z.infer<typeof createCourseFormSchema>;
 
 export const CourseCreator: React.FC = () => {
+  const { user } = useAuthStore();
+  const navigate = useNavigate();
+  const { createCourse } = useCourseCreationAPI();
+
   const {
     handleSubmit,
     control,
-    formState: { errors },
+    setValue,
+    watch,
+    formState: { errors, isSubmitting },
   } = useForm<FormData>({
     resolver: zodResolver(createCourseFormSchema),
+    defaultValues: {
+      title: '',
+      shortDescription: '',
+      description: '',
+      courseLanguage: 'English',
+      languageTaught: 'Spanish',
+    },
   });
 
-  const { createCourse } = useCourseCreationAPI();
+  const selectedLanguageTaught = watch('languageTaught');
+  const selectedCourseLanguage = watch('courseLanguage');
 
   const onSubmit = async (data: FormData) => {
-    await createCourse({
+    if (!user) {
+      toast.error('You must be logged in to create a course');
+      return;
+    }
+
+    const { data: course, error } = await createCourse({
       title: data.title,
       shortDescription: data.shortDescription,
       description: data.description,
-      courseLanguage: 'english',
-      languageTaught: 'german',
+      courseLanguage: data.courseLanguage,
+      languageTaught: data.languageTaught,
     });
+
+    if (error) {
+      console.error('Error creating course:', error);
+      return;
+    }
+
+    if (course?.id) {
+      // Redirect to the course editor with the new course ID
+      navigate(`/course/editor/${course.id}`);
+    }
   };
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="creator-container">
-        <Controller
-          name={'title'}
-          control={control}
-          rules={{ required: true, maxLength: 4 }}
-          render={({ field }) => (
-            <TextField
-              label="Course Name"
-              text={field.value}
-              onChange={(e) => field.onChange(e)}
-            />
-          )}
-        />
-        {errors.title && <span className="error">Title is Required</span>}
-        <Controller
-          name="shortDescription"
-          control={control}
-          rules={{ required: true }}
-          render={({ field }) => (
-            <TextField
-              text={field.value}
-              label="Course Short Description"
-              onChange={(e) => field.onChange(e)}
-            />
-          )}
-        />
-        {errors.shortDescription && (
-          <span className="error">Short description is Required</span>
+    <form onSubmit={handleSubmit(onSubmit)} className="creator-container">
+      <Controller
+        name="title"
+        control={control}
+        render={({ field }) => (
+          <TextField
+            label="Course Name"
+            text={field.value}
+            onChange={(e) => field.onChange(e.target.value)}
+          />
         )}
-        <Controller
-          name="description"
-          control={control}
-          rules={{ required: true }}
-          render={({ field }) => (
-            <TextArea
-              text={field.value}
-              label="Course Description"
-              onChange={(e) => field.onChange(e)}
-            />
-          )}
-        />
-        {errors.description && (
-          <span className="error">Description is Required</span>
+      />
+      {errors.title && <span className="error">{errors.title.message}</span>}
+
+      <Controller
+        name="shortDescription"
+        control={control}
+        render={({ field }) => (
+          <TextField
+            label="Course Short Description"
+            text={field.value}
+            onChange={(e) => field.onChange(e.target.value)}
+          />
         )}
-        <div className="creator-section-container">
-          <div className="label-bold">Language Taught</div>
-          <div>
-            <DialogTrigger>
-              <Button size="small" variant="flat">
-                Select Language Taught
-              </Button>
-              <Modal>
-                <LanguageList heading="Language Taught" />
-              </Modal>
-            </DialogTrigger>
-          </div>
+      />
+      {errors.shortDescription && (
+        <span className="error">{errors.shortDescription.message}</span>
+      )}
+
+      <Controller
+        name="description"
+        control={control}
+        render={({ field }) => (
+          <TextArea
+            label="Course Description"
+            text={field.value}
+            onChange={(e) => field.onChange(e.target.value)}
+          />
+        )}
+      />
+      {errors.description && (
+        <span className="error">{errors.description.message}</span>
+      )}
+
+      <div className="creator-section-container">
+        <div className="label-bold">Language Taught</div>
+        <div className="language-grid">
+          {SUPPORTED_LANGUAGES.map((language) => (
+            <Button
+              key={language}
+              type={
+                selectedLanguageTaught === language ? 'primary' : 'tertiary'
+              }
+              size="small"
+              onPress={() => setValue('languageTaught', language)}
+            >
+              {language}
+            </Button>
+          ))}
         </div>
-        <div className="section-container">
-          <div className="label-bold">Course Language</div>
-          <div>
-            <DialogTrigger>
-              <Button size="small" variant="flat">
-                Select Course Language
-              </Button>
-              <Modal>
-                <LanguageList heading="Course Language" />
-              </Modal>
-            </DialogTrigger>
-          </div>
+        {errors.languageTaught && (
+          <span className="error">{errors.languageTaught.message}</span>
+        )}
+      </div>
+
+      <div className="creator-section-container">
+        <div className="label-bold">Course Language</div>
+        <div className="language-grid">
+          {SUPPORTED_LANGUAGES.map((language) => (
+            <Button
+              key={language}
+              type={
+                selectedCourseLanguage === language ? 'primary' : 'tertiary'
+              }
+              size="small"
+              onPress={() => setValue('courseLanguage', language)}
+            >
+              {language}
+            </Button>
+          ))}
         </div>
-        <div className="actions">
-          <Button actionType="submit" type="secondary" size="small">
-            Create Course
-          </Button>
-        </div>
+        {errors.courseLanguage && (
+          <span className="error">{errors.courseLanguage.message}</span>
+        )}
+      </div>
+
+      <div className="actions">
+        <Button actionType="submit" type="secondary" size="small">
+          {isSubmitting ? 'Creating Course...' : 'Create Course'}
+        </Button>
       </div>
     </form>
   );

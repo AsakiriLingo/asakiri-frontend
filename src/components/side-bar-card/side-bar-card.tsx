@@ -4,17 +4,17 @@ import React, { useState } from 'react';
 import './side-bar-card.scss';
 import { Button } from '@/components/button';
 
-type Section = {
-  id: string;
-  title: string;
-  subTitle: string;
-};
-
 interface SideBarCardProps {
   title: string;
   subTitle: string;
-  sections: Array<Section>;
+  sections: Array<{
+    id: string;
+    title: string;
+    subTitle: string;
+  }>;
   isDeletable?: boolean;
+  onSelect?: () => void;
+  onDelete?: () => void;
 }
 
 export const SideBarCard: React.FC<SideBarCardProps> = ({
@@ -22,28 +22,36 @@ export const SideBarCard: React.FC<SideBarCardProps> = ({
   subTitle,
   sections,
   isDeletable = false,
+  onSelect,
+  onDelete,
 }: SideBarCardProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
-  const toggleExpand = () => {
+  const handleClick = () => {
     setIsExpanded(!isExpanded);
+    onSelect?.();
+  };
+
+  const handleDelete = (e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent triggering the card click
+    onDelete?.();
   };
 
   return (
     <div className="sidebar-container">
-      <div
-        className="chapter"
-        onClick={toggleExpand}
-        role="button"
-        tabIndex={0}
-      >
+      <div className="chapter" onClick={handleClick} role="button" tabIndex={0}>
         <Book className="section-icon" />
         <div className="chapter-content">
           <div className="chapter-title">{title}</div>
           <div className="chapter-subtitle">{subTitle}</div>
         </div>
         {isDeletable && (
-          <Button size="small" variant="ghost" type="tertiary">
+          <Button
+            size="small"
+            variant="ghost"
+            type="tertiary"
+            onPress={handleDelete}
+          >
             <Trash2 size={16} />
           </Button>
         )}

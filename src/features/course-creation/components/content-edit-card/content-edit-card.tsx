@@ -2,36 +2,31 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Pencil, Save, Trash2 } from 'lucide-react';
 import React, { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
-import { Editor } from 'src/components/editor';
 import { z } from 'zod';
 
 import { Button } from '@/components/button';
+import { Editor } from '@/components/editor';
 import { TextField } from '@/components/text-field';
-import { editCourseFormSchema } from '@/features/course-creation/config/form.ts';
+import { ContentEditCardProps } from '@/types/course-editor.types';
 
-import './content-edit-card.scss';
+const editCourseFormSchema = z.object({
+  title: z.string().min(1, 'Title is required'),
+  subTitle: z.string().min(1, 'Subtitle is required'),
+  content: z.string().optional(),
+});
 
 type FormData = z.infer<typeof editCourseFormSchema>;
 
-interface ContentCardProps {
-  title: string;
-  subtitle: string;
-  variant: 'chapter' | 'section';
-  content: string;
-  isEditable: boolean;
-}
-
-export const ContentEditCard: React.FC<ContentCardProps> = ({
+export const ContentEditCard: React.FC<ContentEditCardProps> = ({
   title,
-  subtitle,
-  variant = 'chapter',
+  subTitle,
+  variant,
   content,
   isEditable,
-}: ContentCardProps) => {
-  // const [cardTitle, setCardTitle] = useState(title);
-  // const [cardSubtitle, setCardSubtitle] = useState(subtitle);
-  // const [cardContent, setCardContent] = useState(content);
-  const [isEditEnabled, setIsEditEnabled] = useState(false);
+  onSave,
+  onDelete,
+}) => {
+  const [isEditMode, setIsEditMode] = useState(false);
 
   const {
     handleSubmit,
@@ -41,27 +36,21 @@ export const ContentEditCard: React.FC<ContentCardProps> = ({
     resolver: zodResolver(editCourseFormSchema),
     defaultValues: {
       title,
-      subtitle,
+      subTitle,
       content,
     },
   });
 
-  // const onCardContentChange = (html: string) => {
-  //   setCardContent(html);
-  // };
-
-  const onSave = async (data: FormData) => {
-    setIsEditEnabled(false);
-    console.log(data.subtitle);
-    // if (false) {
-    //   setCardTitle('test');
-    //   setCardSubtitle('test');
-    // }
+  const handleSaveClick = async (data: FormData) => {
+    if (onSave) {
+      await onSave(data);
+      setIsEditMode(false);
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit(onSave)} className="content-card">
-      {isEditEnabled ? (
+    <form onSubmit={handleSubmit(handleSaveClick)} className="content-card">
+      {isEditMode ? (
         <>
           <div className="content-card--header">
             <div className="content-card__content">
@@ -71,9 +60,8 @@ export const ContentEditCard: React.FC<ContentCardProps> = ({
                 }
               >
                 <Controller
-                  name={'title'}
+                  name="title"
                   control={control}
-                  rules={{ required: true, maxLength: 150 }}
                   render={({ field }) => (
                     <TextField
                       text={field.value}
@@ -93,9 +81,8 @@ export const ContentEditCard: React.FC<ContentCardProps> = ({
                 }
               >
                 <Controller
-                  name={'subtitle'}
+                  name="subTitle"
                   control={control}
-                  rules={{ required: true, maxLength: 150 }}
                   render={({ field }) => (
                     <TextField
                       text={field.value}
@@ -103,15 +90,22 @@ export const ContentEditCard: React.FC<ContentCardProps> = ({
                     />
                   )}
                 />
-                {errors.subtitle && (
-                  <span className="error">{errors.subtitle.message}</span>
+                {errors.subTitle && (
+                  <span className="error">{errors.subTitle.message}</span>
                 )}
               </div>
             </div>
             <div className="content-card__actions">
-              <Button size="small" variant="ghost" type="tertiary">
-                <Trash2 size={24} />
-              </Button>
+              {onDelete && (
+                <Button
+                  size="small"
+                  variant="ghost"
+                  type="tertiary"
+                  onPress={onDelete}
+                >
+                  <Trash2 size={24} />
+                </Button>
+              )}
               <Button
                 size="small"
                 type="primary"
@@ -125,17 +119,15 @@ export const ContentEditCard: React.FC<ContentCardProps> = ({
           {variant === 'section' && (
             <div>
               <Controller
-                name={'content'}
+                name="content"
                 control={control}
-                rules={{ required: true }}
                 render={({ field }) => (
                   <Editor
-                    content={field.value}
+                    content={field.value || ''}
                     onChange={(e) => field.onChange(e)}
                   />
                 )}
               />
-              {/*<Editor content={cardContent} onChange={onCardContentChange} />*/}
             </div>
           )}
         </>
@@ -157,13 +149,13 @@ export const ContentEditCard: React.FC<ContentCardProps> = ({
                     : 'section--subtitle'
                 }
               >
-                {subtitle}
+                {subTitle}
               </div>
             </div>
             <div className="content-card__actions">
               {isEditable && (
                 <Button
-                  onPress={() => setIsEditEnabled((state) => !state)}
+                  onPress={() => setIsEditMode(true)}
                   size="small"
                   type="primary"
                   variant="ghost"

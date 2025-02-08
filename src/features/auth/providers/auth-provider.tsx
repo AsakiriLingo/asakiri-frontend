@@ -1,71 +1,21 @@
-import { AppState, Auth0Provider, useAuth0 } from '@auth0/auth0-react';
-import React, { useEffect } from 'react';
-import { env } from 'src/config/env.ts';
+import React, { createContext, useContext } from 'react';
 
-import { useAuthStore } from '../stores/auth-store.ts';
+import { useAuth } from '../hooks/use-auth';
+import { AuthContextType } from '../types/auth.types';
 
-const AuthStateSync = ({ children }: { children: React.ReactNode }) => {
-  const {
-    user,
-    isAuthenticated,
-    isLoading,
-    getAccessTokenSilently,
-    loginWithRedirect,
-    logout,
-  } = useAuth0();
-  const setAuthState = useAuthStore((state) => state.setAuthState);
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-  useEffect(() => {
-    setAuthState({ isAuthenticated, user, isLoading });
-    useAuthStore.setState({
-      getAccessToken: async () => {
-        try {
-          const token = await getAccessTokenSilently();
-          useAuthStore.setState({ accessToken: token });
-          return token;
-        } catch (error) {
-          console.error('Error getting access token:', error);
-          return null;
-        }
-      },
-      loginWithRedirect,
-      logout: () =>
-        logout({ logoutParams: { returnTo: window.location.origin } }),
-    });
-  }, [
-    isAuthenticated,
-    user,
-    isLoading,
-    getAccessTokenSilently,
-    loginWithRedirect,
-    logout,
-    setAuthState,
-  ]);
-
-  return <>{children}</>;
+export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
+  const auth = useAuth();
+  return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>;
 };
 
-export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const onRedirectCallback = (appState: AppState | undefined) => {
-    window.location.replace(
-      appState && appState.targetUrl
-        ? appState.targetUrl
-        : window.location.pathname
-    );
-  };
-  return (
-    <Auth0Provider
-      domain={env.AUTH0_DOMAIN}
-      clientId={env.AUTH0_CLIENT_ID}
-      authorizationParams={{
-        redirect_uri: window.location.origin,
-        audience: env.AUTH0_AUDIENCE,
-      }}
-      cacheLocation="localstorage"
-      useRefreshTokens={true}
-      onRedirectCallback={onRedirectCallback}
-    >
-      <AuthStateSync>{children}</AuthStateSync>
-    </Auth0Provider>
-  );
+export const useAuthContext = () => {
+  const context = useContext(AuthContext);
+  if (context === undefined) {
+    throw new Error('useAuthContext must be used within an AuthProvider');
+  }
+  return context;
 };

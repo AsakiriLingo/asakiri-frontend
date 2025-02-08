@@ -1,7 +1,8 @@
 interface AuthUser {
+  id: string;
   email?: string;
   name?: string;
-  picture?: string;
+  avatar_url?: string;
 }
 
 interface AuthState {
@@ -14,8 +15,8 @@ interface AuthState {
 interface AuthStore extends AuthState {
   setAuthState: (state: Partial<AuthState>) => void;
   getAccessToken: () => Promise<string | null>;
-  loginWithRedirect: (() => Promise<void>) | null;
-  logout: (() => Promise<void>) | null;
+  loginWithRedirect: () => Promise<void>;
+  logout: () => Promise<Error | null>;
 }
 
 export type { AuthUser, AuthState, AuthStore };

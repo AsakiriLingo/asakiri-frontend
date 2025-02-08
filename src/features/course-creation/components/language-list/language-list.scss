@@ -1,13 +1,31 @@
-@use '@styles/styles';
-
-.language-list__container {
-  display: flex;
-  flex-direction: column;
+.language-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   gap: var(--gap-md);
-  background-color: var(--surface-container-low);
-  width: 900px;
-  padding: var(--gap-lg);
-  border-radius: var(--radius-md);
+  margin-top: var(--gap-md);
+  max-height: 400px;
+  overflow-y: auto;
+  padding: var(--padding-sm);
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-md);
+    background-color: var(--surface-container-low);
+    width: 900px;
+    padding: var(--gap-lg);
+    border-radius: var(--radius-md);
+  }
+
+  button {
+    width: 100%;
+    text-align: center;
+    transition: transform 0.2s ease;
+
+    &:hover {
+      transform: scale(1.02);
+    }
+  }
 }
 
 .heading {
@@ -16,3 +34,65 @@
   margin: 0;
 }
 
+// creator.scss
+.creator-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-md);
+  background-color: var(--surface-container-lowest);
+  width: 900px;
+  padding: var(--gap-lg);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--outline-alt);
+
+  .error {
+    color: var(--error);
+    font-size: 0.875rem;
+    margin-top: -0.5rem;
+  }
+}
+
+.creator-section-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-sm);
+}
+
+.label-bold {
+  @extend .label-bold;
+  color: var(--on-surface);
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  margin-top: var(--gap-md);
+}
+
+.selected-language {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-sm);
+  padding: var(--padding-sm);
+  background-color: var(--surface-container);
+  border-radius: var(--radius-sm);
+  margin-top: var(--gap-xs);
+
+  &__text {
+    @extend .body;
+    color: var(--on-surface);
+  }
+
+  &__clear {
+    color: var(--error);
+    cursor: pointer;
+    padding: 2px;
+    border-radius: 50%;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: var(--surface-container-high);
+    }
+  }
+}

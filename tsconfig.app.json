@@ -29,7 +29,8 @@
       "@/components": ["./src/components/*"],
       "@/features": ["./src/components/features/*"],
       "@styles/*": ["styles/*"]
-    }
+    },
+    "allowSyntheticDefaultImports": true
   },
   "include": [
     "src"

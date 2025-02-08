@@ -1,36 +1,41 @@
 import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { Avatar } from '@/components/avatar';
 import { Button } from '@/components/button';
 import { Image } from '@/components/image';
 import { NavigationItem } from '@/components/navigation-item';
 import { SearchField } from '@/components/search-field';
-import ThemeSwitcher from '@/components/theme-switcher/theme-switcher.tsx';
-import { useAuthStore } from '@/features/auth/stores/auth-store.ts';
+import ThemeSwitcher from '@/components/theme-switcher/theme-switcher';
+import { useAuth } from '@/features/auth/hooks/use-auth';
 import './nav-bar.scss';
 
 export const NavBar: React.FC = () => {
-  const { isAuthenticated, loginWithRedirect } = useAuthStore();
+  const { user, signOut } = useAuth();
+  const navigate = useNavigate();
+
   const routes = [
-    { title: 'Home', route: './' },
-    { title: 'Teach on Asakiri', route: './teach' },
-    { title: 'My Learning', route: './my-learning' },
+    { title: 'Home', route: '/' },
+    { title: 'Teach on Asakiri', route: '/teach' },
+    { title: 'My Learning', route: '/my-learning' },
   ];
 
-  const handleSignIn = async () => {
-    await loginWithRedirect?.();
+  const handleSignOut = async () => {
+    await signOut();
+    navigate('/');
   };
+
   return (
     <nav className="nav-container">
       <div className="left-container">
-        <a className="logo" href="./">
+        <Link className="logo" to="/">
           <Image
             width="39px"
             height="41px"
             src="/asakiri-logo.svg"
             alt="Asakiri Logo"
-          ></Image>
-        </a>
+          />
+        </Link>
         <div className="routes">
           {routes.map((route, index) => (
             <NavigationItem
@@ -47,16 +52,21 @@ export const NavBar: React.FC = () => {
       </div>
       <div className="right-container">
         <ThemeSwitcher />
-        {isAuthenticated ? (
+        {user ? (
           <div className="right-container">
-            <Avatar size={42} username="Alok" />
+            <Avatar size={42} username={user.email?.split('@')[0] || 'User'} />
+            <Button variant="ghost" size="small" onPress={handleSignOut}>
+              Sign Out
+            </Button>
           </div>
         ) : (
           <div className="right-container">
-            <Button variant="flat" size="small" onPress={handleSignIn}>
+            <Button variant="flat" size="small" isLink={true} href="/login">
               Sign In
             </Button>
-            <Button size="small">Sign Up</Button>
+            <Button size="small" isLink={true} href="/sign-up">
+              Sign Up
+            </Button>
           </div>
         )}
       </div>
