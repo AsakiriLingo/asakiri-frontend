@@ -1,86 +1,150 @@
-import { Auth } from '@supabase/auth-ui-react';
-import { ThemeSupa } from '@supabase/auth-ui-shared';
-import { useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { zodResolver } from '@hookform/resolvers/zod';
+import React, { useState } from 'react';
+import { useForm, Controller } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import { z } from 'zod';
 
+import { Button } from '@/components/button';
 import { Head } from '@/components/seo';
-import { useAuth } from '@/features/auth/hooks/use-auth';
+import { TextField } from '@/components/text-field';
+import { toast } from '@/components/toast';
 import { supabase } from '@/lib/supabase/client';
-import './auth.scss';
 
-const SignInPage = () => {
+import './sign-in.scss';
+
+const loginSchema = z.object({
+  email: z.string().email('Invalid email address'),
+  password: z.string().min(1, 'Password is required'),
+});
+
+type LoginFormData = z.infer<typeof loginSchema>;
+
+const SigninPage: React.FC = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const { user } = useAuth();
 
-  useEffect(() => {
-    if (user) {
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+    setError,
+  } = useForm<LoginFormData>({
+    resolver: zodResolver(loginSchema),
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+  });
+
+  const onSubmit = async (data: LoginFormData) => {
+    try {
+      setIsLoading(true);
+
+      const { error: signInError } = await supabase.auth.signInWithPassword({
+        email: data.email,
+        password: data.password,
+      });
+
+      if (signInError) {
+        if (signInError.message.includes('email')) {
+          setError('email', {
+            type: 'manual',
+            message: 'Invalid email address',
+          });
+        } else if (signInError.message.includes('password')) {
+          setError('password', {
+            type: 'manual',
+            message: 'Invalid password',
+          });
+        } else {
+          // Generic auth error
+          setError('password', {
+            type: 'manual',
+            message: 'Invalid email or password',
+          });
+        }
+        return;
+      }
+
+      toast.success('Login successful!');
       navigate('/');
+    } catch (error) {
+      console.error('Login error:', error);
+      toast.error('Failed to log in. Please try again.');
+    } finally {
+      setIsLoading(false);
     }
-  }, [user, navigate]);
+  };
 
   return (
-    <>
-      <Head description="Sign in to Asakiri" />
-      <div className="auth-page">
-        <div className="auth-container">
-          <div className="auth-header">
-            <Link to="/" className="auth-logo-link">
-              <img
-                src="/asakiri-logo.svg"
-                alt="Asakiri Logo"
-                className="auth-logo"
-              />
-            </Link>
-            <h1 className="auth-title">Welcome back</h1>
-            <p className="auth-subtitle">Sign in to your account to continue</p>
+    <div className="login">
+      <Head description="Log in to Asakiri"></Head>
+      <div className="login__container">
+        <h1 className="login__title">Welcome Back</h1>
+        <form className="login__form" onSubmit={handleSubmit(onSubmit)}>
+          <div className="form-group">
+            <Controller
+              name="email"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  label="Email"
+                  text={field.value}
+                  onChange={(e) => field.onChange(e.target.value)}
+                />
+              )}
+            />
+            {errors.email && <p className="error">{errors.email.message}</p>}
           </div>
 
-          <Auth
-            supabaseClient={supabase}
-            appearance={{
-              theme: ThemeSupa,
-              variables: {
-                default: {
-                  colors: {
-                    brand: 'var(--primary)',
-                    brandAccent: 'var(--primary-container)',
-                  },
-                  radii: {
-                    borderRadiusButton: 'var(--radius-md)',
-                    inputBorderRadius: 'var(--radius-sm)',
-                  },
-                },
-              },
-              className: {
-                container: 'auth-form-container',
-                button: 'auth-button',
-                input: 'auth-input',
-                label: 'auth-label',
-                loader: 'auth-loader',
-                message: 'auth-message',
-                divider: 'auth-divider',
-                anchor: 'auth-link',
-              },
-            }}
-            view="sign_in"
-            theme="default"
-            showLinks={false}
-            providers={['google']}
-            redirectTo={`${window.location.origin}/auth/callback`}
-          />
-
-          <div className="auth-footer">
-            <p>
-              Don't have an account?{' '}
-              <Link to="/sign-up" className="auth-link">
-                Sign up
-              </Link>
-            </p>
+          <div className="form-group">
+            <Controller
+              name="password"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  label="Password"
+                  text={field.value}
+                  onChange={(e) => field.onChange(e.target.value)}
+                  type="password"
+                />
+              )}
+            />
+            {errors.password && (
+              <p className="error">{errors.password.message}</p>
+            )}
           </div>
+
+          <Button type="primary" size="medium" actionType="submit">
+            {isLoading ? 'Logging in...' : 'Log In'}
+          </Button>
+        </form>
+        <div className="login__links">
+          <Button
+            type="primary"
+            variant="ghost"
+            size="small"
+            isLink={true}
+            href="/forgot-password"
+          >
+            Forgot Password?
+          </Button>
+          <p className="login__signup-text">
+            Don't have an account?{' '}
+            <Button
+              type="primary"
+              variant="ghost"
+              size="small"
+              isLink={true}
+              href="/sign-up"
+            >
+              Sign up
+            </Button>
+          </p>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
-export default SignInPage;
+export default SigninPage;

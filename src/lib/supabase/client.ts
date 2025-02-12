@@ -1,6 +1,6 @@
-import { createClient } from '@supabase/supabase-js';
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
-import { Database } from './types';
+import type { Database } from './types';
 
 if (!import.meta.env.VITE_SUPABASE_URL) {
   throw new Error('Missing environment variable: VITE_SUPABASE_URL');
@@ -25,3 +25,22 @@ export const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey, {
     },
   },
 });
+
+interface ErrorResponse {
+  message: string;
+  code?: string;
+}
+
+// Error handling wrapper
+export const handleError = (error: Error | null): ErrorResponse | null => {
+  if (error) {
+    console.error('Supabase Error:', error.message);
+    return {
+      message: error.message,
+      code: (error as { code?: string }).code,
+    };
+  }
+  return null;
+};
+
+export type TypedSupabaseClient = SupabaseClient<Database>;
