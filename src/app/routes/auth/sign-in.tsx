@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { z } from 'zod';
 
 import { Button } from '@/components/button';
+import { Image } from '@/components/image';
 import { Head } from '@/components/seo';
 import { TextField } from '@/components/text-field';
 import { toast } from '@/components/toast';
@@ -21,6 +22,7 @@ type LoginFormData = z.infer<typeof loginSchema>;
 
 const SigninPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [isGoogleLoading, setIsGoogleLoading] = useState(false);
   const navigate = useNavigate();
 
   const {
@@ -35,6 +37,33 @@ const SigninPage: React.FC = () => {
       password: '',
     },
   });
+
+  const handleGoogleSignIn = async () => {
+    try {
+      setIsGoogleLoading(true);
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: `${window.location.origin}/auth/callback`,
+          queryParams: {
+            access_type: 'offline',
+            prompt: 'consent',
+          },
+        },
+      });
+
+      if (error) {
+        throw error;
+      }
+
+      toast.success('Signing in with Google...');
+    } catch (error) {
+      console.error('Google sign in error:', error);
+      toast.error('Failed to sign in with Google. Please try again.');
+    } finally {
+      setIsGoogleLoading(false);
+    }
+  };
 
   const onSubmit = async (data: LoginFormData) => {
     try {
@@ -81,6 +110,25 @@ const SigninPage: React.FC = () => {
       <Head description="Log in to Asakiri"></Head>
       <div className="login__container">
         <h1 className="login__title">Welcome Back</h1>
+
+        {/* Google Sign In Button */}
+        <Button type="tertiary" size="medium" onPress={handleGoogleSignIn}>
+          <span className="login__google-button-content">
+            <Image
+              className="login__google-icon"
+              height="20px"
+              width="20px"
+              src="/icons/google-icon.svg"
+              alt={'Google'}
+            />
+            {isGoogleLoading ? 'Connecting...' : 'Continue with Google'}
+          </span>
+        </Button>
+
+        <div className="login__divider">
+          <span className="login__divider-text">or</span>
+        </div>
+
         <form className="login__form" onSubmit={handleSubmit(onSubmit)}>
           <div className="form-group">
             <Controller
@@ -119,6 +167,7 @@ const SigninPage: React.FC = () => {
             {isLoading ? 'Logging in...' : 'Log In'}
           </Button>
         </form>
+
         <div className="login__links">
           <Button
             type="primary"

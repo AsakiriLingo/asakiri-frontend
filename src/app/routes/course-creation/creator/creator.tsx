@@ -5,7 +5,7 @@ import { Head } from '@/components/seo';
 import './creator.scss';
 import { CourseCreator } from '@/features/course-creation/components/course-creator';
 
-const CourseSettingsRoute: React.FC = () => {
+const CourseCreatorRoute: React.FC = () => {
   return (
     <>
       <Head description={'Course Creator'}></Head>
@@ -23,4 +23,4 @@ const CourseSettingsRoute: React.FC = () => {
     </>
   );
 };
-export default CourseSettingsRoute;
+export default CourseCreatorRoute;
