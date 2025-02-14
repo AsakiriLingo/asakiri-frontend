@@ -1,11 +1,5 @@
 import { Search } from 'lucide-react';
-import React from 'react';
-import {
-  SearchField as AriaSearchField,
-  Label,
-  Input,
-  Button,
-} from 'react-aria-components';
+import React, { ChangeEvent } from 'react';
 
 import './search-field.scss';
 
@@ -14,24 +8,28 @@ type SearchFieldProps = {
   buttonLabel?: string;
   value?: string;
   placeholder?: string;
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
 };
 
 export const SearchField: React.FC<SearchFieldProps> = ({
   label,
   value,
   placeholder,
+  onChange,
 }: SearchFieldProps) => {
   return (
-    <AriaSearchField className={`search-field`}>
-      <Button className={`icon`}>
+    <div className="search-field">
+      <button className="icon" type="button">
         <Search size={20} className="search-icon" />
-      </Button>
-      <Label>{label}</Label>
-      <Input
-        value={value ?? undefined}
-        className={`input`}
+      </button>
+      {label && <label>{label}</label>}
+      <input
+        type="text"
+        value={value}
+        className="input"
         placeholder={placeholder}
+        onChange={onChange}
       />
-    </AriaSearchField>
+    </div>
   );
 };

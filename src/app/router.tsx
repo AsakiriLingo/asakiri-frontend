@@ -7,6 +7,9 @@ const Home = lazy(() => import('./routes/landing/landing.tsx'));
 const CourseDetails = lazy(
   () => import('@/app/routes/course-view/details/details.tsx')
 );
+const SignInPage = lazy(() => import('@/app/routes/auth/sign-in.tsx'));
+const SignUpPage = lazy(() => import('@/app/routes/auth/sign-up.tsx'));
+
 const CourseEditor = lazy(
   () => import('@/app/routes/course-creation/editor/editor.tsx')
 );
@@ -62,6 +65,14 @@ const createAppRouter = () =>
     {
       path: '/teach',
       element: <CourseTeaching />,
+    },
+    {
+      path: '/sign-in',
+      element: <SignInPage />,
+    },
+    {
+      path: '/sign-up',
+      element: <SignUpPage />,
     },
     {
       path: '/my-learning',

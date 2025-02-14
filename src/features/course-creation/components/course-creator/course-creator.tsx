@@ -1,118 +1,166 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
-import { z } from 'zod';
+import { useNavigate } from 'react-router-dom';
+
+import { createCourseFormSchema } from '../../schemas';
+import { CourseFormData } from '../../types';
+
+import './course-creator.scss';
 
 import { Button } from '@/components/button';
 import { DialogTrigger } from '@/components/dialog-trigger';
 import { Modal } from '@/components/modal';
 import { TextArea } from '@/components/text-area';
 import { TextField } from '@/components/text-field';
-import { useCourseCreationAPI } from '@/features/course-creation/api/course-creation.ts';
+import { toast } from '@/components/toast';
+import { useCourseCreationAPI } from '@/features/course-creation/api/course-creation';
 import { LanguageList } from '@/features/course-creation/components/language-list';
-import { createCourseFormSchema } from '@/features/course-creation/config/form.ts';
-
-import './course-creator.scss';
-
-type FormData = z.infer<typeof createCourseFormSchema>;
+import { Language } from '@/types/language.types';
 
 export const CourseCreator: React.FC = () => {
+  const navigate = useNavigate();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { createCourse } = useCourseCreationAPI();
+
   const {
     handleSubmit,
     control,
+    setValue,
     formState: { errors },
-  } = useForm<FormData>({
+  } = useForm<CourseFormData>({
     resolver: zodResolver(createCourseFormSchema),
+    defaultValues: {
+      title: '',
+      shortDescription: '',
+      description: '',
+      languageTaught: null,
+      courseLanguage: null,
+    },
   });
 
-  const { createCourse } = useCourseCreationAPI();
-
-  const onSubmit = async (data: FormData) => {
-    await createCourse({
-      title: data.title,
-      shortDescription: data.shortDescription,
-      description: data.description,
-      courseLanguage: 'english',
-      languageTaught: 'german',
-    });
+  const onLanguageTaughtSelect = (language: Language) => {
+    setValue('languageTaught', language, { shouldValidate: true });
   };
+
+  const onCourseLanguageSelect = (language: Language) => {
+    setValue('courseLanguage', language, { shouldValidate: true });
+  };
+
+  const onSubmit = async (data: CourseFormData) => {
+    try {
+      setIsSubmitting(true);
+
+      if (!data.languageTaught || !data.courseLanguage) {
+        toast.error('Please select both languages');
+        return;
+      }
+
+      await createCourse({
+        title: data.title,
+        shortDescription: data.shortDescription,
+        description: data.description,
+        courseLanguage: data.courseLanguage.code,
+        languageTaught: data.languageTaught.code,
+      });
+
+      toast.success('Course created successfully!');
+      navigate('/teach');
+    } catch (error) {
+      console.error('Failed to create course:', error);
+      toast.error('Failed to create course. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="creator-container">
-        <Controller
-          name={'title'}
-          control={control}
-          rules={{ required: true, maxLength: 4 }}
-          render={({ field }) => (
-            <TextField
-              label="Course Name"
-              text={field.value}
-              onChange={(e) => field.onChange(e)}
-            />
-          )}
-        />
-        {errors.title && <span className="error">Title is Required</span>}
-        <Controller
-          name="shortDescription"
-          control={control}
-          rules={{ required: true }}
-          render={({ field }) => (
-            <TextField
-              text={field.value}
-              label="Course Short Description"
-              onChange={(e) => field.onChange(e)}
-            />
-          )}
-        />
-        {errors.shortDescription && (
-          <span className="error">Short description is Required</span>
+    <form onSubmit={handleSubmit(onSubmit)} className="creator-container">
+      <Controller
+        name="title"
+        control={control}
+        render={({ field }) => (
+          <TextField
+            label="Course Name"
+            text={field.value}
+            onChange={(e) => field.onChange(e.target.value)}
+          />
         )}
-        <Controller
-          name="description"
-          control={control}
-          rules={{ required: true }}
-          render={({ field }) => (
-            <TextArea
-              text={field.value}
-              label="Course Description"
-              onChange={(e) => field.onChange(e)}
-            />
-          )}
-        />
-        {errors.description && (
-          <span className="error">Description is Required</span>
+      />
+      {errors.title && <span className="error">{errors.title.message}</span>}
+
+      <Controller
+        name="shortDescription"
+        control={control}
+        render={({ field }) => (
+          <TextField
+            label="Course Short Description"
+            text={field.value}
+            onChange={(e) => field.onChange(e.target.value)}
+          />
         )}
-        <div className="creator-section-container">
-          <div className="label-bold">Language Taught</div>
-          <div>
-            <DialogTrigger>
-              <Button size="small" variant="flat">
-                Select Language Taught
-              </Button>
-              <Modal>
-                <LanguageList heading="Language Taught" />
-              </Modal>
-            </DialogTrigger>
-          </div>
-        </div>
-        <div className="section-container">
-          <div className="label-bold">Course Language</div>
-          <div>
-            <DialogTrigger>
-              <Button size="small" variant="flat">
-                Select Course Language
-              </Button>
-              <Modal>
-                <LanguageList heading="Course Language" />
-              </Modal>
-            </DialogTrigger>
-          </div>
-        </div>
-        <div className="actions">
-          <Button actionType="submit" type="secondary" size="small">
-            Create Course
+      />
+      {errors.shortDescription && (
+        <span className="error">{errors.shortDescription.message}</span>
+      )}
+
+      <Controller
+        name="description"
+        control={control}
+        render={({ field }) => (
+          <TextArea
+            label="Course Description"
+            text={field.value}
+            onChange={(e) => field.onChange(e.target.value)}
+          />
+        )}
+      />
+      {errors.description && (
+        <span className="error">{errors.description.message}</span>
+      )}
+
+      <div className="creator-section-container">
+        <div className="label-bold">Language Taught</div>
+        <DialogTrigger>
+          <Button size="small" variant="flat">
+            {control._formValues.languageTaught?.name_en ??
+              'Select Language Taught'}
           </Button>
-        </div>
+          <Modal>
+            <LanguageList
+              heading="Language Taught"
+              onSelect={onLanguageTaughtSelect}
+            />
+          </Modal>
+        </DialogTrigger>
+        {errors.languageTaught && (
+          <span className="error">Please select a language to teach</span>
+        )}
+      </div>
+
+      <div className="creator-section-container">
+        <div className="label-bold">Course Language</div>
+        <DialogTrigger>
+          <Button size="small" variant="flat">
+            {control._formValues.courseLanguage?.name_en ??
+              'Select Course Language'}
+          </Button>
+          <Modal>
+            <LanguageList
+              heading="Course Language"
+              onSelect={onCourseLanguageSelect}
+            />
+          </Modal>
+        </DialogTrigger>
+        {errors.courseLanguage && (
+          <span className="error">Please select a course language</span>
+        )}
+      </div>
+
+      <div className="actions">
+        <Button type="secondary" size="small" actionType="submit">
+          {isSubmitting ? 'Creating Course...' : 'Create Course'}
+        </Button>
       </div>
     </form>
   );

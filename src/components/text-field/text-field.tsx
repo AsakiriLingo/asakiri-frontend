@@ -12,6 +12,7 @@ interface TextFieldProps {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   label?: string;
   isTextArea?: boolean;
+  type?: string;
 }
 
 export const TextField: React.FC<TextFieldProps> = ({

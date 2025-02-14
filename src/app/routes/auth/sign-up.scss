@@ -1,0 +1,96 @@
+@use '@styles/styles';
+
+.sign-up {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--surface-bright);
+  padding: var(--padding-md);
+
+  &__container {
+    width: 100%;
+    max-width: 400px;
+    background-color: var(--surface-container-lowest);
+    padding: var(--padding-xl);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--outline-alt);
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__title {
+    @extend .heading-2;
+    color: var(--on-surface);
+    text-align: center;
+    margin-bottom: var(--gap-lg);
+  }
+
+  &__google-button {
+    width: 100%;
+    margin-bottom: var(--gap-md);
+
+    &-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--gap-sm);
+    }
+  }
+
+  &__google-icon {
+    color: var(--on-surface);
+  }
+
+  &__divider {
+    position: relative;
+    text-align: center;
+    margin: var(--gap-lg) 0;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background-color: var(--outline-variant);
+    }
+
+    &-text {
+      @extend .body;
+      color: var(--on-surface-variant);
+      background-color: var(--surface-container-lowest);
+      padding: 0 var(--padding-sm);
+      position: relative;
+      z-index: 1;
+    }
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-md);
+
+    .form-group {
+      width: 100%;
+    }
+
+    .error {
+      @extend .body-small;
+      color: var(--error);
+      margin-top: var(--gap-xs);
+    }
+  }
+
+  &__login-link {
+    @extend .body;
+    color: var(--on-surface-variant);
+    text-align: center;
+    margin-top: var(--gap-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--gap-xs);
+  }
+}

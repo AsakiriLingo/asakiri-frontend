@@ -1,8 +1,8 @@
 import { useQuery, useMutation, useQueryClient } from 'react-query';
 
 import { toast } from '@/components/toast';
-import { AuthUser } from '@/features/auth/types/auth.ts';
 import { useAxios } from '@/hooks/use-axios.tsx';
+import { AuthUser } from '@/types/auth.types';
 
 interface UpdateUserProfile {
   user_id: string;
