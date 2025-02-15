@@ -67,6 +67,14 @@ export const NavBar: React.FC = () => {
         {isAuthenticated ? (
           <div className="right-container">
             <Button
+              type="secondary"
+              size="small"
+              isLink={true}
+              href="/supporters"
+            >
+              Support Us
+            </Button>
+            <Button
               type="primary"
               variant="ghost"
               size="small"

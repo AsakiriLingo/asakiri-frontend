@@ -2,7 +2,6 @@ import React from 'react';
 
 import { Image } from '@/components/image';
 import './footer.scss';
-import KofiWidget from '@/components/kofi-widget/kofi-widget.tsx';
 
 export const Footer: React.FC = () => {
   return (
@@ -19,7 +18,7 @@ export const Footer: React.FC = () => {
               />
               <div className="footer-logo-text">
                 <h3 className="footer-heading">Asakiri</h3>
-                <p>Community Driven Language Learning</p>
+                <p>Where language learning comes to life</p>
                 <p>&copy; 2025 Asakiri. All rights reserved.</p>
               </div>
             </div>
@@ -33,10 +32,16 @@ export const Footer: React.FC = () => {
                   <a href="./teach">Teach on Asakiri</a>
                 </li>
                 <li>
+                  <a href="./supporters">Support Asakiri</a>
+                </li>
+                <li>
                   <a href="./about">About Us</a>
                 </li>
                 <li>
                   <a href="./privacy-policy">Privacy Policy</a>
+                </li>
+                <li>
+                  <a href="./terms">Terms & Conditions</a>
                 </li>
               </ul>
             </div>
@@ -77,7 +82,6 @@ export const Footer: React.FC = () => {
               </div>
             </div>
           </div>
-          <KofiWidget username="asakiri" />
         </div>
       </footer>
     </>

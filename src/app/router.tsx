@@ -40,6 +40,10 @@ const TermsPage = lazy(
   () => import('@/app/routes/static-pages/privacy-and-terms/terms.tsx')
 );
 
+const SupportersPage = lazy(
+  () => import('@/app/routes/static-pages/supporters/supporters.tsx')
+);
+
 const createAppRouter = () =>
   createBrowserRouter([
     {
@@ -97,6 +101,10 @@ const createAppRouter = () =>
     {
       path: '/terms',
       element: <TermsPage />,
+    },
+    {
+      path: '/supporters',
+      element: <SupportersPage />,
     },
   ]);
 
