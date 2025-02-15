@@ -1,6 +1,22 @@
 @use '@styles/styles';
 
-.profile-container  {
+.profile-settings__heading {
+  display: flex;
+  align-items: center;
+  width: 900px;
+  justify-content: space-between;
+  padding: var(--padding-lg);
+  background-color: var(--surface-container-lowest);
+  border-radius: var(--radius-md);
+}
+
+.profile-settings__title {
+  @extend .heading-4;
+  color: var(--on-surface);
+  margin: 0;
+}
+
+.profile-container {
   display: flex;
   flex-direction: column;
   gap: var(--gap-md);
@@ -8,6 +24,7 @@
   width: 900px;
   padding: var(--gap-lg);
   border-radius: var(--radius-md);
+  border: 1px solid var(--outline-alt);
 }
 
 .section-container {
@@ -18,10 +35,27 @@
 
 .avatar-section {
   display: flex;
-  justify-content: space-between;
+  align-items: center;
+  gap: var(--gap-xl);
+}
+
+.avatar-preview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.upload-section {
+  display: flex;
+  gap: var(--gap-sm);
 }
 
 .label-bold {
   @extend .label-bold;
   color: var(--on-surface);
+}
+
+.actions {
+  display: flex;
+  gap: var(--gap-md);
 }

@@ -2,9 +2,11 @@ import React from 'react';
 
 import { NavBar } from '@/components/nav-bar';
 import { Head } from '@/components/seo';
+import { ChaptersCard } from '@/features/courses/components/chapters-card';
+import { CourseDescription } from '@/features/courses/components/course-description';
 import { HeroCard } from '@/features/courses/components/hero-card';
 import { InstructorCard } from '@/features/courses/components/instructor-card';
-
+import { CourseViewData } from '@/mocks/course.ts';
 import './details.scss';
 
 const CourseDetailsRoute: React.FC = () => {
@@ -20,15 +22,19 @@ const CourseDetailsRoute: React.FC = () => {
           thumbnail="/spanish.jpg"
         />
       </header>
-      <section>
+      <section className="section-container">
         <div className="instructor-container">
           <InstructorCard
             name="Misa Amane"
             subTitle="subtitle"
-            description="description"
+            description="Sit semper aenean enim id consequat pretium bibendum. Placerat morbi sit interdum egestas est. Scelerisque in in nullam risus vitae aliquam mauris velit nulla. Vel proin arcu euismod sit scelerisque turpis aliquam sagittis. Lorem tristique dolor aliquet."
             avatar=""
             id={''}
           />
+        </div>
+        <div className="section-right">
+          <CourseDescription description="Sit semper aenean enim id consequat pretium bibendum. Placerat morbi sit interdum egestas est. Scelerisque in in nullam risus vitae aliquam mauris velit nulla. Vel proin arcu euismod sit scelerisque turpis aliquam sagittis. Lorem tristique dolor aliquet." />
+          <ChaptersCard chapters={CourseViewData} />
         </div>
       </section>
     </>

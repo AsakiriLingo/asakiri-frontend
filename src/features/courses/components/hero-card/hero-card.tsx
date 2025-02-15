@@ -31,7 +31,7 @@ export const HeroCard: React.FC<HeroCardProps> = ({
           <div className="hero-card--meta">
             <div className="hero-card--course-rating">
               <Image
-                src="/star.svg"
+                src="/icons/star.svg"
                 width="20px"
                 height="20px"
                 alt="star icon"
@@ -40,7 +40,7 @@ export const HeroCard: React.FC<HeroCardProps> = ({
             </div>
             <div className="hero-card--course-cost">
               <Image
-                src="/credit-card.svg"
+                src="/icons/credit-card.svg"
                 width="20px"
                 height="20px"
                 alt="credit card icon"

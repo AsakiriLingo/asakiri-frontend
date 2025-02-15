@@ -1,23 +1,28 @@
-import React, { JSX } from 'react';
+import { FileText } from 'lucide-react';
+import React from 'react';
 
 import './chapters-card.scss';
 import { Chapter } from '@/types/chapter.types.ts';
 
 interface ChaptersCardProps {
-  chapters: Array<Omit<Chapter, 'id' | 'sections' | 'serialNumber'>>;
+  chapters: Array<Chapter>;
 }
 
-export const ChaptersCard: React.FC<ChaptersCardProps> = ({
-  chapters,
-}: ChaptersCardProps): JSX.Element => {
+export const ChaptersCard: React.FC<ChaptersCardProps> = ({ chapters }) => {
   return (
-    <>
-      {chapters.map((chapter, index) => (
-        <div key={index}>
-          {chapter.title}
-          {chapter.subTitle}
+    <div className="chapters-container">
+      <h2 className="heading">Chapters in this Course</h2>
+      {chapters.map((chapter) => (
+        <div key={chapter.id} className="chapter-item">
+          <div className="icon-wrapper">
+            <FileText size={20} color="var(--on-surface-variant)" />
+          </div>
+          <div className="content">
+            <h3 className="title">{chapter.title}</h3>
+            <p className="subtitle">{chapter.subTitle}</p>
+          </div>
         </div>
       ))}
-    </>
+    </div>
   );
 };

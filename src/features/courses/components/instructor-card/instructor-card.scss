@@ -5,11 +5,39 @@
   background-color: var(--surface-container-lowest);
   border-radius: var(--radius-lg);
   display: flex;
+  gap: var(--gap-sm);
   flex-direction: column;
   font-family: "Noto Sans", sans-serif;
+  max-width: 400px;
+
+  &--header {
+    display: flex;
+    gap: var(--gap-sm);
+  }
 
   &--title {
     @extend .heading-3;
     color: var(--on-surface);
+  }
+
+  &--details {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &--name {
+    @extend .heading-4;
+    color: var(--on-surface);
+  }
+
+  &--subtitle {
+    @extend .body;
+    color: var(--on-surface-variant);
+  }
+
+  &--description {
+    @extend .body;
+    color: var(--on-surface-variant);
+
   }
 }
