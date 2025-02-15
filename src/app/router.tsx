@@ -33,7 +33,11 @@ const AboutPage = lazy(
   () => import('@/app/routes/static-pages/about/about.tsx')
 );
 const PrivacyPolicyPage = lazy(
-  () => import('@/app/routes/static-pages/privacy-policy/privacy-policy.tsx')
+  () => import('@/app/routes/static-pages/privacy-and-terms/privacy-policy.tsx')
+);
+
+const TermsPage = lazy(
+  () => import('@/app/routes/static-pages/privacy-and-terms/terms.tsx')
 );
 
 const createAppRouter = () =>
@@ -89,6 +93,10 @@ const createAppRouter = () =>
     {
       path: '/privacy-policy',
       element: <PrivacyPolicyPage />,
+    },
+    {
+      path: '/terms',
+      element: <TermsPage />,
     },
   ]);
 

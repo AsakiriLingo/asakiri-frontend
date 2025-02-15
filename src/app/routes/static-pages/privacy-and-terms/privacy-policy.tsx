@@ -3,9 +3,9 @@ import React from 'react';
 import { Footer } from '@/components/footer';
 import { NavBar } from '@/components/nav-bar';
 import { Head } from '@/components/seo';
-import './privacy-policy.scss';
+import './privacy-and-terms.scss';
 
-const ProfileSettingsRoute: React.FC = () => {
+const PrivacyPolicyRoute: React.FC = () => {
   return (
     <>
       <Head description={'Asakiri | Privacy Policy'}></Head>
@@ -170,4 +170,4 @@ const ProfileSettingsRoute: React.FC = () => {
     </>
   );
 };
-export default ProfileSettingsRoute;
+export default PrivacyPolicyRoute;
