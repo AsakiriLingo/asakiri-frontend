@@ -1,15 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { FileTrigger } from 'react-aria-components';
 
 import { Button } from '@/components/button';
 import { DialogTrigger } from '@/components/dialog-trigger';
+import { Image } from '@/components/image';
 import { Modal } from '@/components/modal';
-import { TextArea } from '@/components/text-area';
+import { SimpleTextEditor } from '@/components/simple-text-editor';
 import { TextField } from '@/components/text-field';
 import { LanguageList } from '@/features/course-creation/components/language-list';
 
 import './course-settings.scss';
 
 export const CourseSettings: React.FC = () => {
+  const [description, setDescription] = useState('');
+  const [thumbnail, setThumbnail] = useState<string | null>(null);
+
+  const handleThumbnailSelect = (files: FileList | null) => {
+    if (files && files[0]) {
+      const file = files[0];
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setThumbnail(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleSaveDescription = (content: string) => {
+    setDescription(content);
+    //API call to save the description
+  };
+
   return (
     <>
       <header className="course-settings__heading">
@@ -26,7 +47,47 @@ export const CourseSettings: React.FC = () => {
       <div className="settings-container">
         <TextField label="Course Name" />
         <TextField label="Course Short Description" />
-        <TextArea label="Course Description" />
+
+        <SimpleTextEditor
+          label="Course Description"
+          content={description}
+          onChange={setDescription}
+          onSave={handleSaveDescription}
+          placeholder="Write your course description..."
+        />
+
+        <div className="section-container">
+          <div className="label-bold">Course Thumbnail</div>
+          <div className="thumbnail-section">
+            <div className="thumbnail-preview">
+              {thumbnail ? (
+                <img
+                  src={thumbnail}
+                  alt="Course thumbnail preview"
+                  className="thumbnail-image"
+                />
+              ) : (
+                <div className="thumbnail-placeholder">
+                  <Image
+                    src="/api/placeholder/400/225"
+                    width="400px"
+                    height="225px"
+                    alt="Upload thumbnail"
+                  />
+                </div>
+              )}
+            </div>
+            <FileTrigger
+              onSelect={handleThumbnailSelect}
+              acceptedFileTypes={['image/jpeg', 'image/png', 'image/webp']}
+            >
+              <Button size="small" variant="flat">
+                {thumbnail ? 'Change Thumbnail' : 'Upload Thumbnail'}
+              </Button>
+            </FileTrigger>
+          </div>
+        </div>
+
         <div className="section-container">
           <div className="label-bold">Language Taught</div>
           <div>
@@ -40,6 +101,7 @@ export const CourseSettings: React.FC = () => {
             </DialogTrigger>
           </div>
         </div>
+
         <div className="section-container">
           <div className="label-bold">Course Language</div>
           <div>

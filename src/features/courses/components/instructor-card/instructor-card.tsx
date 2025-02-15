@@ -17,19 +17,24 @@ export const InstructorCard: React.FC<InstructorCardProps> = ({
     <div>
       <div className="instructor-card">
         <div className="instructor-card--title">Your Instructor</div>
-        <div className="instructor-card--avatar">
-          {avatar ? (
-            <img className="card--avatar" src={avatar} alt={`${name}`} />
-          ) : (
-            <Avatar
-              size={42}
-              name={name}
-              colors={['#264653', '#2a9d8f', '#e9c46a', '#f4a261', '#e76f51']}
-            />
-          )}
+        <div className="instructor-card--header">
+          <div className="instructor-card--avatar">
+            {avatar ? (
+              <img className="card--avatar" src={avatar} alt={`${name}`} />
+            ) : (
+              <Avatar
+                size={42}
+                name={name}
+                colors={['#264653', '#2a9d8f', '#e9c46a', '#f4a261', '#e76f51']}
+                variant="beam"
+              />
+            )}
+          </div>
+          <div className="instructor-card--details">
+            <div className="instructor-card--name">{name}</div>
+            <div className="instructor-card--subtitle">{subTitle}</div>
+          </div>
         </div>
-        <div className="instructor-card--name">{name}</div>
-        <div className="instructor-card--subtitle">{subTitle}</div>
         <div className="instructor-card--description">{description}</div>
 
         {id}
