@@ -19,6 +19,6 @@ export interface CreateCourseData {
   title: string;
   shortDescription: string;
   description?: string;
-  courseLanguage: string;
-  languageTaught: string;
+  courseLanguage: number;
+  languageTaught: number;
 }

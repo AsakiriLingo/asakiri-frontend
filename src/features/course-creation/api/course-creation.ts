@@ -1,6 +1,7 @@
 import { CreateCourseData } from '../types';
 
 import { supabase } from '@/lib/supabase/client';
+import { Course } from '@/types/course.types.ts';
 import { Language } from '@/types/language.types';
 
 interface CourseResponse<T> {
@@ -11,7 +12,7 @@ interface CourseResponse<T> {
 export const useCourseCreationAPI = () => {
   const createCourse = async (
     data: CreateCourseData
-  ): Promise<CourseResponse<never>> => {
+  ): Promise<CourseResponse<Course>> => {
     try {
       const {
         data: { user },
@@ -26,10 +27,10 @@ export const useCourseCreationAPI = () => {
           title: data.title,
           short_description: data.shortDescription,
           description: data.description || '',
-          course_language: data.courseLanguage.toLowerCase(),
-          language_taught: data.languageTaught.toLowerCase(),
+          course_language: data.courseLanguage,
+          language_taught: data.languageTaught,
           is_published: false,
-          author_id: user.id,
+          profile_id: user.id,
         })
         .select()
         .single();
@@ -39,16 +40,23 @@ export const useCourseCreationAPI = () => {
       return { data: course, error: null };
     } catch (error) {
       console.error('Course creation error:', error);
-      return { data: null, error: error as Error };
+      throw { data: null, error: error as Error };
     }
   };
 
-  const getLanguages = async (): Promise<CourseResponse<Language[]>> => {
+  const getLanguages = async (
+    searchTerm: string = ''
+  ): Promise<CourseResponse<Language[]>> => {
     try {
-      const { data, error } = await supabase
-        .from('languages')
-        .select('*')
-        .order('name_en');
+      let query = supabase.from('languages').select('*').order('name_en');
+
+      if (searchTerm) {
+        query = query.or(
+          `name_en.ilike.%${searchTerm}%,name_native.ilike.%${searchTerm}%`
+        );
+      }
+
+      const { data, error } = await query;
 
       if (error) throw error;
 

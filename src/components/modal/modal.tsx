@@ -5,12 +5,25 @@ import './modal.scss';
 
 interface ModalProps {
   children?: React.ReactNode;
+  isOpen?: boolean;
+  setIsOpen?: (isOpen: boolean) => void;
 }
 
-export const Modal: React.FC<ModalProps> = ({ children }: ModalProps) => {
+export const Modal: React.FC<ModalProps> = ({
+  children,
+  isOpen,
+  setIsOpen,
+}: ModalProps) => {
   return (
     <>
-      <AriaModal className="modal">{children}</AriaModal>
+      <AriaModal
+        className="modal"
+        isDismissable
+        isOpen={isOpen}
+        onOpenChange={setIsOpen}
+      >
+        {children}
+      </AriaModal>
     </>
   );
 };
