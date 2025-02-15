@@ -10,33 +10,43 @@
     @extend .label-bold;
     color: var(--on-surface);
   }
+
+  .input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .password-toggle {
+    position: absolute;
+    right: var(--padding-sm);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--on-surface-variant);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--padding-xs);
+    border-radius: 50%;
+
+    &:hover {
+      background-color: var(--surface-container-low);
+    }
+  }
 }
 
 .text-input {
   @extend .body;
   padding: var(--padding-sm) var(--padding-md);
+  padding-right: 40px; // Space for password toggle
   border-radius: var(--radius-md);
   border: 1px solid var(--outline-variant);
   color: var(--on-surface);
   background-color: transparent;
+  width: 100%;
 
   &:focus {
     outline: 2px solid var(--primary);
   }
 }
-
-.text-area{
-  @extend .body;
-  padding: var(--padding-sm) var(--padding-md);
-  border-radius: var(--radius-md);
-  border: 1px solid var(--outline-variant);
-  color: var(--on-surface);
-  background-color: transparent;
-  height: 200px;
-
-  &:focus {
-    outline: 2px solid var(--primary);
-  }
-}
-
-

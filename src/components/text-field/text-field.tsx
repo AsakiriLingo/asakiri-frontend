@@ -1,3 +1,4 @@
+import { EyeIcon, EyeOffIcon } from 'lucide-react';
 import React, { useState, ChangeEvent } from 'react';
 import {
   Input,
@@ -12,31 +13,53 @@ interface TextFieldProps {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   label?: string;
   isTextArea?: boolean;
-  type?: string;
+  type?: 'text' | 'password' | 'email' | 'number';
 }
 
 export const TextField: React.FC<TextFieldProps> = ({
   text,
   onChange,
   label,
+  type = 'text',
 }: TextFieldProps) => {
   const [textValue, setTextValue] = useState<string>(() => text ?? '');
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setTextValue(e.target.value);
     onChange?.(e);
   };
 
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const inputType =
+    type === 'password' ? (showPassword ? 'text' : 'password') : type;
+
   return (
     <AriaTextField className="text-field-base">
       <Label htmlFor={label} className="label">
         {label}
       </Label>
-      <Input
-        className="text-input"
-        value={textValue}
-        onChange={handleInputChange}
-      />
+      <div className="input-wrapper">
+        <Input
+          className="text-input"
+          value={textValue}
+          onChange={handleInputChange}
+          type={inputType}
+        />
+        {type === 'password' && (
+          <button
+            type="button"
+            className="password-toggle"
+            onClick={togglePasswordVisibility}
+            aria-label={showPassword ? 'Hide password' : 'Show password'}
+          >
+            {showPassword ? <EyeOffIcon size={20} /> : <EyeIcon size={20} />}
+          </button>
+        )}
+      </div>
     </AriaTextField>
   );
 };
