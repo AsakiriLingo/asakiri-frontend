@@ -1,10 +1,11 @@
 export interface EditorProps {
-  content: string;
+  contentHtml: string;
+  contentJson: object;
   placeholder?: string;
   editable?: boolean;
   autoFocus?: boolean;
-  onChange?: (html: string) => void;
   onUploadFile?: (file: File) => Promise<string>;
+  onEditorChange: (data: { html: string; json: object }) => void;
 }
 
 export interface PopoverProps {

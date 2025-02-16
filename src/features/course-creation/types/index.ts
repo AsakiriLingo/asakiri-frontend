@@ -22,3 +22,11 @@ export interface CreateCourseData {
   courseLanguage: number;
   languageTaught: number;
 }
+
+export interface CreateChapterData {
+  courseId: string;
+  title: string;
+  subTitle: string;
+  description: string;
+  serialNumber: number;
+}

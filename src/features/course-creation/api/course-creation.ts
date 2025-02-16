@@ -1,6 +1,7 @@
-import { CreateCourseData } from '../types';
+import { CreateChapterData, CreateCourseData } from '../types';
 
 import { supabase } from '@/lib/supabase/client';
+import { Chapter } from '@/types/chapter.types.ts';
 import { Course } from '@/types/course.types.ts';
 import { Language } from '@/types/language.types';
 
@@ -43,6 +44,79 @@ export const useCourseCreationAPI = () => {
       throw { data: null, error: error as Error };
     }
   };
+  const createChapter = async (
+    data: CreateChapterData
+  ): Promise<CourseResponse<Chapter>> => {
+    try {
+      const {
+        data: { user },
+        error: userError,
+      } = await supabase.auth.getUser();
+      if (userError) throw userError;
+      if (!user) throw new Error('No authenticated user');
+
+      const { data: chapter, error: chapterError } = await supabase
+        .from('chapters')
+        .insert({
+          course_id: data.courseId,
+          title: data.title,
+          sub_title: data.subTitle,
+          description: data.description || '',
+        })
+        .select(
+          `
+            *,
+            sections (*)
+          `
+        )
+        .single();
+
+      if (chapterError) throw chapterError;
+
+      return { data: chapter, error: null };
+    } catch (error) {
+      console.error('Chapter creation error:', error);
+      throw { data: null, error: error as Error };
+    }
+  };
+  const updateChapter = async (
+    chapterId: string,
+    data: Partial<CreateChapterData>
+  ): Promise<CourseResponse<Chapter>> => {
+    try {
+      const {
+        data: { user },
+        error: userError,
+      } = await supabase.auth.getUser();
+
+      if (userError) throw userError;
+      if (!user) throw new Error('No authenticated user');
+
+      const { data: updatedChapter, error: updateError } = await supabase
+        .from('chapters')
+        .update({
+          ...(data.courseId && { course_id: data.courseId }),
+          ...(data.title && { title: data.title }),
+          ...(data.subTitle && { sub_title: data.subTitle }),
+          ...(data.description && { description: data.description }),
+        })
+        .eq('id', chapterId)
+        .select(
+          `
+            *,
+            sections (*)
+          `
+        )
+        .single();
+
+      if (updateError) throw updateError;
+
+      return { data: updatedChapter, error: null };
+    } catch (error) {
+      console.error('Chapter update error:', error);
+      throw { data: null, error: error as Error };
+    }
+  };
 
   const getLanguages = async (
     searchTerm: string = ''
@@ -67,8 +141,37 @@ export const useCourseCreationAPI = () => {
     }
   };
 
+  const getCourseById = async (
+    courseId: string
+  ): Promise<CourseResponse<Course>> => {
+    try {
+      const { data, error } = await supabase
+        .from('courses')
+        .select(
+          `
+          *,
+          chapters (
+            *,
+            sections (*)
+          )
+        `
+        )
+        .eq('id', courseId)
+        .single();
+
+      if (error) throw error;
+
+      return { data: data as Course, error: null };
+    } catch (error) {
+      console.error('Error fetching course by ID:', error);
+      return { data: null, error: error as Error };
+    }
+  };
   return {
     createCourse,
     getLanguages,
+    getCourseById,
+    createChapter,
+    updateChapter,
   };
 };

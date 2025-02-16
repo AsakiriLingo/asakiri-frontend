@@ -1,10 +1,10 @@
 interface Section {
-  id: string;
+  id?: string;
   title: string;
-  subTitle: string;
+  sub_title: string;
   content_html: string;
   content_json: Record<string, string | object>;
-  serialNumber: number;
+  serial_number: number;
 }
 
 export type { Section };

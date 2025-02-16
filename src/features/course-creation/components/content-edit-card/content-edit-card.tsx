@@ -8,7 +8,8 @@ import { z } from 'zod';
 import { Button } from '@/components/button';
 import { TextField } from '@/components/text-field';
 import { editCourseFormSchema } from '@/features/course-creation/config/form.ts';
-
+import { Chapter } from '@/types/chapter.types.ts';
+import { Section } from '@/types/section.types.ts';
 import './content-edit-card.scss';
 
 type FormData = z.infer<typeof editCourseFormSchema>;
@@ -17,50 +18,50 @@ interface ContentCardProps {
   title: string;
   subtitle: string;
   variant: 'chapter' | 'section';
-  content: string;
+  contentHtml: string;
+  contentJson?: object;
   isEditable: boolean;
+  editEnabled?: boolean;
+  data: Chapter | Section;
+  onEditClicked?: () => void;
+  onSave: (form: FormData) => Promise<void>;
 }
 
 export const ContentEditCard: React.FC<ContentCardProps> = ({
   title,
   subtitle,
   variant = 'chapter',
-  content,
+  contentHtml,
+  contentJson,
   isEditable,
+  editEnabled = false,
+  onEditClicked,
+  onSave,
 }: ContentCardProps) => {
-  // const [cardTitle, setCardTitle] = useState(title);
-  // const [cardSubtitle, setCardSubtitle] = useState(subtitle);
-  // const [cardContent, setCardContent] = useState(content);
-  const [isEditEnabled, setIsEditEnabled] = useState(false);
+  const [isEditEnabled, setIsEditEnabled] = useState(editEnabled);
 
   const {
     handleSubmit,
     control,
+    setValue,
     formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(editCourseFormSchema),
     defaultValues: {
       title,
       subtitle,
-      content,
+      contentHtml,
+      contentJson,
     },
   });
 
-  // const onCardContentChange = (html: string) => {
-  //   setCardContent(html);
-  // };
-
-  const onSave = async (data: FormData) => {
+  const handleSave = async (data: FormData) => {
+    await onSave(data);
     setIsEditEnabled(false);
-    console.log(data.subtitle);
-    // if (false) {
-    //   setCardTitle('test');
-    //   setCardSubtitle('test');
-    // }
   };
 
   return (
-    <form onSubmit={handleSubmit(onSave)} className="content-card">
+    <form onSubmit={handleSubmit(handleSave)} className="content-card">
       {isEditEnabled ? (
         <>
           <div className="content-card--header">
@@ -125,17 +126,20 @@ export const ContentEditCard: React.FC<ContentCardProps> = ({
           {variant === 'section' && (
             <div>
               <Controller
-                name={'content'}
+                name={'contentHtml'}
                 control={control}
                 rules={{ required: true }}
                 render={({ field }) => (
                   <Editor
-                    content={field.value}
-                    onChange={(e) => field.onChange(e)}
+                    contentHtml={field.value}
+                    contentJson={{}}
+                    onEditorChange={(e) => {
+                      field.onChange(e.html);
+                      setValue('contentJson', e.json, { shouldValidate: true });
+                    }}
                   />
                 )}
               />
-              {/*<Editor content={cardContent} onChange={onCardContentChange} />*/}
             </div>
           )}
         </>
@@ -163,7 +167,12 @@ export const ContentEditCard: React.FC<ContentCardProps> = ({
             <div className="content-card__actions">
               {isEditable && (
                 <Button
-                  onPress={() => setIsEditEnabled((state) => !state)}
+                  onPress={() => {
+                    setIsEditEnabled((state) => !state);
+                    if (onEditClicked) {
+                      onEditClicked();
+                    }
+                  }}
                   size="small"
                   type="primary"
                   variant="ghost"
@@ -174,7 +183,12 @@ export const ContentEditCard: React.FC<ContentCardProps> = ({
             </div>
           </header>
           {variant === 'section' && (
-            <Editor content={content} editable={false} />
+            <Editor
+              contentHtml={contentHtml}
+              contentJson={{}}
+              editable={false}
+              onEditorChange={() => {}}
+            />
           )}
         </>
       )}
