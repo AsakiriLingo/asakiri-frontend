@@ -1,90 +1,73 @@
-@use '@styles/styles';
-
-.simple-text-editor {
-  border: 1px solid var(--outline-variant);
-  border-radius: var(--radius-md);
-  background-color: var(--surface-container-lowest);
+.text-editor {
   width: 100%;
 
-  .label-bold {
-    padding: var(--padding-md);
-    border-bottom: 1px solid var(--outline-variant);
+  .editor-label {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
   }
 
-  .editor-menu {
-    display: flex;
-    align-items: center;
-    gap: 0.25rem;
-    padding: 0.5rem;
-    border-bottom: 1px solid var(--outline-variant);
+  .editor-container {
+    margin-top: 0.5rem;
+    padding: 1rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.5rem;
+    min-height: 200px;
+    transition: border-color 0.2s ease;
 
-    .menu-button {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0.5rem;
-      border: none;
-      background: none;
-      border-radius: 0.375rem;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      color: var(--on-surface-variant);
-
-      &:hover {
-        background-color: var(--surface-bright);
-      }
-
-      &.is-active {
-        background-color: var(--surface-bright);
-        color: var(--primary);
-      }
-
-      .icon {
-        width: 1.25rem;
-        height: 1.25rem;
-      }
+    &:focus-within {
+      border-color: #3b82f6;
     }
   }
 
-  .ProseMirror {
-    padding: var(--padding-md);
-    min-height: 200px;
+  .editor-content {
     outline: none;
 
-    &.readonly {
-      cursor: default;
-      background-color: var(--surface-container-low);
-    }
-
-    p {
-      margin: 0.75em 0;
-      color: var(--on-surface);
-    }
-
-    h1 {
-      font-size: 1.5rem;
-      font-weight: 600;
-      color: var(--on-surface);
-      margin: 1em 0 0.5em;
-    }
-
-    h2 {
-      font-size: 1.25rem;
-      font-weight: 600;
-      color: var(--on-surface);
-      margin: 1em 0 0.5em;
-    }
-
-    &.ProseMirror-focused {
-      outline: none;
-    }
-
-    p.is-editor-empty:first-child::before {
+    &[data-placeholder]:empty::before {
       content: attr(data-placeholder);
-      float: left;
-      color: var(--on-surface-variant);
+      color: #9ca3af;
       pointer-events: none;
+      float: left;
       height: 0;
     }
+  }
+
+  .disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+}
+
+// Add styles for the Tiptap content
+.ProseMirror {
+  > * + * {
+    margin-top: 0.75em;
+  }
+
+  h1 {
+    font-size: 1.75rem;
+    font-weight: bold;
+    line-height: 1.2;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    line-height: 1.25;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  strong {
+    font-weight: bold;
+  }
+
+  em {
+    font-style: italic;
   }
 }

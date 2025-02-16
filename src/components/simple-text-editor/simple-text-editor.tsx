@@ -1,98 +1,59 @@
-import { Bold } from '@tiptap/extension-bold';
-import { Document } from '@tiptap/extension-document';
-import { Heading } from '@tiptap/extension-heading';
-import { Italic } from '@tiptap/extension-italic';
-import { Paragraph } from '@tiptap/extension-paragraph';
-import { Text } from '@tiptap/extension-text';
-import { useEditor, EditorContent, Editor } from '@tiptap/react';
-import {
-  Bold as BoldIcon,
-  Italic as ItalicIcon,
-  Type,
-  Heading1,
-  Heading2,
-} from 'lucide-react';
+import { Color } from '@tiptap/extension-color';
+import Link from '@tiptap/extension-link';
+import TableExtension from '@tiptap/extension-table';
+import { TableCell } from '@tiptap/extension-table-cell';
+import { TableHeader } from '@tiptap/extension-table-header';
+import { TableRow } from '@tiptap/extension-table-row';
+import TextStyle from '@tiptap/extension-text-style';
+import Youtube from '@tiptap/extension-youtube';
+import { useEditor, EditorContent } from '@tiptap/react';
+import StarterKit from '@tiptap/starter-kit';
 import React from 'react';
 
-import { MenuButton } from '@/components/editor/components/menu-button';
-import './simple-text-editor.scss';
+import { TextFormatting } from '@/components/editor/components/text-formatting.tsx';
+import { EditorProps } from '@/components/editor/types/editor.types.ts';
 
-interface SimpleTextEditorProps {
-  content: string;
-  onChange?: (html: string) => void;
-  placeholder?: string;
-  label?: string;
-  isEditable?: boolean;
-}
+import '@/components/editor/editor.scss';
 
-interface MenuBarProps {
-  editor: Editor | null;
-}
-
-const SimpleTextMenuBar: React.FC<MenuBarProps> = ({ editor }) => {
-  if (!editor) return null;
-
-  return (
-    <div className="editor-menu">
-      <MenuButton
-        editor={editor}
-        isActive={editor.isActive('heading', { level: 1 })}
-        onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
-      >
-        <Heading1 className="icon" />
-      </MenuButton>
-      <MenuButton
-        editor={editor}
-        isActive={editor.isActive('heading', { level: 2 })}
-        onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
-      >
-        <Heading2 className="icon" />
-      </MenuButton>
-      <MenuButton
-        editor={editor}
-        isActive={editor.isActive('paragraph')}
-        onClick={() => editor.chain().focus().setParagraph().run()}
-      >
-        <Type className="icon" />
-      </MenuButton>
-      <MenuButton
-        editor={editor}
-        isActive={editor.isActive('bold')}
-        onClick={() => editor.chain().focus().toggleBold().run()}
-      >
-        <BoldIcon className="icon" />
-      </MenuButton>
-      <MenuButton
-        editor={editor}
-        isActive={editor.isActive('italic')}
-        onClick={() => editor.chain().focus().toggleItalic().run()}
-      >
-        <ItalicIcon className="icon" />
-      </MenuButton>
-    </div>
-  );
-};
-
-export const SimpleTextEditor: React.FC<SimpleTextEditorProps> = ({
+export const SimpleTextEditor: React.FC<EditorProps> = ({
   content,
   onChange,
   placeholder = 'Start typing...',
-  label,
-  isEditable = true,
+  editable = true,
+  autoFocus = false,
 }) => {
   const editor = useEditor({
     extensions: [
-      Document,
-      Text,
-      Paragraph,
-      Bold,
-      Italic,
-      Heading.configure({
-        levels: [1, 2],
+      StarterKit,
+      Link.configure({
+        openOnClick: false,
+        HTMLAttributes: {
+          class: 'editor-link',
+          rel: 'noopener noreferrer',
+          target: '_blank',
+        },
       }),
+      Youtube.configure({
+        controls: true,
+        nocookie: true,
+        modestBranding: true,
+        HTMLAttributes: {
+          class: 'editor-youtube',
+        },
+      }),
+      TableExtension.configure({
+        resizable: true,
+        cellMinWidth: 100,
+      }),
+      TableRow,
+      TableHeader,
+      TableCell,
+      TextStyle,
+      Color,
     ],
     content,
-    editable: isEditable,
+    editable,
+    autofocus: autoFocus,
     editorProps: {
       attributes: {
         class: 'tiptap-editor-content',
@@ -106,13 +67,16 @@ export const SimpleTextEditor: React.FC<SimpleTextEditorProps> = ({
   });
 
   return (
-    <div className="simple-text-editor">
-      {label && <div className="label-bold">{label}</div>}
-      {isEditable && <SimpleTextMenuBar editor={editor} />}
-      <EditorContent
-        editor={editor}
-        className={!isEditable ? 'readonly' : ''}
-      />
-    </div>
+    <>
+      <div className="label-bold">Course Description</div>
+      <div className={`tiptap-editor ${!editable ? 'readonly' : ''}`}>
+        {editable && (
+          <div className="editor-menu">
+            <TextFormatting editor={editor} />
+          </div>
+        )}
+        <EditorContent editor={editor} />
+      </div>
+    </>
   );
 };

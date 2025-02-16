@@ -26,11 +26,6 @@ export const CourseSettings: React.FC = () => {
     }
   };
 
-  const handleSaveDescription = (content: string) => {
-    setDescription(content);
-    //API call to save the description
-  };
-
   return (
     <>
       <header className="course-settings__heading">
@@ -47,12 +42,10 @@ export const CourseSettings: React.FC = () => {
       <div className="settings-container">
         <TextField label="Course Name" />
         <TextField label="Course Short Description" />
-
+        <TextField label="Support Link (Patreon, Kofi etc)" />
         <SimpleTextEditor
-          label="Course Description"
           content={description}
           onChange={setDescription}
-          onSave={handleSaveDescription}
           placeholder="Write your course description..."
         />
 
@@ -69,7 +62,7 @@ export const CourseSettings: React.FC = () => {
               ) : (
                 <div className="thumbnail-placeholder">
                   <Image
-                    src="/api/placeholder/400/225"
+                    src=""
                     width="400px"
                     height="225px"
                     alt="Upload thumbnail"

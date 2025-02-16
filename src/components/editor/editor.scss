@@ -1,11 +1,16 @@
 @use '@styles/styles';
 
+.heading {
+
+}
+
 .tiptap-editor {
   margin: 0 auto;
   padding: 1rem;
   position: relative;
   border: 1px solid var(--outline-variant);
   border-radius: var(--radius-md);
+  width: 96%;
 
   &.readonly {
     padding: 0;
