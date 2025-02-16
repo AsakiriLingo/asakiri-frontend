@@ -242,6 +242,8 @@ export const useCourseCreationAPI = () => {
         `
         )
         .eq('id', courseId)
+        .order('serial_number', { foreignTable: 'chapters' })
+        .order('serial_number', { foreignTable: 'chapters.sections' })
         .single();
 
       if (error) throw error;

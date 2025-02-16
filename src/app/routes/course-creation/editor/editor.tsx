@@ -57,16 +57,8 @@ export const Editor: React.FC = () => {
     const dummyChapter = {
       title: `Chapter ${chapters.length + 1}`,
       sub_title: `Subtitle of chapter ${chapters.length + 1}`,
-      sections: [
-        {
-          content_html: '',
-          title: `Section Title 1`,
-          sub_title: `Section Subtitle 1`,
-          content_json: {},
-          serial_number: 0,
-        },
-      ],
-      serial_number: chapters.length + 1,
+      sections: [],
+      serial_number: chapters.length,
     };
     setChapters([...chapters, dummyChapter]);
     setTimeout(() => {
@@ -89,7 +81,7 @@ export const Editor: React.FC = () => {
       title: `Section Title ${sections.length + 1}`,
       sub_title: `Section Subtitle ${sections.length + 1}`,
       content_json: {},
-      serial_number: sections.length + 1,
+      serial_number: sections.length,
     };
     setSelectedChapter({
       ...selectedChapter!,
@@ -218,6 +210,7 @@ export const Editor: React.FC = () => {
             <div className="course-editor__container">
               {selectedChapter && (
                 <ContentEditCard
+                  key={'chapter' + selectedChapter.title}
                   variant="chapter"
                   title={selectedChapter.title}
                   sub_title={selectedChapter.sub_title}
@@ -241,6 +234,7 @@ export const Editor: React.FC = () => {
                 selectedChapter.sections.map((section) => {
                   return (
                     <ContentEditCard
+                      key={'section' + section.title}
                       variant="section"
                       title={section.title}
                       sub_title={section.sub_title}
@@ -255,6 +249,7 @@ export const Editor: React.FC = () => {
                         if (selectedChapter.id) {
                           await handleSectionSave(data);
                         }
+                        setSelectedSection(null);
                       }}
                     />
                   );

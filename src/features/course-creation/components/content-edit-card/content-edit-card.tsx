@@ -57,11 +57,16 @@ export const ContentEditCard: React.FC<ContentCardProps> = ({
       sub_title,
       contentHtml,
       contentJson,
+      serialNumber: data.serial_number || 0,
     },
   });
 
   const handleSave = async (formData: FormData) => {
-    await onSave({ ...formData, id: data.id });
+    await onSave({
+      ...formData,
+      id: data.id,
+      serialNumber: data.serial_number || 0,
+    });
     setIsEditEnabled(false);
   };
 

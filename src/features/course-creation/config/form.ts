@@ -11,6 +11,7 @@ const editCourseFormSchema = z.object({
   sub_title: z.string().min(5),
   contentHtml: z.string().max(10000),
   contentJson: z.any(),
+  serialNumber: z.number().default(0),
 });
 
 export { createCourseFormSchema, editCourseFormSchema };
