@@ -249,7 +249,7 @@ export const Editor: React.FC = () => {
                         if (selectedChapter.id) {
                           await handleSectionSave(data);
                         }
-                        setSelectedSection(null);
+                        setSelectedSection(undefined);
                       }}
                     />
                   );
