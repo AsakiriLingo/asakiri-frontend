@@ -1,11 +1,16 @@
-import { CreateChapterData, CreateCourseData } from '../types';
+import {
+  CreateChapterData,
+  CreateCourseData,
+  CreateSectionData,
+} from '../types';
 
 import { supabase } from '@/lib/supabase/client';
 import { Chapter } from '@/types/chapter.types.ts';
 import { Course } from '@/types/course.types.ts';
 import { Language } from '@/types/language.types';
+import { Section } from '@/types/section.types.ts';
 
-interface CourseResponse<T> {
+export interface CourseResponse<T> {
   data: T | null;
   error: Error | null;
 }
@@ -60,8 +65,10 @@ export const useCourseCreationAPI = () => {
         .insert({
           course_id: data.courseId,
           title: data.title,
-          sub_title: data.subTitle,
+          sub_title: data.sub_title,
           description: data.description || '',
+          created_at: new Date(),
+          updated_at: new Date(),
         })
         .select(
           `
@@ -97,8 +104,9 @@ export const useCourseCreationAPI = () => {
         .update({
           ...(data.courseId && { course_id: data.courseId }),
           ...(data.title && { title: data.title }),
-          ...(data.subTitle && { sub_title: data.subTitle }),
+          ...(data.sub_title && { sub_title: data.sub_title }),
           ...(data.description && { description: data.description }),
+          updated_at: new Date(),
         })
         .eq('id', chapterId)
         .select(
@@ -114,6 +122,83 @@ export const useCourseCreationAPI = () => {
       return { data: updatedChapter, error: null };
     } catch (error) {
       console.error('Chapter update error:', error);
+      throw { data: null, error: error as Error };
+    }
+  };
+
+  const createSection = async (
+    data: CreateSectionData
+  ): Promise<CourseResponse<Section>> => {
+    try {
+      const {
+        data: { user },
+        error: userError,
+      } = await supabase.auth.getUser();
+      if (userError) throw userError;
+      if (!user) throw new Error('No authenticated user');
+
+      const { data: section, error: sectionError } = await supabase
+        .from('sections')
+        .insert({
+          chapter_id: data.chapterId,
+          title: data.title,
+          sub_title: data.sub_title || '',
+          content_html: data.contentHtml,
+          content_json: data.contentJson,
+          serial_number: data.serialNumber,
+          created_at: new Date(),
+          updated_at: new Date(),
+        })
+        .select(
+          'id, chapter_id, title, content_html, content_json, serial_number, sub_title'
+        )
+        .single();
+
+      if (sectionError) throw sectionError;
+
+      return {
+        data: { ...section, sub_title: section.sub_title },
+        error: null,
+      };
+    } catch (error) {
+      console.error('Section creation error:', error);
+      throw { data: null, error: error as Error };
+    }
+  };
+  const updateSection = async (
+    sectionId: string,
+    data: Partial<CreateSectionData>
+  ): Promise<CourseResponse<Section>> => {
+    try {
+      const {
+        data: { user },
+        error: userError,
+      } = await supabase.auth.getUser();
+
+      if (userError) throw userError;
+      if (!user) throw new Error('No authenticated user');
+
+      const { data: updatedSection, error: updateError } = await supabase
+        .from('sections')
+        .update({
+          ...(data.chapterId && { chapter_id: data.chapterId }),
+          ...(data.title && { title: data.title }),
+          ...(data.sub_title && { sub_title: data.sub_title }),
+          ...(data.contentHtml && { content_html: data.contentHtml }),
+          ...(data.contentJson && { content_json: data.contentJson }),
+          updated_at: new Date(),
+        })
+        .eq('id', sectionId)
+        .select(
+          'id, chapter_id, title, content_html, content_json, serial_number, sub_title'
+        )
+        .single();
+
+      if (updateError) throw updateError;
+
+      return { data: updatedSection, error: null };
+    } catch (error) {
+      console.error('Section update error:', error);
       throw { data: null, error: error as Error };
     }
   };
@@ -173,5 +258,7 @@ export const useCourseCreationAPI = () => {
     getCourseById,
     createChapter,
     updateChapter,
+    createSection,
+    updateSection,
   };
 };

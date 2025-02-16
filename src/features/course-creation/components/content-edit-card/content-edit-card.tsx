@@ -16,7 +16,7 @@ type FormData = z.infer<typeof editCourseFormSchema>;
 
 interface ContentCardProps {
   title: string;
-  subtitle: string;
+  sub_title: string;
   variant: 'chapter' | 'section';
   contentHtml: string;
   contentJson?: object;
@@ -29,7 +29,7 @@ interface ContentCardProps {
 
 export const ContentEditCard: React.FC<ContentCardProps> = ({
   title,
-  subtitle,
+  sub_title,
   variant = 'chapter',
   contentHtml,
   contentJson,
@@ -49,7 +49,7 @@ export const ContentEditCard: React.FC<ContentCardProps> = ({
     resolver: zodResolver(editCourseFormSchema),
     defaultValues: {
       title,
-      subtitle,
+      sub_title,
       contentHtml,
       contentJson,
     },
@@ -94,7 +94,7 @@ export const ContentEditCard: React.FC<ContentCardProps> = ({
                 }
               >
                 <Controller
-                  name={'subtitle'}
+                  name={'sub_title'}
                   control={control}
                   rules={{ required: true, maxLength: 150 }}
                   render={({ field }) => (
@@ -104,8 +104,8 @@ export const ContentEditCard: React.FC<ContentCardProps> = ({
                     />
                   )}
                 />
-                {errors.subtitle && (
-                  <span className="error">{errors.subtitle.message}</span>
+                {errors.sub_title && (
+                  <span className="error">{errors.sub_title.message}</span>
                 )}
               </div>
             </div>
@@ -161,7 +161,7 @@ export const ContentEditCard: React.FC<ContentCardProps> = ({
                     : 'section--subtitle'
                 }
               >
-                {subtitle}
+                {sub_title}
               </div>
             </div>
             <div className="content-card__actions">

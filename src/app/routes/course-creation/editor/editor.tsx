@@ -7,7 +7,14 @@ import { Button } from '@/components/button';
 import { CourseSidebar } from '@/components/course-sidebar';
 import { SideBarCard } from '@/components/side-bar-card';
 import { toast } from '@/components/toast';
-import { useCourseCreationAPI } from '@/features/course-creation/api/course-creation.ts';
+import {
+  CourseResponse,
+  useCourseCreationAPI,
+} from '@/features/course-creation/api/course-creation.ts';
+import {
+  CreateChapterData,
+  CreateSectionData,
+} from '@/features/course-creation/types';
 import { Chapter } from '@/types/chapter.types.ts';
 import { Course } from '@/types/course.types.ts';
 import { Section } from '@/types/section.types.ts';
@@ -16,8 +23,13 @@ import './editor.scss';
 
 export const Editor: React.FC = () => {
   const { id } = useParams();
-  const { getCourseById, createChapter, updateChapter } =
-    useCourseCreationAPI();
+  const {
+    getCourseById,
+    createChapter,
+    updateChapter,
+    createSection,
+    updateSection,
+  } = useCourseCreationAPI();
   const [chapters, setChapters] = useState<Chapter[]>([]);
   const [selectedChapter, setSelectedChapter] = useState<Chapter>();
   const [selectedSection, setSelectedSection] = useState<Section>();
@@ -84,6 +96,82 @@ export const Editor: React.FC = () => {
       sections: [...sections, section],
     });
   };
+  const handleChapterSave = async (data: Partial<CreateChapterData>) => {
+    if (!id) {
+      return;
+    }
+    try {
+      let response: CourseResponse<Chapter> | undefined;
+      if (data.id) {
+        response = await updateChapter(data.id, {
+          courseId: id,
+          title: data.title,
+          sub_title: data.sub_title,
+          serialNumber: data.serialNumber || 0,
+        });
+      } else {
+        response = await createChapter({
+          courseId: id,
+          title: data.title,
+          sub_title: data.sub_title,
+          serialNumber: data.serialNumber || 0,
+          description: '',
+        });
+      }
+      if (response.data) {
+        setSelectedChapter(response.data);
+      }
+      const updatedCourse = await getCourseById(id);
+      if (updatedCourse.data) {
+        setCourse(updatedCourse.data);
+      }
+    } catch (e) {
+      if (e instanceof Error) {
+        toast.error(e.message);
+      } else {
+        toast.error('Something went wrong');
+      }
+    }
+  };
+  const handleSectionSave = async (data: Partial<CreateSectionData>) => {
+    if (!id || !selectedChapter) {
+      return;
+    }
+    try {
+      if (data.id) {
+        await updateSection(data.id, {
+          chapterId: selectedChapter.id,
+          title: data.title,
+          sub_title: data.sub_title,
+          serialNumber: data.serialNumber || 0,
+          contentHtml: data.contentHtml,
+          contentJson: data.contentJson,
+        });
+      } else {
+        await createSection({
+          chapterId: selectedChapter.id,
+          title: data.title,
+          sub_title: data.sub_title,
+          serialNumber: data.serialNumber || 0,
+          contentHtml: data.contentHtml,
+          contentJson: data.contentJson,
+        });
+      }
+      const updatedCourse = await getCourseById(id);
+      if (updatedCourse.data) {
+        setCourse(updatedCourse.data);
+        setSelectedChapter(
+          updatedCourse.data.chapters.find((c) => c.id === selectedChapter.id)
+        );
+      }
+    } catch (e) {
+      if (e instanceof Error) {
+        toast.error(e.message);
+      } else {
+        toast.error('Something went wrong');
+      }
+    }
+  };
   return (
     <>
       <div className="header">
@@ -132,7 +220,7 @@ export const Editor: React.FC = () => {
                 <ContentEditCard
                   variant="chapter"
                   title={selectedChapter.title}
-                  subtitle={selectedChapter.sub_title}
+                  sub_title={selectedChapter.sub_title}
                   isEditable={true}
                   data={selectedChapter}
                   editEnabled={chapterEditEnabled}
@@ -140,35 +228,11 @@ export const Editor: React.FC = () => {
                   onEditClicked={() => setChapterEditEnabled(true)}
                   onSave={async (data) => {
                     if (id) {
-                      if (selectedChapter.id) {
-                        const response = await updateChapter(
-                          selectedChapter.id,
-                          {
-                            courseId: id,
-                            title: data.title,
-                            subTitle: data.subtitle,
-                            serialNumber: selectedChapter.serial_number || 0,
-                          }
-                        );
-                        if (response.data) {
-                          setSelectedChapter(response.data);
-                        }
-                      } else {
-                        const response = await createChapter({
-                          courseId: id,
-                          title: data.title,
-                          subTitle: data.subtitle,
-                          serialNumber: selectedChapter.serial_number || 0,
-                          description: '',
-                        });
-                        if (response.data) {
-                          setSelectedChapter(response.data);
-                        }
-                      }
-                      const updatedCourse = await getCourseById(id);
-                      if (updatedCourse.data) {
-                        setCourse(updatedCourse.data);
-                      }
+                      const chapterData: Partial<CreateChapterData> = {
+                        ...selectedChapter,
+                        ...data,
+                      };
+                      await handleChapterSave(chapterData);
                     }
                   }}
                 />
@@ -179,7 +243,7 @@ export const Editor: React.FC = () => {
                     <ContentEditCard
                       variant="section"
                       title={section.title}
-                      subtitle={section.sub_title}
+                      sub_title={section.sub_title}
                       isEditable={true}
                       data={section}
                       contentHtml={section.content_html}
@@ -188,7 +252,9 @@ export const Editor: React.FC = () => {
                         setSelectedSection(section);
                       }}
                       onSave={async (data) => {
-                        console.log(data);
+                        if (selectedChapter.id) {
+                          await handleSectionSave(data);
+                        }
                       }}
                     />
                   );
