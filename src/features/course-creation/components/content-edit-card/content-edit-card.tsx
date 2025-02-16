@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Pencil, Save, Trash2 } from 'lucide-react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { Editor } from 'src/components/editor';
 import { z } from 'zod';
@@ -67,9 +67,10 @@ export const ContentEditCard: React.FC<ContentCardProps> = ({
       id: data.id,
       serialNumber: data.serial_number || 0,
     });
-    setIsEditEnabled(false);
   };
-
+  useEffect(() => {
+    setIsEditEnabled(editEnabled);
+  }, [editEnabled]);
   return (
     <form onSubmit={handleSubmit(handleSave)} className="content-card">
       {isEditEnabled ? (
