@@ -1,10 +1,10 @@
 import { Section } from '@/types/section.types.ts';
 
 interface Chapter {
-  id: string;
+  id?: string;
   title: string;
-  subTitle: string;
-  serialNumber: number | null;
+  sub_title: string;
+  serial_number: number | null;
   sections: Array<Section>;
 }
 

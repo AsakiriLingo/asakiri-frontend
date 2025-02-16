@@ -19,6 +19,24 @@ export interface CreateCourseData {
   title: string;
   shortDescription: string;
   description?: string;
-  courseLanguage: string;
-  languageTaught: string;
+  courseLanguage: number;
+  languageTaught: number;
+}
+
+export interface CreateChapterData {
+  id?: string;
+  courseId: string;
+  title?: string;
+  sub_title?: string;
+  description: string;
+  serialNumber: number;
+}
+export interface CreateSectionData {
+  id?: string;
+  chapterId?: string;
+  title?: string;
+  sub_title?: string;
+  serialNumber?: number;
+  contentHtml?: string;
+  contentJson?: object;
 }

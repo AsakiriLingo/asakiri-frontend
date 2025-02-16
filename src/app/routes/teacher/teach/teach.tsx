@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { mockCourseData } from '../../landing/mock-data.ts';
 
@@ -10,6 +11,7 @@ import './teach.scss';
 import { Card } from '@/features/courses/components/card';
 
 const CourseTeachingRoute: React.FC = () => {
+  const navigate = useNavigate();
   return (
     <div className="landing">
       <Head description={'Welcome to Asakiri'}></Head>
@@ -17,7 +19,11 @@ const CourseTeachingRoute: React.FC = () => {
       <div className="course-grid-container">
         <div className="course-header">
           <div className="course-heading"> Published Courses</div>
-          <Button type="secondary" size="small">
+          <Button
+            type="secondary"
+            size="small"
+            onPress={() => navigate('/course/create')}
+          >
             Create New Course
           </Button>
         </div>

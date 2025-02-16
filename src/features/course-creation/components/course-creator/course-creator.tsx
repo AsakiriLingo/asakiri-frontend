@@ -21,6 +21,8 @@ import { Language } from '@/types/language.types';
 export const CourseCreator: React.FC = () => {
   const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isLanguageTaughtOpen, setIsLanguageTaughtOpen] = useState(false);
+  const [isCourseLanguageOpen, setIsCourseLanguageOpen] = useState(false);
   const { createCourse } = useCourseCreationAPI();
 
   const {
@@ -41,10 +43,12 @@ export const CourseCreator: React.FC = () => {
 
   const onLanguageTaughtSelect = (language: Language) => {
     setValue('languageTaught', language, { shouldValidate: true });
+    setIsLanguageTaughtOpen(false);
   };
 
   const onCourseLanguageSelect = (language: Language) => {
     setValue('courseLanguage', language, { shouldValidate: true });
+    setIsCourseLanguageOpen(false);
   };
 
   const onSubmit = async (data: CourseFormData) => {
@@ -56,16 +60,16 @@ export const CourseCreator: React.FC = () => {
         return;
       }
 
-      await createCourse({
+      const courseResponse = await createCourse({
         title: data.title,
         shortDescription: data.shortDescription,
         description: data.description,
-        courseLanguage: data.courseLanguage.code,
-        languageTaught: data.languageTaught.code,
+        courseLanguage: data.courseLanguage.id,
+        languageTaught: data.languageTaught.id,
       });
 
       toast.success('Course created successfully!');
-      navigate('/teach');
+      navigate(`/course/editor/${courseResponse.data?.id}`);
     } catch (error) {
       console.error('Failed to create course:', error);
       toast.error('Failed to create course. Please try again.');
@@ -122,11 +126,18 @@ export const CourseCreator: React.FC = () => {
       <div className="creator-section-container">
         <div className="label-bold">Language Taught</div>
         <DialogTrigger>
-          <Button size="small" variant="flat">
+          <Button
+            size="small"
+            variant="flat"
+            onPress={() => setIsLanguageTaughtOpen(true)}
+          >
             {control._formValues.languageTaught?.name_en ??
               'Select Language Taught'}
           </Button>
-          <Modal>
+          <Modal
+            isOpen={isLanguageTaughtOpen}
+            setIsOpen={setIsLanguageTaughtOpen}
+          >
             <LanguageList
               heading="Language Taught"
               onSelect={onLanguageTaughtSelect}
@@ -141,11 +152,18 @@ export const CourseCreator: React.FC = () => {
       <div className="creator-section-container">
         <div className="label-bold">Course Language</div>
         <DialogTrigger>
-          <Button size="small" variant="flat">
+          <Button
+            size="small"
+            variant="flat"
+            onPress={() => setIsCourseLanguageOpen(true)}
+          >
             {control._formValues.courseLanguage?.name_en ??
               'Select Course Language'}
           </Button>
-          <Modal>
+          <Modal
+            isOpen={isCourseLanguageOpen}
+            setIsOpen={setIsCourseLanguageOpen}
+          >
             <LanguageList
               heading="Course Language"
               onSelect={onCourseLanguageSelect}

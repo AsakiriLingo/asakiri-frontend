@@ -11,6 +11,7 @@ export const MenuButton = forwardRef<HTMLButtonElement, MenuButtonProps>(
     return (
       <button
         ref={ref}
+        type="button"
         onClick={onClick}
         className={buttonClass}
         disabled={disabled}
