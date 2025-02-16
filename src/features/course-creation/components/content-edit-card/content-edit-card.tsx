@@ -14,6 +14,10 @@ import './content-edit-card.scss';
 
 type FormData = z.infer<typeof editCourseFormSchema>;
 
+interface ExtendedForm extends FormData {
+  id?: string;
+}
+
 interface ContentCardProps {
   title: string;
   sub_title: string;
@@ -24,7 +28,7 @@ interface ContentCardProps {
   editEnabled?: boolean;
   data: Chapter | Section;
   onEditClicked?: () => void;
-  onSave: (form: FormData) => Promise<void>;
+  onSave: (form: ExtendedForm) => Promise<void>;
 }
 
 export const ContentEditCard: React.FC<ContentCardProps> = ({
@@ -34,6 +38,7 @@ export const ContentEditCard: React.FC<ContentCardProps> = ({
   contentHtml,
   contentJson,
   isEditable,
+  data,
   editEnabled = false,
   onEditClicked,
   onSave,
@@ -55,8 +60,8 @@ export const ContentEditCard: React.FC<ContentCardProps> = ({
     },
   });
 
-  const handleSave = async (data: FormData) => {
-    await onSave(data);
+  const handleSave = async (formData: FormData) => {
+    await onSave({ ...formData, id: data.id });
     setIsEditEnabled(false);
   };
 
