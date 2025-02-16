@@ -70,7 +70,8 @@ export const NavBar: React.FC = () => {
               type="secondary"
               size="small"
               isLink={true}
-              href="/supporters"
+              href="https://patreon.com/asakiri"
+              target="_blank"
             >
               Support Us
             </Button>

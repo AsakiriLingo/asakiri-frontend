@@ -17,6 +17,17 @@ export const Viewer: React.FC = () => {
           </Button>
           <h1 className="course-viewer__title">Japanese with Misa</h1>
         </div>
+        <div className="header__right">
+          <Button
+            type="primary"
+            size="small"
+            isLink={true}
+            href="/"
+            target="_blank"
+          >
+            Support
+          </Button>
+        </div>
       </div>
       <div className="course-viewer">
         <div className="course-viewer__sidebar">

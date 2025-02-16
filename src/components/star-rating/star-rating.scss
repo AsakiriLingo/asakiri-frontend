@@ -1,0 +1,48 @@
+@use '@styles/styles';
+
+.star-rating {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-xs);
+
+  &__container {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-xxs);
+  }
+
+  &__button {
+    background: none;
+    border: none;
+    padding: var(--padding-xs);
+    cursor: pointer;
+    transition: transform 0.2s ease;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+
+    &:disabled {
+      cursor: default;
+      transform: none;
+    }
+  }
+
+  &__star {
+    color: var(--secondary);
+
+    &--filled {
+      fill: var(--secondary);
+    }
+
+    &--empty {
+      fill: none;
+      color: var(--outline-variant);
+    }
+  }
+
+  &__average {
+    @extend .body-large;
+    color: var(--on-surface-variant);
+  }
+}
