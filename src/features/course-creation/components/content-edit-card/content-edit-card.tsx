@@ -173,7 +173,9 @@ export const ContentEditCard: React.FC<ContentCardProps> = ({
                     content_json={{}}
                     onEditorChange={(e) => {
                       field.onChange(e.html);
-                      setValue('content_json', e.json, { shouldValidate: true });
+                      setValue('content_json', e.json, {
+                        shouldValidate: true,
+                      });
                       if (updateSectionLocally) {
                         updateSectionLocally(data.id || 'new', {
                           content_html: e.html,
