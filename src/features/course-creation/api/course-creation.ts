@@ -295,6 +295,23 @@ export const useCourseCreationAPI = () => {
       return { data: null, error: error as Error };
     }
   };
+  const uploadFile = async (
+    file: File,
+    folder: string
+  ): Promise<string | null> => {
+    try {
+      const filePath = `${folder}/${Date.now()}-${file.name}`;
+      const { error } = await supabase.storage
+        .from('media')
+        .upload(filePath, file);
+      if (error) throw error;
+      const { data } = supabase.storage.from('media').getPublicUrl(filePath);
+      return data.publicUrl;
+    } catch (error) {
+      console.error('File upload error:', error);
+      return null;
+    }
+  };
 
   return {
     createCourse,
@@ -306,5 +323,6 @@ export const useCourseCreationAPI = () => {
     updateSection,
     deleteChapter,
     deleteSection,
+    uploadFile,
   };
 };
