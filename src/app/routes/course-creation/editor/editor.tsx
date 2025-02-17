@@ -270,7 +270,7 @@ export const Editor: React.FC = () => {
           size="small"
           onPress={() => {}}
           isLink={true}
-          href="./course-settings"
+          href={`/course/editor/settings/${id}`}
         >
           Course Settings
         </Button>

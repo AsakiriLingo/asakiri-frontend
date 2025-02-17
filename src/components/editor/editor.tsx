@@ -8,7 +8,7 @@ import { TableHeader } from '@tiptap/extension-table-header';
 import { TableRow } from '@tiptap/extension-table-row';
 import TextStyle from '@tiptap/extension-text-style';
 import Youtube from '@tiptap/extension-youtube';
-import { useEditor, EditorContent } from '@tiptap/react';
+import { useEditor, EditorContent, NodeViewRenderer } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import React from 'react';
 
@@ -24,25 +24,49 @@ import { EditorProps } from './types/editor.types.ts';
 
 import './editor.scss';
 
-export const Audio = Node.create({
+const Audio = Node.create({
   name: 'audio',
   group: 'block',
   atom: true,
-
   addAttributes() {
     return {
       src: {
         default: null,
       },
+      controls: {
+        default: true,
+      },
+      preload: {
+        default: 'none',
+      },
     };
   },
-
   parseHTML() {
-    return [{ tag: 'audio' }];
+    return [
+      {
+        tag: 'audio',
+      },
+    ];
   },
-
   renderHTML({ HTMLAttributes }) {
-    return ['audio', mergeAttributes(HTMLAttributes, { controls: 'true' })];
+    return [
+      'audio',
+      mergeAttributes(HTMLAttributes),
+      ['source', { src: HTMLAttributes.src, type: 'audio/mpeg' }],
+    ];
+  },
+  addNodeView(): NodeViewRenderer {
+    return ({ node }) => {
+      const container = document.createElement('div');
+      const audio = document.createElement('audio');
+      audio.controls = true;
+      audio.preload = 'none';
+      audio.src = node.attrs.src;
+      container.appendChild(audio);
+      return {
+        dom: container,
+      };
+    };
   },
 });
 

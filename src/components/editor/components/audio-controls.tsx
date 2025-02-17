@@ -24,7 +24,7 @@ export const AudioControl: React.FC<FeatureProps> = ({ editor }) => {
     if (audioUrl) {
       editor?.commands.insertContent({
         type: 'audio',
-        attrs: { src: audioUrl },
+        attrs: { src: audioUrl, controls: true, preload: 'none' },
       });
     }
   };
