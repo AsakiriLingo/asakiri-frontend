@@ -44,6 +44,8 @@ const SupportersPage = lazy(
   () => import('@/app/routes/static-pages/supporters/supporters.tsx')
 );
 
+const PartnersPage = lazy(() => import('@/app/routes/partners/partners.tsx'));
+
 const createAppRouter = () =>
   createBrowserRouter([
     {
@@ -105,6 +107,10 @@ const createAppRouter = () =>
     {
       path: '/supporters',
       element: <SupportersPage />,
+    },
+    {
+      path: '/partners',
+      element: <PartnersPage />,
     },
   ]);
 

@@ -1,0 +1,137 @@
+@use '@styles/styles';
+
+.card {
+  display: flex;
+  flex-direction: column;
+  padding: var(--padding-md);
+  background: var(--surface-container-lowest);
+  border-radius: var(--radius-xl);
+  cursor: pointer;
+  gap: var(--gap-sm);
+  font-family: var(--font-primary), 'Noto Sans', system-ui;
+  transition: transform ease-in-out;
+  align-items: stretch;
+  justify-items: stretch;
+  min-height: fit-content;
+  border: 1px solid var(--outline-alt);
+
+  &:hover {
+    transform: scale(1.01);
+  }
+
+  &--thumbnail {
+    height: 100px;
+    width: 100%;
+    object-fit: cover;
+    border-radius: var(--radius-md);
+  }
+
+  &--header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    text-align: left;
+  }
+
+  &--footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &--left {
+      @extend .body;
+      display: flex;
+      align-content: center;
+      gap: var(--gap-sm);
+    }
+
+    &--right {
+      @extend .body;
+      display: flex;
+      color: var(--on-surface);
+    }
+  }
+
+  &--course-rating {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-xs);
+    color: var(--on-surface);
+  }
+
+  &--course-cost {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-xs);
+    color: var(--on-surface);
+  }
+
+  &--teacher-details {
+    flex: 1;
+  }
+
+  &--teacher-name {
+    @extend .heading-4;
+    margin: 0;
+    color: var(--on-surface);
+  }
+
+  &--teacher-subtitle {
+    @extend .body-small;
+    margin: 0;
+    color: var(--on-surface);
+  }
+
+  &--content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-xxs);
+    flex: 1;
+    overflow: hidden;
+    min-height: 130px;
+
+    &--course-title {
+      @extend .heading-4;
+      color: var(--on-surface);
+      margin: 0;
+    }
+    &--language {
+      color: var(--on-surface-variant);
+      display: flex;
+      gap: 4px;
+    }
+
+    &--language-taught {
+      @extend .body-small-variant;
+      margin: 0;
+      color: var(--on-primary-fixed);
+    }
+    &--from-text {
+      @extend .body-small;
+      margin: 0;
+      color: var(--on-surface-variant);
+    }
+    &--from-language {
+      @extend .body-small-variant;
+      margin: 0;
+      color: var(--on-surface-variant);
+    }
+    &--course-description {
+      @extend .body;
+      color: var(--on-surface-variant);
+    }
+  }
+
+  &--avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+}
+
+@media (max-width: 1024px) {
+  .card--content {
+    min-height: fit-content;
+  }
+}
