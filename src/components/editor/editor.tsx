@@ -1,3 +1,4 @@
+import { Node, mergeAttributes } from '@tiptap/core';
 import { Color } from '@tiptap/extension-color';
 import Image from '@tiptap/extension-image';
 import Link from '@tiptap/extension-link';
@@ -22,6 +23,28 @@ import { YouTubeControl } from './components/youtube-control.tsx';
 import { EditorProps } from './types/editor.types.ts';
 
 import './editor.scss';
+
+export const Audio = Node.create({
+  name: 'audio',
+  group: 'block',
+  atom: true,
+
+  addAttributes() {
+    return {
+      src: {
+        default: null,
+      },
+    };
+  },
+
+  parseHTML() {
+    return [{ tag: 'audio' }];
+  },
+
+  renderHTML({ HTMLAttributes }) {
+    return ['audio', mergeAttributes(HTMLAttributes, { controls: 'true' })];
+  },
+});
 
 export const Editor: React.FC<EditorProps> = ({
   contentHtml,
@@ -59,6 +82,7 @@ export const Editor: React.FC<EditorProps> = ({
       TableCell,
       TextStyle,
       Color,
+      Audio,
     ],
     content: contentHtml,
     editable,

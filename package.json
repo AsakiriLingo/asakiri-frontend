@@ -34,7 +34,7 @@
     "@tiptap/extension-youtube": "^2.11.0",
     "@tiptap/pm": "^2.11.0",
     "@tiptap/react": "^2.11.0",
-    "@tiptap/starter-kit": "^2.11.0",
+    "@tiptap/starter-kit": "^2.11.5",
     "axios": "^1.7.9",
     "boring-avatars": "^1.11.2",
     "i18next": "^24.1.2",
