@@ -40,6 +40,9 @@ export const Editor: React.FC = () => {
       getCourseById(id).then((res) => {
         if (res.data) {
           setCourse(res.data);
+          if (res.data.chapters.length) {
+            setSelectedChapter(res.data.chapters[0]);
+          }
         }
       });
     }
