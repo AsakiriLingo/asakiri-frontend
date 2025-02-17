@@ -254,6 +254,48 @@ export const useCourseCreationAPI = () => {
       return { data: null, error: error as Error };
     }
   };
+  const deleteChapter = async (
+    chapterId: string
+  ): Promise<CourseResponse<null>> => {
+    try {
+      const { error: sectionError } = await supabase
+        .from('sections')
+        .delete()
+        .eq('chapter_id', chapterId);
+
+      if (sectionError) throw sectionError;
+
+      const { error: chapterError } = await supabase
+        .from('chapters')
+        .delete()
+        .eq('id', chapterId);
+
+      if (chapterError) throw chapterError;
+
+      return { data: null, error: null };
+    } catch (error) {
+      console.error('Error deleting chapter:', error);
+      return { data: null, error: error as Error };
+    }
+  };
+  const deleteSection = async (
+    sectionId: string
+  ): Promise<CourseResponse<null>> => {
+    try {
+      const { error } = await supabase
+        .from('sections')
+        .delete()
+        .eq('id', sectionId);
+
+      if (error) throw error;
+
+      return { data: null, error: null };
+    } catch (error) {
+      console.error('Error deleting section:', error);
+      return { data: null, error: error as Error };
+    }
+  };
+
   return {
     createCourse,
     getLanguages,
@@ -262,5 +304,7 @@ export const useCourseCreationAPI = () => {
     updateChapter,
     createSection,
     updateSection,
+    deleteChapter,
+    deleteSection,
   };
 };

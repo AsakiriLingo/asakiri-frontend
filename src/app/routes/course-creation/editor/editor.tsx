@@ -29,6 +29,8 @@ export const Editor: React.FC = () => {
     updateChapter,
     createSection,
     updateSection,
+    deleteChapter,
+    deleteSection,
   } = useCourseCreationAPI();
   const [chapters, setChapters] = useState<Chapter[]>([]);
   const [selectedChapter, setSelectedChapter] = useState<Chapter>();
@@ -116,16 +118,31 @@ export const Editor: React.FC = () => {
       if (response.data) {
         setSelectedChapter(response.data);
       }
-      const updatedCourse = await getCourseById(id);
-      if (updatedCourse.data) {
-        setCourse(updatedCourse.data);
-      }
+      await refetchCourse();
     } catch (e) {
       if (e instanceof Error) {
         toast.error(e.message);
       } else {
         toast.error('Something went wrong');
       }
+    }
+  };
+  const refetchCourse = async () => {
+    if (id) {
+      const updatedCourse = await getCourseById(id);
+      if (updatedCourse.data) {
+        setCourse(updatedCourse.data);
+      }
+      return updatedCourse;
+    }
+  };
+  const refetchCourseAndUpdateSelectedChapter = async () => {
+    if (!selectedChapter) return;
+    const updatedCourse = await refetchCourse();
+    if (updatedCourse && updatedCourse.data) {
+      setSelectedChapter(
+        updatedCourse.data.chapters.find((c) => c.id === selectedChapter.id)
+      );
     }
   };
   const handleSectionSave = async (data: Partial<CreateSectionData>) => {
@@ -152,13 +169,7 @@ export const Editor: React.FC = () => {
           contentJson: data.contentJson,
         });
       }
-      const updatedCourse = await getCourseById(id);
-      if (updatedCourse.data) {
-        setCourse(updatedCourse.data);
-        setSelectedChapter(
-          updatedCourse.data.chapters.find((c) => c.id === selectedChapter.id)
-        );
-      }
+      await refetchCourseAndUpdateSelectedChapter();
     } catch (e) {
       if (e instanceof Error) {
         toast.error(e.message);
@@ -231,6 +242,24 @@ export const Editor: React.FC = () => {
                       await handleChapterSave(chapterData);
                     }
                   }}
+                  onDelete={async () => {
+                    if (selectedChapter.id) {
+                      await deleteChapter(selectedChapter.id);
+                      await refetchCourse();
+                      if (chapters.length) {
+                        setSelectedChapter(chapters[0]);
+                        setChapterEditEnabled(false);
+                      }
+                    } else {
+                      if (selectedChapter) {
+                        const updatedChapters = Array.from(chapters).filter(
+                          (s) => s != selectedChapter
+                        );
+                        setSelectedChapter(undefined);
+                        setChapters(updatedChapters);
+                      }
+                    }
+                  }}
                 />
               )}
               {selectedChapter &&
@@ -253,6 +282,22 @@ export const Editor: React.FC = () => {
                           await handleSectionSave(data);
                         }
                         setSelectedSection(undefined);
+                      }}
+                      onDelete={async () => {
+                        if (section.id) {
+                          await deleteSection(section.id);
+                          await refetchCourseAndUpdateSelectedChapter();
+                        } else {
+                          if (selectedChapter) {
+                            const sections = Array.from(
+                              selectedChapter.sections
+                            ).filter((s) => s != section);
+                            setSelectedChapter({
+                              ...selectedChapter,
+                              sections,
+                            });
+                          }
+                        }
                       }}
                     />
                   );

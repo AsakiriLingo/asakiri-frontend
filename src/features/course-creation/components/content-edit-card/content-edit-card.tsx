@@ -29,6 +29,7 @@ interface ContentCardProps {
   data: Chapter | Section;
   onEditClicked?: () => void;
   onSave: (form: ExtendedForm) => Promise<void>;
+  onDelete: () => Promise<void>;
 }
 
 export const ContentEditCard: React.FC<ContentCardProps> = ({
@@ -42,6 +43,7 @@ export const ContentEditCard: React.FC<ContentCardProps> = ({
   editEnabled = false,
   onEditClicked,
   onSave,
+  onDelete,
 }: ContentCardProps) => {
   const [isEditEnabled, setIsEditEnabled] = useState(editEnabled);
 
@@ -121,7 +123,12 @@ export const ContentEditCard: React.FC<ContentCardProps> = ({
               </div>
             </div>
             <div className="content-card__actions">
-              <Button size="small" variant="ghost" type="tertiary">
+              <Button
+                size="small"
+                variant="ghost"
+                type="tertiary"
+                onPress={() => onDelete()}
+              >
                 <Trash2 size={24} />
               </Button>
               <Button
