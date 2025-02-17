@@ -213,7 +213,7 @@ export const Editor: React.FC = () => {
             <div className="course-editor__container">
               {selectedChapter && (
                 <ContentEditCard
-                  key={'chapter' + selectedChapter.title}
+                  key={'chapter' + selectedChapter.title + selectedChapter.id}
                   variant="chapter"
                   title={selectedChapter.title}
                   sub_title={selectedChapter.sub_title}
@@ -237,7 +237,7 @@ export const Editor: React.FC = () => {
                 selectedChapter.sections.map((section) => {
                   return (
                     <ContentEditCard
-                      key={'section' + section.title}
+                      key={'section' + section.title + section.id}
                       variant="section"
                       title={section.title}
                       sub_title={section.sub_title}
