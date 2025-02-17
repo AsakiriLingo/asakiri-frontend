@@ -49,6 +49,34 @@ export const useCourseCreationAPI = () => {
       throw { data: null, error: error as Error };
     }
   };
+  const updateCourse = async (
+    courseId: string,
+    data: Partial<Course>,
+    thumbnailFile?: File | null
+  ): Promise<CourseResponse<Course>> => {
+    try {
+      if (!courseId) throw new Error('Course ID is required.');
+      let thumbnailUrl = data.thumbnail || null;
+      if (thumbnailFile) {
+        thumbnailUrl = await uploadFile(thumbnailFile, 'thumbnails');
+      }
+
+      const { data: updatedCourse, error } = await supabase
+        .from('courses')
+        .update({ ...data, thumbnail: thumbnailUrl })
+        .eq('id', courseId)
+        .select()
+        .single();
+
+      if (error) throw error;
+
+      return { data: updatedCourse as Course, error: null };
+    } catch (error) {
+      console.error('Error updating course:', error);
+      return { data: null, error: error as Error };
+    }
+  };
+
   const createChapter = async (
     data: CreateChapterData
   ): Promise<CourseResponse<Chapter>> => {
@@ -254,6 +282,26 @@ export const useCourseCreationAPI = () => {
       return { data: null, error: error as Error };
     }
   };
+  const getLanguageById = async (
+    id: number
+  ): Promise<CourseResponse<Language>> => {
+    try {
+      const { data, error } = await supabase
+        .from('languages')
+        .select(
+          `
+          *
+        `
+        )
+        .eq('id', id)
+        .single();
+      if (error) throw error;
+      return { data: data as Language, error: null };
+    } catch (error) {
+      console.error('Error fetching course by ID:', error);
+      return { data: null, error: error as Error };
+    }
+  };
   const deleteChapter = async (
     chapterId: string
   ): Promise<CourseResponse<null>> => {
@@ -300,7 +348,11 @@ export const useCourseCreationAPI = () => {
     folder: string
   ): Promise<string | null> => {
     try {
-      const filePath = `${folder}/${Date.now()}-${file.name}`;
+      const sanitizedFileName = file.name
+        .replace(/\s+/g, '-') // Replace spaces with hyphens
+        .replace(/[^a-zA-Z0-9.-]/g, '') // Remove special characters
+        .toLowerCase();
+      const filePath = `${folder}/${Date.now()}-${sanitizedFileName}`;
       const { error } = await supabase.storage
         .from('media')
         .upload(filePath, file);
@@ -315,7 +367,9 @@ export const useCourseCreationAPI = () => {
 
   return {
     createCourse,
+    updateCourse,
     getLanguages,
+    getLanguageById,
     getCourseById,
     createChapter,
     updateChapter,

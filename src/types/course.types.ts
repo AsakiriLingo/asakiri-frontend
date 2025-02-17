@@ -5,12 +5,15 @@ interface Course {
   id: string;
   title: string;
   author: Teacher;
-  shortDescription: string;
-  description: string;
+  short_description: string;
+  description_html: string;
+  description_json: object;
+  support_link: string;
   thumbnail: string;
-  courseLanguage: string;
-  languageTaught: string;
-  isPublished: boolean;
+  course_language: number;
+  language_taught: number;
+  is_published: boolean;
+  published_at: Date;
   chapters: Array<Chapter>;
 }
 

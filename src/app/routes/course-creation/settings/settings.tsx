@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { Button } from '@/components/button';
 import { Head } from '@/components/seo';
 import './settings.scss';
 import { CourseSettings } from '@/features/course-creation/components/course-settings';
+import { Course } from '@/types/course.types.ts';
 
 const CourseSettingsRoute: React.FC = () => {
+  const [course, setCourse] = useState<Course>();
   return (
     <>
       <Head description={'Course Settings'}></Head>
@@ -14,11 +16,11 @@ const CourseSettingsRoute: React.FC = () => {
           <Button type="secondary" size="small" onPress={() => {}}>
             Back
           </Button>
-          <h1 className="course-settings__title">Foundations of Japanese</h1>
+          <h1 className="course-settings__title">{course?.title || ''}</h1>
         </div>
       </div>
       <div className="course-settings">
-        <CourseSettings />
+        <CourseSettings course={course} setCourse={setCourse} />
       </div>
     </>
   );
