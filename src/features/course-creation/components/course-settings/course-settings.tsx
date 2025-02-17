@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FileTrigger } from 'react-aria-components';
+import { useParams } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 
 import { Button } from '@/components/button';
 import { DialogTrigger } from '@/components/dialog-trigger';
@@ -7,17 +9,72 @@ import { Image } from '@/components/image';
 import { Modal } from '@/components/modal';
 import { SimpleTextEditor } from '@/components/simple-text-editor';
 import { TextField } from '@/components/text-field';
+import { toast } from '@/components/toast';
+import { useCourseCreationAPI } from '@/features/course-creation/api/course-creation.ts';
 import { LanguageList } from '@/features/course-creation/components/language-list';
+import { Course } from '@/types/course.types.ts';
+import { Language } from '@/types/language.types.ts';
 
 import './course-settings.scss';
 
-export const CourseSettings: React.FC = () => {
-  const [description, setDescription] = useState('');
+export interface CourseSettingsProps {
+  course: Course | undefined;
+  setCourse: React.Dispatch<React.SetStateAction<Course | undefined>>;
+}
+export const CourseSettings: React.FC<CourseSettingsProps> = ({
+  course,
+  setCourse,
+}) => {
+  const { id } = useParams();
+  const navigate = useNavigate();
   const [thumbnail, setThumbnail] = useState<string | null>(null);
+  const [thumbnailFile, setThumbnailFile] = useState<File | null>(null);
+  const { getCourseById, updateCourse, getLanguageById } =
+    useCourseCreationAPI();
+  const [isLanguageTaughtOpen, setIsLanguageTaughtOpen] = useState(false);
+  const [isCourseLanguageOpen, setIsCourseLanguageOpen] = useState(false);
+  const [selectedLanguageThought, setSelectedLanguageThought] =
+    useState<Language>();
+  const [selectedCourseLanguage, setSelectedCourseLanguage] =
+    useState<Language>();
 
+  useEffect(() => {
+    if (id) {
+      getCourseById(id).then((res) => {
+        if (res.data) {
+          setCourse(res.data);
+          console.log(res.data);
+          if (res.data.thumbnail) setThumbnail(res.data.thumbnail);
+          if (res.data.language_taught || res.data.course_language)
+            setLanguages(res.data);
+        }
+      });
+    }
+  }, [id]);
+  const setLanguages = async (data: Course) => {
+    if (data.course_language) {
+      const res = await getLanguageById(data.course_language);
+      if (res.error) {
+        console.error('Error fetching languages:', res.error);
+        setSelectedCourseLanguage(undefined);
+      } else {
+        setSelectedCourseLanguage(res.data!);
+      }
+    }
+    if (data.language_taught) {
+      const res = await getLanguageById(data.language_taught);
+      if (res.error) {
+        console.error('Error fetching languages:', res.error);
+        setSelectedLanguageThought(undefined);
+      } else {
+        setSelectedLanguageThought(res.data!);
+      }
+    }
+  };
   const handleThumbnailSelect = (files: FileList | null) => {
     if (files && files[0]) {
       const file = files[0];
+      setThumbnailFile(file);
       const reader = new FileReader();
       reader.onloadend = () => {
         setThumbnail(reader.result as string);
@@ -26,26 +83,101 @@ export const CourseSettings: React.FC = () => {
     }
   };
 
+  const updateField = <K extends keyof Course>(field: K, value: Course[K]) => {
+    setCourse((prevCourse) => ({
+      ...prevCourse!,
+      [field]: value,
+    }));
+  };
+
+  const onLanguageTaughtSelect = (language: Language) => {
+    updateField('language_taught', language.id);
+    setSelectedLanguageThought(language);
+    setIsLanguageTaughtOpen(false);
+  };
+
+  const onCourseLanguageSelect = (language: Language) => {
+    updateField('course_language', language.id);
+    setSelectedCourseLanguage(language);
+    setIsCourseLanguageOpen(false);
+  };
+
+  const handleSaveCourse = async (publish: boolean) => {
+    if (!id || !course) return;
+
+    const courseUpdate: Partial<Course> = {
+      title: course.title,
+      short_description: course.short_description,
+      description_html: course.description_html,
+      description_json: course.description_json,
+      course_language: course.course_language,
+      language_taught: course.language_taught,
+      support_link: course.support_link,
+    };
+
+    if (publish) {
+      courseUpdate.is_published = true;
+      courseUpdate.published_at = new Date();
+    }
+
+    const response = await updateCourse(id, courseUpdate, thumbnailFile);
+
+    if (response.error) {
+      toast.error(`Failed to update course: ${response.error.message}`);
+    } else {
+      toast.success('Course updated successfully');
+      navigate('/teach');
+    }
+  };
+
+  if (!course) {
+    return <div />;
+  }
+
   return (
     <>
       <header className="course-settings__heading">
         <h2 className="course-settings__title">Course Settings</h2>
         <div className="actions">
-          <Button type="primary" size="small" onPress={() => {}}>
+          <Button
+            type="primary"
+            size="small"
+            onPress={() => handleSaveCourse(true)}
+          >
             Save
           </Button>
-          <Button type="secondary" size="small" onPress={() => {}}>
+          <Button
+            type="secondary"
+            size="small"
+            onPress={() => handleSaveCourse(false)}
+          >
             Publish Course
           </Button>
         </div>
       </header>
       <div className="settings-container">
-        <TextField label="Course Name" />
-        <TextField label="Course Short Description" />
-        <TextField label="Support Link (Patreon, Kofi etc)" />
+        <TextField
+          label="Course Name"
+          text={course.title}
+          onChange={(e) => updateField('title', e.target.value)}
+        />
+        <TextField
+          label="Course Short Description"
+          text={course.short_description}
+          onChange={(e) => updateField('short_description', e.target.value)}
+        />
+        <TextField
+          label="Support Link (Patreon, Kofi etc)"
+          text={course.support_link}
+          onChange={(e) => updateField('support_link', e.target.value)}
+        />
         <SimpleTextEditor
-          content={description}
-          onChange={setDescription}
+          content_html={course.description_html}
+          content_json={{}}
+          onEditorChange={(e) => {
+            updateField('description_html', e.html);
+            updateField('description_json', e.json);
+          }}
           placeholder="Write your course description..."
         />
 
@@ -85,11 +217,21 @@ export const CourseSettings: React.FC = () => {
           <div className="label-bold">Language Taught</div>
           <div>
             <DialogTrigger>
-              <Button size="small" variant="flat">
-                Select Language Taught
+              <Button
+                size="small"
+                variant="flat"
+                onPress={() => setIsLanguageTaughtOpen(true)}
+              >
+                {selectedLanguageThought?.name_en ?? 'Select Language Taught'}
               </Button>
-              <Modal>
-                <LanguageList heading="Language Taught" />
+              <Modal
+                isOpen={isLanguageTaughtOpen}
+                setIsOpen={setIsLanguageTaughtOpen}
+              >
+                <LanguageList
+                  heading="Language Taught"
+                  onSelect={onLanguageTaughtSelect}
+                />
               </Modal>
             </DialogTrigger>
           </div>
@@ -99,11 +241,21 @@ export const CourseSettings: React.FC = () => {
           <div className="label-bold">Course Language</div>
           <div>
             <DialogTrigger>
-              <Button size="small" variant="flat">
-                Select Course Language
+              <Button
+                size="small"
+                variant="flat"
+                onPress={() => setIsCourseLanguageOpen(true)}
+              >
+                {selectedCourseLanguage?.name_en ?? 'Select Course Language'}
               </Button>
-              <Modal>
-                <LanguageList heading="Course Language" />
+              <Modal
+                isOpen={isCourseLanguageOpen}
+                setIsOpen={setIsCourseLanguageOpen}
+              >
+                <LanguageList
+                  heading="Course Language"
+                  onSelect={onCourseLanguageSelect}
+                />
               </Modal>
             </DialogTrigger>
           </div>

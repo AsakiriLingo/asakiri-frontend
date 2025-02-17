@@ -16,8 +16,8 @@ import { EditorProps } from '@/components/editor/types/editor.types.ts';
 import '@/components/editor/editor.scss';
 
 export const SimpleTextEditor: React.FC<EditorProps> = ({
-  content,
-  onChange,
+  content_html,
+  onEditorChange,
   placeholder = 'Start typing...',
   editable = true,
   autoFocus = false,
@@ -51,7 +51,7 @@ export const SimpleTextEditor: React.FC<EditorProps> = ({
       TextStyle,
       Color,
     ],
-    content,
+    content: content_html,
     editable,
     autofocus: autoFocus,
     editorProps: {
@@ -62,7 +62,8 @@ export const SimpleTextEditor: React.FC<EditorProps> = ({
     },
     onUpdate: ({ editor }) => {
       const html = editor.getHTML();
-      onChange?.(html);
+      const json = editor.getJSON();
+      onEditorChange?.({ html, json });
     },
   });
 

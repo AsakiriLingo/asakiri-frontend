@@ -8,6 +8,7 @@ import { z } from 'zod';
 import { Button } from '@/components/button';
 import { TextField } from '@/components/text-field';
 import { editCourseFormSchema } from '@/features/course-creation/config/form.ts';
+import { CreateSectionData } from '@/features/course-creation/types';
 import { Chapter } from '@/types/chapter.types.ts';
 import { Section } from '@/types/section.types.ts';
 import './content-edit-card.scss';
@@ -22,26 +23,33 @@ interface ContentCardProps {
   title: string;
   sub_title: string;
   variant: 'chapter' | 'section';
-  contentHtml: string;
-  contentJson?: object;
+  content_html: string;
+  content_json?: object;
   isEditable: boolean;
   editEnabled?: boolean;
   data: Chapter | Section;
   onEditClicked?: () => void;
   onSave: (form: ExtendedForm) => Promise<void>;
+  onDelete: () => Promise<void>;
+  updateSectionLocally?: (
+    sectionId: string,
+    updates: Partial<CreateSectionData>
+  ) => void;
 }
 
 export const ContentEditCard: React.FC<ContentCardProps> = ({
   title,
   sub_title,
   variant = 'chapter',
-  contentHtml,
-  contentJson,
+  content_html,
+  content_json,
   isEditable,
   data,
   editEnabled = false,
   onEditClicked,
   onSave,
+  onDelete,
+  updateSectionLocally,
 }: ContentCardProps) => {
   const [isEditEnabled, setIsEditEnabled] = useState(editEnabled);
 
@@ -55,9 +63,9 @@ export const ContentEditCard: React.FC<ContentCardProps> = ({
     defaultValues: {
       title,
       sub_title,
-      contentHtml,
-      contentJson,
-      serialNumber: data.serial_number || 0,
+      content_html,
+      content_json,
+      serial_number: data.serial_number || 0,
     },
   });
 
@@ -65,7 +73,7 @@ export const ContentEditCard: React.FC<ContentCardProps> = ({
     await onSave({
       ...formData,
       id: data.id,
-      serialNumber: data.serial_number || 0,
+      serial_number: data.serial_number || 0,
     });
   };
   useEffect(() => {
@@ -89,7 +97,14 @@ export const ContentEditCard: React.FC<ContentCardProps> = ({
                   render={({ field }) => (
                     <TextField
                       text={field.value}
-                      onChange={(e) => field.onChange(e)}
+                      onChange={(e) => {
+                        field.onChange(e);
+                        if (variant === 'section' && updateSectionLocally) {
+                          updateSectionLocally(data.id || 'new', {
+                            title: e.target.value,
+                          });
+                        }
+                      }}
                     />
                   )}
                 />
@@ -111,7 +126,14 @@ export const ContentEditCard: React.FC<ContentCardProps> = ({
                   render={({ field }) => (
                     <TextField
                       text={field.value}
-                      onChange={(e) => field.onChange(e)}
+                      onChange={(e) => {
+                        field.onChange(e);
+                        if (variant === 'section' && updateSectionLocally) {
+                          updateSectionLocally(data.id || 'new', {
+                            sub_title: e.target.value,
+                          });
+                        }
+                      }}
                     />
                   )}
                 />
@@ -121,7 +143,12 @@ export const ContentEditCard: React.FC<ContentCardProps> = ({
               </div>
             </div>
             <div className="content-card__actions">
-              <Button size="small" variant="ghost" type="tertiary">
+              <Button
+                size="small"
+                variant="ghost"
+                type="tertiary"
+                onPress={() => onDelete()}
+              >
                 <Trash2 size={24} />
               </Button>
               <Button
@@ -137,16 +164,24 @@ export const ContentEditCard: React.FC<ContentCardProps> = ({
           {variant === 'section' && (
             <div>
               <Controller
-                name={'contentHtml'}
+                name={'content_html'}
                 control={control}
                 rules={{ required: true }}
                 render={({ field }) => (
                   <Editor
-                    contentHtml={field.value}
-                    contentJson={{}}
+                    content_html={field.value}
+                    content_json={{}}
                     onEditorChange={(e) => {
                       field.onChange(e.html);
-                      setValue('contentJson', e.json, { shouldValidate: true });
+                      setValue('content_json', e.json, {
+                        shouldValidate: true,
+                      });
+                      if (updateSectionLocally) {
+                        updateSectionLocally(data.id || 'new', {
+                          content_html: e.html,
+                          content_json: e.json,
+                        });
+                      }
                     }}
                   />
                 )}
@@ -195,8 +230,8 @@ export const ContentEditCard: React.FC<ContentCardProps> = ({
           </header>
           {variant === 'section' && (
             <Editor
-              contentHtml={contentHtml}
-              contentJson={{}}
+              content_html={content_html}
+              content_json={{}}
               editable={false}
               onEditorChange={() => {}}
             />

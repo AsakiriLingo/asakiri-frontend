@@ -25,18 +25,18 @@ export interface CreateCourseData {
 
 export interface CreateChapterData {
   id?: string;
-  courseId: string;
+  course_id: string;
   title?: string;
   sub_title?: string;
   description: string;
-  serialNumber: number;
+  serial_number: number;
 }
 export interface CreateSectionData {
   id?: string;
-  chapterId?: string;
+  chapter_id?: string;
   title?: string;
   sub_title?: string;
-  serialNumber?: number;
-  contentHtml?: string;
-  contentJson?: object;
+  serial_number?: number;
+  content_html?: string;
+  content_json?: object;
 }

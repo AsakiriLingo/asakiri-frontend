@@ -29,17 +29,26 @@ export const Editor: React.FC = () => {
     updateChapter,
     createSection,
     updateSection,
+    deleteChapter,
+    deleteSection,
   } = useCourseCreationAPI();
   const [chapters, setChapters] = useState<Chapter[]>([]);
   const [selectedChapter, setSelectedChapter] = useState<Chapter>();
   const [selectedSection, setSelectedSection] = useState<Section>();
   const [chapterEditEnabled, setChapterEditEnabled] = useState<boolean>(false);
   const [course, setCourse] = useState<Course>();
+  const [editedSections, setEditedSections] = useState<
+    Record<string, Partial<CreateSectionData>>
+  >({});
+
   useEffect(() => {
     if (id) {
       getCourseById(id).then((res) => {
         if (res.data) {
           setCourse(res.data);
+          if (res.data.chapters.length) {
+            setSelectedChapter(res.data.chapters[0]);
+          }
         }
       });
     }
@@ -88,34 +97,97 @@ export const Editor: React.FC = () => {
       sections: [...sections, section],
     });
   };
+  const updateSectionLocally = (
+    sectionId: string | 'new',
+    updates: Partial<CreateSectionData>
+  ) => {
+    setEditedSections((prev) => ({
+      ...prev,
+      [sectionId]: { ...prev[sectionId], ...updates },
+    }));
+  };
   const handleChapterSave = async (data: Partial<CreateChapterData>) => {
-    if (!id) {
-      return;
-    }
+    if (!id) return;
     try {
       let response: CourseResponse<Chapter> | undefined;
+
       if (data.id) {
         response = await updateChapter(data.id, {
-          courseId: id,
+          course_id: id,
           title: data.title,
           sub_title: data.sub_title,
-          serialNumber: data.serialNumber || 0,
+          serial_number: data.serial_number || 0,
         });
       } else {
         response = await createChapter({
-          courseId: id,
+          course_id: id,
           title: data.title,
           sub_title: data.sub_title,
-          serialNumber: data.serialNumber || 0,
+          serial_number: data.serial_number || 0,
           description: '',
         });
       }
-      if (response.data) {
-        setSelectedChapter(response.data);
-      }
-      const updatedCourse = await getCourseById(id);
-      if (updatedCourse.data) {
-        setCourse(updatedCourse.data);
+
+      if (response?.data) {
+        const savedChapter = response.data;
+        setSelectedChapter(savedChapter);
+
+        const updatedSections = (selectedChapter?.sections ?? []).map(
+          (section) => ({
+            ...section,
+            ...editedSections[section.id ?? 'new'],
+          })
+        );
+
+        const createdSections = await Promise.all(
+          updatedSections
+            .filter((section) => !section.id || section.id === 'new') // Only new sections
+            .map(async (section, index) => {
+              const newSection = await createSection({
+                chapter_id: savedChapter.id,
+                title: section.title,
+                sub_title: section.sub_title,
+                serial_number: section.serial_number || index,
+                content_html: section.content_html || '',
+                content_json: section.content_json || {},
+              });
+
+              return newSection.data;
+            })
+        );
+
+        const allSections = [
+          ...updatedSections.filter((s) => s.id && s.id !== 'new'), // Keep existing sections
+          ...createdSections.filter(Boolean),
+        ]
+          .filter((s) => s != null)
+          .sort((a, b) => (a.serial_number || 0) - (b.serial_number || 0)); // Sort by serial number
+
+        await Promise.all(
+          allSections.map(async (section) => {
+            return await updateSection(section.id as string, {
+              chapter_id: savedChapter.id,
+              title: section.title,
+              sub_title: section.sub_title,
+              serial_number: section.serial_number || 0,
+              content_html: section.content_html || '',
+              content_json: section.content_json || {},
+            });
+          })
+        );
+        setSelectedChapter({
+          ...savedChapter,
+          sections: allSections,
+        });
+
+        setEditedSections((prev) => {
+          const updated = { ...prev };
+          delete updated['new'];
+          return updated;
+        });
+        setSelectedSection(undefined);
+        setChapterEditEnabled(false);
+        await refetchCourse();
       }
     } catch (e) {
       if (e instanceof Error) {
@@ -125,37 +197,55 @@ export const Editor: React.FC = () => {
       }
     }
   };
+
+  const refetchCourse = async () => {
+    if (id) {
+      const updatedCourse = await getCourseById(id);
+      if (updatedCourse.data) {
+        setCourse(updatedCourse.data);
+      }
+      return updatedCourse;
+    }
+  };
+  const refetchCourseAndUpdateSelectedChapter = async () => {
+    if (!selectedChapter) return;
+    const updatedCourse = await refetchCourse();
+    if (updatedCourse && updatedCourse.data) {
+      setSelectedChapter(
+        updatedCourse.data.chapters.find((c) => c.id === selectedChapter.id)
+      );
+    }
+  };
   const handleSectionSave = async (data: Partial<CreateSectionData>) => {
     if (!id || !selectedChapter) {
       return;
     }
+
     try {
+      const editedData = editedSections[data.id ?? 'new'] || {};
+
+      const sectionData = {
+        chapterId: selectedChapter.id,
+        title: editedData.title ?? data.title,
+        sub_title: editedData.sub_title ?? data.sub_title,
+        serial_number: editedData.serial_number ?? (data.serial_number || 0),
+        content_html: editedData.content_html ?? data.content_html,
+        content_json: editedData.content_json ?? data.content_json,
+      };
+
       if (data.id) {
-        await updateSection(data.id, {
-          chapterId: selectedChapter.id,
-          title: data.title,
-          sub_title: data.sub_title,
-          serialNumber: data.serialNumber || 0,
-          contentHtml: data.contentHtml,
-          contentJson: data.contentJson,
-        });
+        await updateSection(data.id, sectionData);
       } else {
-        await createSection({
-          chapterId: selectedChapter.id,
-          title: data.title,
-          sub_title: data.sub_title,
-          serialNumber: data.serialNumber || 0,
-          contentHtml: data.contentHtml,
-          contentJson: data.contentJson,
-        });
+        await createSection(sectionData);
       }
-      const updatedCourse = await getCourseById(id);
-      if (updatedCourse.data) {
-        setCourse(updatedCourse.data);
-        setSelectedChapter(
-          updatedCourse.data.chapters.find((c) => c.id === selectedChapter.id)
-        );
-      }
+
+      await refetchCourseAndUpdateSelectedChapter();
+
+      setEditedSections((prev) => {
+        const updated = { ...prev };
+        delete updated[data.id ?? 'new'];
+        return updated;
+      });
     } catch (e) {
       if (e instanceof Error) {
         toast.error(e.message);
@@ -180,7 +270,7 @@ export const Editor: React.FC = () => {
           size="small"
           onPress={() => {}}
           isLink={true}
-          href="./course-settings"
+          href={`/course/editor/settings/${id}`}
         >
           Course Settings
         </Button>
@@ -210,14 +300,14 @@ export const Editor: React.FC = () => {
             <div className="course-editor__container">
               {selectedChapter && (
                 <ContentEditCard
-                  key={'chapter' + selectedChapter.title}
+                  key={'chapter' + selectedChapter.title + selectedChapter.id}
                   variant="chapter"
                   title={selectedChapter.title}
                   sub_title={selectedChapter.sub_title}
                   isEditable={true}
                   data={selectedChapter}
                   editEnabled={chapterEditEnabled}
-                  contentHtml={''}
+                  content_html={''}
                   onEditClicked={() => setChapterEditEnabled(true)}
                   onSave={async (data) => {
                     if (id) {
@@ -228,32 +318,71 @@ export const Editor: React.FC = () => {
                       await handleChapterSave(chapterData);
                     }
                   }}
+                  onDelete={async () => {
+                    if (selectedChapter.id) {
+                      await deleteChapter(selectedChapter.id);
+                      await refetchCourse();
+                      if (chapters.length) {
+                        setSelectedChapter(chapters[0]);
+                        setChapterEditEnabled(false);
+                      }
+                    } else {
+                      if (selectedChapter) {
+                        const updatedChapters = Array.from(chapters).filter(
+                          (s) => s != selectedChapter
+                        );
+                        setSelectedChapter(undefined);
+                        setChapters(updatedChapters);
+                      }
+                    }
+                  }}
                 />
               )}
               {selectedChapter &&
-                selectedChapter.sections.map((section) => {
-                  return (
-                    <ContentEditCard
-                      key={'section' + section.title}
-                      variant="section"
-                      title={section.title}
-                      sub_title={section.sub_title}
-                      isEditable={true}
-                      data={section}
-                      contentHtml={section.content_html}
-                      editEnabled={section.id === selectedSection?.id}
-                      onEditClicked={() => {
-                        setSelectedSection(section);
-                      }}
-                      onSave={async (data) => {
-                        if (selectedChapter.id) {
-                          await handleSectionSave(data);
-                        }
-                        setSelectedSection(undefined);
-                      }}
-                    />
-                  );
-                })}
+                (selectedChapter.sections ?? [])
+                  .sort(
+                    (a, b) => (a.serial_number || 0) - (b.serial_number || 0)
+                  )
+                  .map((section) => {
+                    return (
+                      <ContentEditCard
+                        key={'section' + section.title + section.id}
+                        variant="section"
+                        title={section.title}
+                        sub_title={section.sub_title}
+                        isEditable={true}
+                        data={section}
+                        content_html={section.content_html}
+                        editEnabled={section.id === selectedSection?.id}
+                        onEditClicked={() => {
+                          setSelectedSection(section);
+                        }}
+                        onSave={async (data) => {
+                          if (selectedChapter.id) {
+                            await handleSectionSave(data);
+                          }
+                          setSelectedSection(undefined);
+                        }}
+                        onDelete={async () => {
+                          if (section.id) {
+                            await deleteSection(section.id);
+                            await refetchCourseAndUpdateSelectedChapter();
+                          } else {
+                            if (selectedChapter) {
+                              const sections = Array.from(
+                                selectedChapter.sections
+                              ).filter((s) => s != section);
+                              setSelectedChapter({
+                                ...selectedChapter,
+                                sections,
+                              });
+                            }
+                          }
+                        }}
+                        updateSectionLocally={updateSectionLocally}
+                      />
+                    );
+                  })}
               <div className="course-editor__add-more">
                 <Button size="small" onPress={() => createBlankSection()}>
                   <Plus />

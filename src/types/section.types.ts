@@ -3,7 +3,7 @@ interface Section {
   title: string;
   sub_title: string;
   content_html: string;
-  content_json: Record<string, string | object>;
+  content_json: object;
   serial_number: number;
 }
 

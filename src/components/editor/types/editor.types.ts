@@ -1,6 +1,6 @@
 export interface EditorProps {
-  contentHtml: string;
-  contentJson: object;
+  content_html: string;
+  content_json: object;
   placeholder?: string;
   editable?: boolean;
   autoFocus?: boolean;

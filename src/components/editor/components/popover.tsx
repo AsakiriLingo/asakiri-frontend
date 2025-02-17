@@ -42,6 +42,14 @@ export const Popover: React.FC<PopoverProps> = ({
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      if (value) {
+        onSubmit(value);
+        setValue('');
+        onClose();
+      }
+    }
     if (e.key === 'Escape') {
       onClose();
     }

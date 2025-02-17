@@ -49,6 +49,34 @@ export const useCourseCreationAPI = () => {
       throw { data: null, error: error as Error };
     }
   };
+  const updateCourse = async (
+    courseId: string,
+    data: Partial<Course>,
+    thumbnailFile?: File | null
+  ): Promise<CourseResponse<Course>> => {
+    try {
+      if (!courseId) throw new Error('Course ID is required.');
+      let thumbnailUrl = data.thumbnail || null;
+      if (thumbnailFile) {
+        thumbnailUrl = await uploadFile(thumbnailFile, 'thumbnails');
+      }
+
+      const { data: updatedCourse, error } = await supabase
+        .from('courses')
+        .update({ ...data, thumbnail: thumbnailUrl })
+        .eq('id', courseId)
+        .select()
+        .single();
+
+      if (error) throw error;
+
+      return { data: updatedCourse as Course, error: null };
+    } catch (error) {
+      console.error('Error updating course:', error);
+      return { data: null, error: error as Error };
+    }
+  };
+
   const createChapter = async (
     data: CreateChapterData
   ): Promise<CourseResponse<Chapter>> => {
@@ -63,7 +91,7 @@ export const useCourseCreationAPI = () => {
       const { data: chapter, error: chapterError } = await supabase
         .from('chapters')
         .insert({
-          course_id: data.courseId,
+          course_id: data.course_id,
           title: data.title,
           sub_title: data.sub_title,
           description: data.description || '',
@@ -102,7 +130,7 @@ export const useCourseCreationAPI = () => {
       const { data: updatedChapter, error: updateError } = await supabase
         .from('chapters')
         .update({
-          ...(data.courseId && { course_id: data.courseId }),
+          ...(data.course_id && { course_id: data.course_id }),
           ...(data.title && { title: data.title }),
           ...(data.sub_title && { sub_title: data.sub_title }),
           ...(data.description && { description: data.description }),
@@ -140,12 +168,12 @@ export const useCourseCreationAPI = () => {
       const { data: section, error: sectionError } = await supabase
         .from('sections')
         .insert({
-          chapter_id: data.chapterId,
+          chapter_id: data.chapter_id,
           title: data.title,
           sub_title: data.sub_title || '',
-          content_html: data.contentHtml,
-          content_json: data.contentJson,
-          serial_number: data.serialNumber,
+          content_html: data.content_html,
+          content_json: data.content_json,
+          serial_number: data.serial_number,
           created_at: new Date(),
           updated_at: new Date(),
         })
@@ -181,11 +209,11 @@ export const useCourseCreationAPI = () => {
       const { data: updatedSection, error: updateError } = await supabase
         .from('sections')
         .update({
-          ...(data.chapterId && { chapter_id: data.chapterId }),
+          ...(data.chapter_id && { chapter_id: data.chapter_id }),
           ...(data.title && { title: data.title }),
           ...(data.sub_title && { sub_title: data.sub_title }),
-          ...(data.contentHtml && { content_html: data.contentHtml }),
-          ...(data.contentJson && { content_json: data.contentJson }),
+          ...(data.content_html && { content_html: data.content_html }),
+          ...(data.content_json && { content_json: data.content_json }),
           updated_at: new Date(),
         })
         .eq('id', sectionId)
@@ -254,13 +282,101 @@ export const useCourseCreationAPI = () => {
       return { data: null, error: error as Error };
     }
   };
+  const getLanguageById = async (
+    id: number
+  ): Promise<CourseResponse<Language>> => {
+    try {
+      const { data, error } = await supabase
+        .from('languages')
+        .select(
+          `
+          *
+        `
+        )
+        .eq('id', id)
+        .single();
+      if (error) throw error;
+      return { data: data as Language, error: null };
+    } catch (error) {
+      console.error('Error fetching course by ID:', error);
+      return { data: null, error: error as Error };
+    }
+  };
+  const deleteChapter = async (
+    chapterId: string
+  ): Promise<CourseResponse<null>> => {
+    try {
+      const { error: sectionError } = await supabase
+        .from('sections')
+        .delete()
+        .eq('chapter_id', chapterId);
+
+      if (sectionError) throw sectionError;
+
+      const { error: chapterError } = await supabase
+        .from('chapters')
+        .delete()
+        .eq('id', chapterId);
+
+      if (chapterError) throw chapterError;
+
+      return { data: null, error: null };
+    } catch (error) {
+      console.error('Error deleting chapter:', error);
+      return { data: null, error: error as Error };
+    }
+  };
+  const deleteSection = async (
+    sectionId: string
+  ): Promise<CourseResponse<null>> => {
+    try {
+      const { error } = await supabase
+        .from('sections')
+        .delete()
+        .eq('id', sectionId);
+
+      if (error) throw error;
+
+      return { data: null, error: null };
+    } catch (error) {
+      console.error('Error deleting section:', error);
+      return { data: null, error: error as Error };
+    }
+  };
+  const uploadFile = async (
+    file: File,
+    folder: string
+  ): Promise<string | null> => {
+    try {
+      const sanitizedFileName = file.name
+        .replace(/\s+/g, '-') // Replace spaces with hyphens
+        .replace(/[^a-zA-Z0-9.-]/g, '') // Remove special characters
+        .toLowerCase();
+      const filePath = `${folder}/${Date.now()}-${sanitizedFileName}`;
+      const { error } = await supabase.storage
+        .from('media')
+        .upload(filePath, file);
+      if (error) throw error;
+      const { data } = supabase.storage.from('media').getPublicUrl(filePath);
+      return data.publicUrl;
+    } catch (error) {
+      console.error('File upload error:', error);
+      return null;
+    }
+  };
+
   return {
     createCourse,
+    updateCourse,
     getLanguages,
+    getLanguageById,
     getCourseById,
     createChapter,
     updateChapter,
     createSection,
     updateSection,
+    deleteChapter,
+    deleteSection,
+    uploadFile,
   };
 };

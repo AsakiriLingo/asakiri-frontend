@@ -24,7 +24,9 @@ export const YouTubeControl: React.FC<FeatureProps> = ({ editor }) => {
       {showYoutubePopover && (
         <Popover
           onClose={() => setShowYoutubePopover(false)}
-          onSubmit={(url) => editor?.commands.setYoutubeVideo({ src: url })}
+          onSubmit={(url) => {
+            editor?.commands.setYoutubeVideo({ src: url });
+          }}
           placeholder="Enter YouTube URL"
           buttonRef={buttonRef}
         />
