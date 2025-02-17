@@ -47,7 +47,7 @@ export const Audio = Node.create({
 });
 
 export const Editor: React.FC<EditorProps> = ({
-  contentHtml,
+  content_html,
   onEditorChange,
   placeholder = 'Start typing...',
   editable = true,
@@ -84,7 +84,7 @@ export const Editor: React.FC<EditorProps> = ({
       Color,
       Audio,
     ],
-    content: contentHtml,
+    content: content_html,
     editable,
     autofocus: autoFocus,
     editorProps: {

@@ -63,7 +63,7 @@ export const useCourseCreationAPI = () => {
       const { data: chapter, error: chapterError } = await supabase
         .from('chapters')
         .insert({
-          course_id: data.courseId,
+          course_id: data.course_id,
           title: data.title,
           sub_title: data.sub_title,
           description: data.description || '',
@@ -102,7 +102,7 @@ export const useCourseCreationAPI = () => {
       const { data: updatedChapter, error: updateError } = await supabase
         .from('chapters')
         .update({
-          ...(data.courseId && { course_id: data.courseId }),
+          ...(data.course_id && { course_id: data.course_id }),
           ...(data.title && { title: data.title }),
           ...(data.sub_title && { sub_title: data.sub_title }),
           ...(data.description && { description: data.description }),
@@ -140,12 +140,12 @@ export const useCourseCreationAPI = () => {
       const { data: section, error: sectionError } = await supabase
         .from('sections')
         .insert({
-          chapter_id: data.chapterId,
+          chapter_id: data.chapter_id,
           title: data.title,
           sub_title: data.sub_title || '',
-          content_html: data.contentHtml,
-          content_json: data.contentJson,
-          serial_number: data.serialNumber,
+          content_html: data.content_html,
+          content_json: data.content_json,
+          serial_number: data.serial_number,
           created_at: new Date(),
           updated_at: new Date(),
         })
@@ -181,11 +181,11 @@ export const useCourseCreationAPI = () => {
       const { data: updatedSection, error: updateError } = await supabase
         .from('sections')
         .update({
-          ...(data.chapterId && { chapter_id: data.chapterId }),
+          ...(data.chapter_id && { chapter_id: data.chapter_id }),
           ...(data.title && { title: data.title }),
           ...(data.sub_title && { sub_title: data.sub_title }),
-          ...(data.contentHtml && { content_html: data.contentHtml }),
-          ...(data.contentJson && { content_json: data.contentJson }),
+          ...(data.content_html && { content_html: data.content_html }),
+          ...(data.content_json && { content_json: data.content_json }),
           updated_at: new Date(),
         })
         .eq('id', sectionId)
