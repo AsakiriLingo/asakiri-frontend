@@ -4,6 +4,10 @@ import {
   CreateSectionData,
 } from '../types';
 
+import {
+  CourseCard,
+  HomepageCoursesResponse,
+} from '@/features/course-creation/types/course-card-type.ts';
 import { supabase } from '@/lib/supabase/client';
 import { Chapter } from '@/types/chapter.types.ts';
 import { Course } from '@/types/course.types.ts';
@@ -455,6 +459,36 @@ export const useCourseCreationAPI = () => {
 
     return !!enrollment; // Set state based on enrollment
   };
+  const getHomepageCourses = async (): Promise<HomepageCoursesResponse> => {
+    try {
+      const { data, error } = await supabase.rpc('get_home_page_courses');
+
+      if (error) throw error;
+
+      const popularCourses = data.filter(
+        (course: CourseCard) => course.category === 'popular'
+      );
+      const trendingCourses = data.filter(
+        (course: CourseCard) => course.category === 'trending'
+      );
+      const recentCourses = data.filter(
+        (course: CourseCard) => course.category === 'recent'
+      );
+
+      return {
+        popularCourses,
+        trendingCourses,
+        recentCourses,
+      };
+    } catch (error) {
+      console.error('Error fetching homepage courses:', error);
+      return {
+        popularCourses: [],
+        trendingCourses: [],
+        recentCourses: [],
+      };
+    }
+  };
 
   return {
     createCourse,
@@ -472,5 +506,6 @@ export const useCourseCreationAPI = () => {
     uploadFile,
     enrollInCourse,
     checkEnrollment,
+    getHomepageCourses,
   };
 };
