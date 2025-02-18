@@ -1,73 +1,101 @@
-import React from 'react';
-import { ContentViewCard } from 'src/features/courses/components/content-view-card';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 
 import { Button } from '@/components/button';
 import { CourseSidebar } from '@/components/course-sidebar';
 import { SideBarCard } from '@/components/side-bar-card';
-import { CourseViewData } from '@/mocks/course.ts';
+import { useCourseCreationAPI } from '@/features/course-creation/api/course-creation.ts';
+import { ContentEditCard } from '@/features/course-creation/components/content-edit-card';
+import { Chapter } from '@/types/chapter.types.ts';
+import { Course } from '@/types/course.types.ts';
+
 import './viewer.scss';
 
 export const Viewer: React.FC = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const { getCourseById } = useCourseCreationAPI();
+  const [chapters, setChapters] = useState<Chapter[]>([]);
+  const [selectedChapter, setSelectedChapter] = useState<Chapter>();
+  const [course, setCourse] = useState<Course>();
+
+  useEffect(() => {
+    if (id) {
+      getCourseById(id).then((res) => {
+        if (res.data) {
+          setCourse(res.data);
+          if (res.data.chapters.length) {
+            setSelectedChapter(res.data.chapters[0]);
+          }
+        }
+      });
+    }
+  }, [id]);
+  useEffect(() => {
+    if (course && course.chapters) {
+      setChapters(course.chapters);
+    }
+  }, [course]);
   return (
     <>
       <div className="header">
         <div className="header__left">
-          <Button type="secondary" size="small" onPress={() => {}}>
+          <Button type="secondary" size="small" onPress={() => navigate(-1)}>
             Back
           </Button>
-          <h1 className="course-viewer__title">Japanese with Misa</h1>
-        </div>
-        <div className="header__right">
-          <Button
-            type="primary"
-            size="small"
-            isLink={true}
-            href="/"
-            target="_blank"
-          >
-            Support
-          </Button>
+          <h1 className="course-editor__title">{course?.title}</h1>
         </div>
       </div>
-      <div className="course-viewer">
-        <div className="course-viewer__sidebar">
+      <div className="course-editor">
+        <div className="course-editor__sidebar">
           <CourseSidebar>
-            {CourseViewData.map((chapter) => (
+            {chapters?.map((chapter) => (
               <SideBarCard
                 key={chapter.id}
                 title={chapter.title}
-                subTitle={chapter.subTitle}
-                sections={chapter.sections.map((section) => ({
-                  id: section.id,
-                  title: section.title,
-                  subTitle: section.subTitle,
-                }))}
+                subTitle={chapter.sub_title}
+                selected={selectedChapter && selectedChapter.id === chapter.id}
+                onClick={() => setSelectedChapter(chapter)}
               />
             ))}
           </CourseSidebar>
         </div>
 
-        <div className="course-viewer__content">
-          <main className="course-viewer__main">
-            <div className="course-viewer__container">
-              <ContentViewCard
-                variant="chapter"
-                title="Introduction to Japanese"
-                subtitle="Basic Concepts and Greetings"
-                content={''}
-              />
-              <ContentViewCard
-                variant="section"
-                title="Sentence Building ぶんのつくり"
-                subtitle="Understanding Japanese Sentences"
-                content={'Test content'}
-              />
-              <ContentViewCard
-                variant="section"
-                title="Sentence Building ぶんのつくり"
-                subtitle="Understanding Japanese Sentences"
-                content={'Test content'}
-              />
+        <div className="course-editor__content">
+          <main className="course-editor__main">
+            <div className="course-editor__container">
+              {selectedChapter && (
+                <ContentEditCard
+                  key={'chapter' + selectedChapter.title + selectedChapter.id}
+                  variant="chapter"
+                  title={selectedChapter.title}
+                  sub_title={selectedChapter.sub_title}
+                  isEditable={false}
+                  data={selectedChapter}
+                  editEnabled={false}
+                  content_html={''}
+                />
+              )}
+              {selectedChapter &&
+                (selectedChapter.sections ?? [])
+                  .sort(
+                    (a, b) => (a.serial_number || 0) - (b.serial_number || 0)
+                  )
+                  .map((section) => {
+                    return (
+                      <ContentEditCard
+                        key={'section' + section.title + section.id}
+                        variant="section"
+                        title={section.title}
+                        sub_title={section.sub_title}
+                        isEditable={false}
+                        data={section}
+                        content_html={section.content_html}
+                        editEnabled={false}
+                      />
+                    );
+                  })}
             </div>
           </main>
         </div>
@@ -76,5 +104,4 @@ export const Viewer: React.FC = () => {
     </>
   );
 };
-
 export default Viewer;

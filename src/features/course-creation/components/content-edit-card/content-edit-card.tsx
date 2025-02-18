@@ -29,8 +29,8 @@ interface ContentCardProps {
   editEnabled?: boolean;
   data: Chapter | Section;
   onEditClicked?: () => void;
-  onSave: (form: ExtendedForm) => Promise<void>;
-  onDelete: () => Promise<void>;
+  onSave?: (form: ExtendedForm) => Promise<void>;
+  onDelete?: () => Promise<void>;
   updateSectionLocally?: (
     sectionId: string,
     updates: Partial<CreateSectionData>
@@ -70,11 +70,13 @@ export const ContentEditCard: React.FC<ContentCardProps> = ({
   });
 
   const handleSave = async (formData: FormData) => {
-    await onSave({
-      ...formData,
-      id: data.id,
-      serial_number: data.serial_number || 0,
-    });
+    if (onSave) {
+      await onSave({
+        ...formData,
+        id: data.id,
+        serial_number: data.serial_number || 0,
+      });
+    }
   };
   useEffect(() => {
     setIsEditEnabled(editEnabled);
@@ -147,7 +149,7 @@ export const ContentEditCard: React.FC<ContentCardProps> = ({
                 size="small"
                 variant="ghost"
                 type="tertiary"
-                onPress={() => onDelete()}
+                onPress={() => (onDelete ? onDelete() : {})}
               >
                 <Trash2 size={24} />
               </Button>

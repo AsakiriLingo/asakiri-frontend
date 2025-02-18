@@ -17,14 +17,14 @@
   }
 }
 
-.course-viewer {
+.course-editor {
   min-height: 100vh;
   background-color: var(--surface-bright);
   font-family: 'Noto Sans', sans-serif;
   display: flex;
 
   &__add-more {
-   z-index: 0;
+    z-index: 0;
     display: flex;
   }
 

@@ -258,7 +258,7 @@ export const Editor: React.FC = () => {
     <>
       <div className="header">
         <div className="header__left">
-          <Button type="secondary" size="small" onPress={() => {}}>
+          <Button type="secondary" size="small" onPress={() => navigate(-1)}>
             Back
           </Button>
           <h1 className="course-editor__title">{course?.title}</h1>
