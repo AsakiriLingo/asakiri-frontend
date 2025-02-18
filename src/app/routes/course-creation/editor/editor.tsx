@@ -225,7 +225,7 @@ export const Editor: React.FC = () => {
       const editedData = editedSections[data.id ?? 'new'] || {};
 
       const sectionData = {
-        chapterId: selectedChapter.id,
+        chapter_id: selectedChapter.id,
         title: editedData.title ?? data.title,
         sub_title: editedData.sub_title ?? data.sub_title,
         serial_number: editedData.serial_number ?? (data.serial_number || 0),
