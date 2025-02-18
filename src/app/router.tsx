@@ -53,7 +53,7 @@ const createAppRouter = () =>
       element: <Home />,
     },
     {
-      path: 'course/details',
+      path: 'course/details/:id',
       element: <CourseDetails />,
     },
     {

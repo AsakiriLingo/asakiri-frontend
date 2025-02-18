@@ -13,9 +13,10 @@ export const CourseDescription: React.FC<CourseDescriptionProps> = ({
   return (
     <div className="course-description">
       <SimpleTextEditor
-        label="Course Description"
-        content={description}
-        isEditable={false}
+        content_html={description}
+        editable={false}
+        content_json={{}}
+        onEditorChange={() => {}}
       />
     </div>
   );

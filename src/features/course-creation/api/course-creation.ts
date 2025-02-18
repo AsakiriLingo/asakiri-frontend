@@ -284,6 +284,43 @@ export const useCourseCreationAPI = () => {
       return { data: null, error: error as Error };
     }
   };
+  const getCourseDetail = async (
+    courseId: string
+  ): Promise<CourseResponse<Course>> => {
+    try {
+      const { data, error } = await supabase
+        .from('courses')
+        .select(
+          `
+          *,
+          profiles (
+            id,
+            name,
+            subtitle,
+            avatar_url,
+            bio
+          ),
+          chapters (
+            *
+          )
+        `
+        )
+        .eq('id', courseId)
+        .order('serial_number', { foreignTable: 'chapters' })
+        .single();
+      if (error) throw error;
+      if (data && data.profiles) {
+        data.author = { ...data.profiles };
+        delete data.profiles;
+      }
+      console.log(data);
+      return { data: data as Course, error: null };
+    } catch (error) {
+      console.error('Error fetching course details:', error);
+      return { data: null, error: error as Error };
+    }
+  };
+
   const getLanguageById = async (
     id: number
   ): Promise<CourseResponse<Language>> => {
@@ -373,6 +410,7 @@ export const useCourseCreationAPI = () => {
     getLanguages,
     getLanguageById,
     getCourseById,
+    getCourseDetail,
     createChapter,
     updateChapter,
     createSection,

@@ -1,40 +1,63 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router';
 
 import { NavBar } from '@/components/nav-bar';
 import { Head } from '@/components/seo';
+import { useCourseCreationAPI } from '@/features/course-creation/api/course-creation.ts';
 import { ChaptersCard } from '@/features/courses/components/chapters-card';
 import { CourseDescription } from '@/features/courses/components/course-description';
 import { HeroCard } from '@/features/courses/components/hero-card';
 import { InstructorCard } from '@/features/courses/components/instructor-card';
-import { CourseViewData } from '@/mocks/course.ts';
+import { Course } from '@/types/course.types.ts';
+
 import './details.scss';
 
 const CourseDetailsRoute: React.FC = () => {
+  const { id } = useParams();
+  const { getCourseDetail } = useCourseCreationAPI();
+  const [course, setCourse] = useState<Course>();
+  useEffect(() => {
+    if (id) {
+      refetchCourse();
+    }
+  }, [id]);
+  const refetchCourse = async () => {
+    if (id) {
+      const updatedCourse = await getCourseDetail(id);
+      if (updatedCourse.data) {
+        setCourse(updatedCourse.data);
+      }
+      return updatedCourse;
+    }
+  };
+  if (!course || !id) {
+    return <div />;
+  }
   return (
     <>
       <Head description={'Course Content'}></Head>
       <NavBar />
       <header className="hero-container">
         <HeroCard
-          courseID="1"
-          title="Japanese with Misa"
-          description="To master basic Japanese conversation and writing systems, start with essential phrases like greetings and self-introductions while learning the three writing systems: Hiragana (the basic phonetic script with 46 characters used for native Japanese words and grammar), Katakana (another 46-character phonetic script used mainly for foreign words), and basic Kanji (Chinese characters representing concepts)."
-          thumbnail="/spanish.jpg"
+          courseID={id}
+          title={course.title}
+          description={course.description_html}
+          thumbnail={course.thumbnail}
         />
       </header>
       <section className="section-container">
         <div className="instructor-container">
           <InstructorCard
-            name="Misa Amane"
-            subTitle="subtitle"
-            description="Sit semper aenean enim id consequat pretium bibendum. Placerat morbi sit interdum egestas est. Scelerisque in in nullam risus vitae aliquam mauris velit nulla. Vel proin arcu euismod sit scelerisque turpis aliquam sagittis. Lorem tristique dolor aliquet."
-            avatar=""
-            id={''}
+            name={course.author?.name || ''}
+            subtitle={course.author?.subtitle || ''}
+            bio={course.author?.bio || ''}
+            avatar_url={course.author?.avatar_url || ''}
+            id={course.author?.id || ''}
           />
         </div>
         <div className="section-right">
-          <CourseDescription description="Sit semper aenean enim id consequat pretium bibendum. Placerat morbi sit interdum egestas est. Scelerisque in in nullam risus vitae aliquam mauris velit nulla. Vel proin arcu euismod sit scelerisque turpis aliquam sagittis. Lorem tristique dolor aliquet." />
-          <ChaptersCard chapters={CourseViewData} />
+          <CourseDescription description={course.description_html} />
+          <ChaptersCard chapters={course.chapters} />
         </div>
       </section>
     </>
