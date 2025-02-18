@@ -403,6 +403,58 @@ export const useCourseCreationAPI = () => {
       return null;
     }
   };
+  const enrollInCourse = async (
+    courseId: string
+  ): Promise<CourseResponse<boolean>> => {
+    try {
+      const {
+        data: { user },
+        error: userError,
+      } = await supabase.auth.getUser();
+      if (userError) throw userError;
+      if (!user) throw new Error('No authenticated user');
+
+      const { data: existingEnrollment } = await supabase
+        .from('enrollments')
+        .select('*')
+        .eq('profile_id', user.id)
+        .eq('course_id', courseId)
+        .single();
+
+      if (existingEnrollment) {
+        return { data: false, error: null };
+      }
+
+      const { error } = await supabase.from('enrollments').insert({
+        profile_id: user.id,
+        course_id: courseId,
+        created_at: new Date(),
+        updated_at: new Date(),
+      });
+
+      if (error) throw error;
+
+      return { data: true, error: null };
+    } catch (error) {
+      console.error('Enrollment error:', error);
+      return { data: null, error: error as Error };
+    }
+  };
+  const checkEnrollment = async (courseId: string) => {
+    const { data: authUser } = await supabase.auth.getUser();
+    if (!authUser?.user) return;
+
+    const profileId = authUser.user.id;
+
+    const { data: enrollment } = await supabase
+      .from('enrollments')
+      .select('*')
+      .eq('profile_id', profileId)
+      .eq('course_id', courseId)
+      .single();
+
+    return !!enrollment; // Set state based on enrollment
+  };
 
   return {
     createCourse,
@@ -418,5 +470,7 @@ export const useCourseCreationAPI = () => {
     deleteChapter,
     deleteSection,
     uploadFile,
+    enrollInCourse,
+    checkEnrollment,
   };
 };

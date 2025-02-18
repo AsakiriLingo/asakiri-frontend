@@ -9,6 +9,8 @@ interface HeroCardProps {
   title: string;
   description: string;
   thumbnail: string;
+  isEnrolled: boolean;
+  enrollInCourse: () => void;
 }
 
 export const HeroCard: React.FC<HeroCardProps> = ({
@@ -16,6 +18,8 @@ export const HeroCard: React.FC<HeroCardProps> = ({
   title,
   description,
   thumbnail,
+  isEnrolled,
+  enrollInCourse,
 }: HeroCardProps): JSX.Element => {
   const randomNum: number = +(Math.random() + 4).toFixed(2);
   return (
@@ -52,9 +56,13 @@ export const HeroCard: React.FC<HeroCardProps> = ({
             className="hero-card--content--description"
             dangerouslySetInnerHTML={{ __html: description }}
           ></div>
-          <div>
-            <Button size="small"> Join Course </Button>
-          </div>
+          {!isEnrolled && (
+            <div>
+              <Button size="small" onPress={enrollInCourse}>
+                Join Course
+              </Button>
+            </div>
+          )}
         </div>
       </header>
     </div>

@@ -3,6 +3,7 @@ import { useParams } from 'react-router';
 
 import { NavBar } from '@/components/nav-bar';
 import { Head } from '@/components/seo';
+import { toast } from '@/components/toast';
 import { useCourseCreationAPI } from '@/features/course-creation/api/course-creation.ts';
 import { ChaptersCard } from '@/features/courses/components/chapters-card';
 import { CourseDescription } from '@/features/courses/components/course-description';
@@ -14,11 +15,18 @@ import './details.scss';
 
 const CourseDetailsRoute: React.FC = () => {
   const { id } = useParams();
-  const { getCourseDetail } = useCourseCreationAPI();
+  const [isEnrolled, setIsEnrolled] = useState(false);
+  const { getCourseDetail, enrollInCourse, checkEnrollment } =
+    useCourseCreationAPI();
   const [course, setCourse] = useState<Course>();
   useEffect(() => {
     if (id) {
       refetchCourse();
+      checkEnrollment(id).then((enrolled) => {
+        if (enrolled !== undefined) {
+          setIsEnrolled(enrolled);
+        }
+      });
     }
   }, [id]);
   const refetchCourse = async () => {
@@ -30,6 +38,18 @@ const CourseDetailsRoute: React.FC = () => {
       return updatedCourse;
     }
   };
+  const handleJoinCourse = async () => {
+    if (!id || !course) return;
+    const response = await enrollInCourse(id);
+    if (response.data) {
+      setIsEnrolled(true);
+      toast.success(`You are successfully enrolled to ${course.title}`);
+    } else {
+      console.error('Failed to enroll:', response.error);
+      toast.error(`Something Went Wrong`);
+    }
+  };
+
   if (!course || !id) {
     return <div />;
   }
@@ -43,6 +63,8 @@ const CourseDetailsRoute: React.FC = () => {
           title={course.title}
           description={course.description_html}
           thumbnail={course.thumbnail}
+          isEnrolled={isEnrolled}
+          enrollInCourse={handleJoinCourse}
         />
       </header>
       <section className="section-container">
