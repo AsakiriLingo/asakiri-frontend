@@ -56,14 +56,16 @@ export const useCourseCreationAPI = () => {
   ): Promise<CourseResponse<Course>> => {
     try {
       if (!courseId) throw new Error('Course ID is required.');
-      let thumbnailUrl = data.thumbnail || null;
+      let thumbnailUrl = null;
       if (thumbnailFile) {
         thumbnailUrl = await uploadFile(thumbnailFile, 'thumbnails');
       }
-
+      if (thumbnailUrl) {
+        data.thumbnail = thumbnailUrl;
+      }
       const { data: updatedCourse, error } = await supabase
         .from('courses')
-        .update({ ...data, thumbnail: thumbnailUrl })
+        .update({ ...data })
         .eq('id', courseId)
         .select()
         .single();

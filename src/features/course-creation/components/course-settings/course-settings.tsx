@@ -40,17 +40,20 @@ export const CourseSettings: React.FC<CourseSettingsProps> = ({
 
   useEffect(() => {
     if (id) {
-      getCourseById(id).then((res) => {
-        if (res.data) {
-          setCourse(res.data);
-          console.log(res.data);
-          if (res.data.thumbnail) setThumbnail(res.data.thumbnail);
-          if (res.data.language_taught || res.data.course_language)
-            setLanguages(res.data);
-        }
-      });
+      refetchCourse();
     }
   }, [id]);
+  const refetchCourse = async () => {
+    if (id) {
+      const res = await getCourseById(id);
+      if (res.data) {
+        setCourse(res.data);
+        if (res.data.thumbnail) setThumbnail(res.data.thumbnail);
+        if (res.data.language_taught || res.data.course_language)
+          setLanguages(res.data);
+      }
+    }
+  };
   const setLanguages = async (data: Course) => {
     if (data.course_language) {
       const res = await getLanguageById(data.course_language);
@@ -129,7 +132,19 @@ export const CourseSettings: React.FC<CourseSettingsProps> = ({
       navigate('/teach');
     }
   };
-
+  const handleUnPublishCourse = async () => {
+    if (!id || !course) return;
+    const courseUpdate: Partial<Course> = {
+      is_published: false,
+    };
+    const response = await updateCourse(id, courseUpdate);
+    if (response.error) {
+      toast.error(`Failed to update course: ${response.error.message}`);
+    } else {
+      toast.success('Course updated successfully');
+      await refetchCourse();
+    }
+  };
   if (!course) {
     return <div />;
   }
@@ -142,17 +157,28 @@ export const CourseSettings: React.FC<CourseSettingsProps> = ({
           <Button
             type="primary"
             size="small"
-            onPress={() => handleSaveCourse(true)}
+            onPress={() => handleSaveCourse(false)}
           >
             Save
           </Button>
-          <Button
-            type="secondary"
-            size="small"
-            onPress={() => handleSaveCourse(false)}
-          >
-            Publish Course
-          </Button>
+          {!course.is_published && (
+            <Button
+              type="secondary"
+              size="small"
+              onPress={() => handleSaveCourse(true)}
+            >
+              Publish Course
+            </Button>
+          )}
+          {course.is_published && (
+            <Button
+              type="secondary"
+              size="small"
+              onPress={() => handleUnPublishCourse()}
+            >
+              Unpublish Course
+            </Button>
+          )}
         </div>
       </header>
       <div className="settings-container">
