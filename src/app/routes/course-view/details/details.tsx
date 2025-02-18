@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 
 import { NavBar } from '@/components/nav-bar';
 import { Head } from '@/components/seo';
@@ -15,6 +16,7 @@ import './details.scss';
 
 const CourseDetailsRoute: React.FC = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [isEnrolled, setIsEnrolled] = useState(false);
   const { getCourseDetail, enrollInCourse, checkEnrollment } =
     useCourseCreationAPI();
@@ -44,6 +46,7 @@ const CourseDetailsRoute: React.FC = () => {
     if (response.data) {
       setIsEnrolled(true);
       toast.success(`You are successfully enrolled to ${course.title}`);
+      navigate(`/course/viewer/${id}`);
     } else {
       console.error('Failed to enroll:', response.error);
       toast.error(`Something Went Wrong`);
