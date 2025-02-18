@@ -1,6 +1,7 @@
 import { Plus } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 import { ContentEditCard } from 'src/features/course-creation/components/content-edit-card';
 
 import { Button } from '@/components/button';
@@ -23,6 +24,7 @@ import './editor.scss';
 
 export const Editor: React.FC = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const {
     getCourseById,
     createChapter,
