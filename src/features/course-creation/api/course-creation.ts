@@ -351,8 +351,8 @@ export const useCourseCreationAPI = () => {
   ): Promise<string | null> => {
     try {
       const sanitizedFileName = file.name
-        .replace(/\s+/g, '-') // Replace spaces with hyphens
-        .replace(/[^a-zA-Z0-9.-]/g, '') // Remove special characters
+        .replace(/\s+/g, '-')
+        .replace(/[^a-zA-Z0-9.-]/g, '')
         .toLowerCase();
       const filePath = `${folder}/${Date.now()}-${sanitizedFileName}`;
       const { error } = await supabase.storage
