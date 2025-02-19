@@ -11,7 +11,6 @@ import Youtube from '@tiptap/extension-youtube';
 import {
   useEditor,
   EditorContent,
-  NodeViewRenderer,
   ReactNodeViewRenderer,
   NodeViewWrapper,
   NodeViewProps,
@@ -37,21 +36,34 @@ const AudioNodeComponent: React.FC<NodeViewProps> = ({ node }) => {
   const { src } = node.attrs;
 
   return (
-    <NodeViewWrapper as="div" className="audio-node">
-      <AudioPlayer src={src} />
+    <NodeViewWrapper as="span" className="audio-node">
+      <AudioPlayer
+        node={{
+          attrs: {
+            src,
+          },
+        }}
+      />
     </NodeViewWrapper>
   );
 };
 
-const Audio = Node.create({
+export const Audio = Node.create({
   name: 'audio',
-  group: 'block',
+  group: 'inline',
+  inline: true,
   atom: true,
 
   addAttributes() {
     return {
       src: {
         default: null,
+      },
+      controls: {
+        default: true,
+      },
+      preload: {
+        default: 'none',
       },
     };
   },
@@ -65,10 +77,14 @@ const Audio = Node.create({
   },
 
   renderHTML({ HTMLAttributes }) {
-    return ['audio', mergeAttributes(HTMLAttributes)];
+    return [
+      'span',
+      mergeAttributes(HTMLAttributes, { class: 'inline-audio' }),
+      ['audio', { src: HTMLAttributes.src, preload: 'none' }],
+    ];
   },
 
-  addNodeView(): NodeViewRenderer {
+  addNodeView() {
     return ReactNodeViewRenderer(AudioNodeComponent);
   },
 });

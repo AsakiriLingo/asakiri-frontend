@@ -15,6 +15,7 @@ export const AudioControl: React.FC<FeatureProps> = ({ editor }) => {
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     const file = event.target.files?.[0];
+    console.log(file);
     if (!file) return;
     if (file.size > MAX_FILE_SIZE) {
       toast.error('File size exceeds 3MB limit.');
