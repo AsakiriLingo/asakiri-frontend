@@ -18,7 +18,6 @@ const PartnersRoute: React.FC = () => {
         <div className="course-grid">
           {mockCourseData.map((course) => (
             <PartnerCard
-              key={course.author.id}
               link={course.link}
               title={course.title}
               shortDescription={course.shortDescription}
