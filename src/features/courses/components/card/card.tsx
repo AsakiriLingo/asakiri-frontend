@@ -6,7 +6,11 @@ import { Image } from '@/components/image';
 import './card.scss';
 import { CourseCard } from '@/features/course-creation/types/course-card-type.ts';
 
-export const Card: React.FC<CourseCard> = ({
+interface CourseCardProps extends CourseCard {
+  link?: string;
+  showTotalEnrolled?: boolean;
+}
+export const Card: React.FC<CourseCardProps> = ({
   title,
   author_avatar_url,
   author_name,
@@ -17,7 +21,9 @@ export const Card: React.FC<CourseCard> = ({
   language_taught,
   thumbnail,
   enrolled_students,
-}: CourseCard) => {
+  link,
+  showTotalEnrolled,
+}: CourseCardProps) => {
   const card = (
     <div className="card">
       <Image src={thumbnail} alt={title} className="card--thumbnail"></Image>
@@ -50,21 +56,29 @@ export const Card: React.FC<CourseCard> = ({
           <p className="card--content--from-text">Course Language</p>
         </div>
       </div>
-      <div className="card--footer">
-        <div className="card--footer--left">
-          <div className="card--course-cost">
-            <Image
-              src="/icons/credit-card.svg"
-              alt="star-icon"
-              width="20px"
-              height="20px"
-            ></Image>
-            <div className="card--course-cost--number">{enrolled_students}</div>
+      {showTotalEnrolled && (
+        <div className="card--footer">
+          <div className="card--footer--left">
+            <div className="card--course-cost">
+              <Image
+                src="/icons/credit-card.svg"
+                alt="star-icon"
+                width="20px"
+                height="20px"
+              ></Image>
+              <div className="card--course-cost--number">
+                {enrolled_students}
+              </div>
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 
-  return <Link href={`/course/details/${id}`}>{card}</Link>;
+  return link ? (
+    <Link href={link}>{card}</Link>
+  ) : (
+    <Link href={`/course/details/${id}`}>{card}</Link>
+  );
 };

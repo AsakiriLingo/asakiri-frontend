@@ -489,7 +489,26 @@ export const useCourseCreationAPI = () => {
       };
     }
   };
+  const getMyLearningCourses = async () => {
+    try {
+      const {
+        data: { user },
+        error: userError,
+      } = await supabase.auth.getUser();
+      if (userError) throw userError;
+      if (!user) throw new Error('No authenticated user');
 
+      const { data, error } = await supabase.rpc('get_my_learning_courses', {
+        input_profile_id: user.id,
+      });
+
+      if (error) throw error;
+      return data as CourseCard[];
+    } catch (error) {
+      console.error('Error fetching my learning courses:', error);
+      return [];
+    }
+  };
   return {
     createCourse,
     updateCourse,
@@ -507,5 +526,6 @@ export const useCourseCreationAPI = () => {
     enrollInCourse,
     checkEnrollment,
     getHomepageCourses,
+    getMyLearningCourses,
   };
 };
