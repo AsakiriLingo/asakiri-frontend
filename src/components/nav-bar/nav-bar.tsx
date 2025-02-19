@@ -24,8 +24,12 @@ export const NavBar: React.FC<NavbarProps> = ({
 
   const routes = [
     { title: 'Home', route: '/' },
-    { title: 'Teach on Asakiri', route: '/teach' },
-    { title: 'My Learning', route: '/my-learning' },
+    ...(isAuthenticated
+      ? [{ title: 'Teach on Asakiri', route: '/teach' }]
+      : []),
+    ...(isAuthenticated
+      ? [{ title: 'My Learning', route: '/my-learning' }]
+      : []),
   ];
 
   const handleSignIn = () => {

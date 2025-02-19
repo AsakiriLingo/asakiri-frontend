@@ -544,6 +544,24 @@ export const useCourseCreationAPI = () => {
       };
     }
   };
+  const getAllPublishedCourses = async (searchTerm?: string) => {
+    let query = supabase.rpc('get_course_data_with_counts');
+
+    if (searchTerm) {
+      query = query.or(
+        `title.ilike.%${searchTerm}%,short_description.ilike.%${searchTerm}%,language_taught.ilike.%${searchTerm}%,author_name.ilike.%${searchTerm}%`
+      );
+    }
+
+    const { data, error } = await query;
+
+    if (error) {
+      console.error('Error fetching courses:', error);
+      return null;
+    }
+    return data as CourseCard[];
+  };
+
   return {
     createCourse,
     updateCourse,
@@ -563,5 +581,6 @@ export const useCourseCreationAPI = () => {
     getHomepageCourses,
     getMyLearningCourses,
     getTeachCourses,
+    getAllPublishedCourses,
   };
 };
