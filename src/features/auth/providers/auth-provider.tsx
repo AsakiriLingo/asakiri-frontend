@@ -24,13 +24,24 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
         if (session) {
           const { user } = session;
+          const {
+            data: { avatar_url },
+          } = await supabase
+            .from('profiles')
+            .select(
+              `
+          *
+        `
+            )
+            .eq('id', user.id)
+            .single();
           setAuthState({
             isAuthenticated: true,
             user: {
               id: user.id,
               email: user.email || undefined,
               name: user.user_metadata?.name as string | undefined,
-              avatar: user.user_metadata?.avatar_url as string | undefined,
+              avatar: avatar_url as string | undefined,
             },
             accessToken: session.access_token,
           });

@@ -21,7 +21,6 @@ export const NavBar: React.FC<NavbarProps> = ({
 }) => {
   const navigate = useNavigate();
   const { isAuthenticated, user, logout } = useAuthStore();
-
   const routes = [
     { title: 'Home', route: '/' },
     ...(isAuthenticated
@@ -111,7 +110,11 @@ export const NavBar: React.FC<NavbarProps> = ({
               size="small"
               onPress={handleProfile}
             >
-              <Avatar size={42} username={user?.name || 'User'} />
+              <Avatar
+                size={42}
+                imageUrl={user?.avatar}
+                username={user?.name || 'User'}
+              />
             </Button>
           </div>
         ) : (
