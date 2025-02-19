@@ -289,7 +289,7 @@ export const Editor: React.FC = () => {
                 onClick={() => setSelectedChapter(chapter)}
               />
             ))}
-            <div>
+            <div className="chapter-add">
               <Button size="small" onPress={() => createBlankChapter()}>
                 <Plus />
               </Button>
@@ -386,7 +386,11 @@ export const Editor: React.FC = () => {
                     );
                   })}
               <div className="course-editor__add-more">
-                <Button size="small" onPress={() => createBlankSection()}>
+                <Button
+                  size="small"
+                  type="tertiary"
+                  onPress={() => createBlankSection()}
+                >
                   <Plus />
                 </Button>
               </div>

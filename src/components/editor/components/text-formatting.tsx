@@ -1,4 +1,12 @@
-import { Bold, Italic, Type, Heading1, Heading2 } from 'lucide-react';
+import {
+  Bold,
+  Italic,
+  Quote,
+  Strikethrough,
+  Type,
+  Heading1,
+  Heading2,
+} from 'lucide-react';
 import React from 'react';
 
 import { FeatureProps } from '../types/menubar.types.ts';
@@ -46,6 +54,20 @@ export const TextFormatting: React.FC<FeatureProps> = ({ editor }) => {
         onClick={() => editor?.chain().focus().toggleItalic().run()}
       >
         <Italic className="icon" />
+      </MenuButton>
+      <MenuButton
+        editor={editor}
+        isActive={editor?.isActive('strike')}
+        onClick={() => editor?.chain().focus().toggleStrike().run()}
+      >
+        <Strikethrough className="icon" />
+      </MenuButton>
+      <MenuButton
+        editor={editor}
+        isActive={editor?.isActive('blockquote')}
+        onClick={() => editor?.chain().focus().toggleBlockquote().run()}
+      >
+        <Quote className="icon" />
       </MenuButton>
     </>
   );

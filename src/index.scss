@@ -1,10 +1,10 @@
-@use "@/styles/styles";
+@use '@/styles/styles';
 
 :root {
   body {
     margin: 0;
-    background: var(--surface-bright, linear-gradient(127deg, #F7F7F7 7.44%, #F1EEE5 97.99%));
-    font-family: var(--font-primary), "Noto Sans", sans-serif;
+    background: var(--surface-bright);
+    font-family: var(--font-primary), 'Noto Sans', sans-serif;
     padding: 0;
   }
   a {
@@ -13,7 +13,9 @@
 }
 
 @media (max-width: 1024px) {
-  html, body, .landing {
+  html,
+  body,
+  .landing {
     &::-webkit-scrollbar {
       display: none !important;
     }
@@ -24,11 +26,26 @@
 }
 
 .error {
-  color: var(--error)
+  color: var(--error);
 }
 
 .play-pause-button {
   border: none;
-  padding: 0;
   background: none;
+  border-radius: 5px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  position: absolute;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  &:focus {
+    outline: none;
+  }
 }

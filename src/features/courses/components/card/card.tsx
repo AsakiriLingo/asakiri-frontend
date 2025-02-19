@@ -48,12 +48,12 @@ export const Card: React.FC<CourseCardProps> = ({
           {short_description}
         </div>
         <div className="card--content--language">
-          <p className="card--content--language-taught">{language_taught} - </p>
-          <p className="card--content--from-text">Language Taught</p>
+          <p className="card--content--from-text">Language Taught - </p>
+          <p className="card--content--language-taught">{language_taught}</p>
         </div>
         <div className="card--content--language">
-          <p className="card--content--from-language">{course_language} - </p>
-          <p className="card--content--from-text">Course Language</p>
+          <p className="card--content--from-text">Course Language - </p>
+          <p className="card--content--from-language">{course_language}</p>
         </div>
       </div>
       {showTotalEnrolled && (
@@ -61,7 +61,7 @@ export const Card: React.FC<CourseCardProps> = ({
           <div className="card--footer--left">
             <div className="card--course-cost">
               <Image
-                src="/icons/credit-card.svg"
+                src="/icons/users.svg"
                 alt="star-icon"
                 width="20px"
                 height="20px"

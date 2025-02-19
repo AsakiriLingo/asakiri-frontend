@@ -35,9 +35,9 @@ const AudioPlayer: React.FC<AudioNodeProps> = ({ node }) => {
         aria-label={isPlaying ? 'Pause' : 'Play'}
       >
         {isPlaying ? (
-          <Image src="/icons/pause.svg" width="24" height="24" alt="pause" />
+          <Image src="/icons/pause.svg" width="20" height="20" alt="pause" />
         ) : (
-          <Image src="/icons/play.svg" width="24" height="24" alt="play" />
+          <Image src="/icons/play.svg" width="20" height="20" alt="play" />
         )}
       </button>
     </NodeViewWrapper>

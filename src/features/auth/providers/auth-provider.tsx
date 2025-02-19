@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import { useAuthStore } from '../stores/auth-store';
 
+import LoadingSpinner from '@/components/loading-spinner/loading-spinner.tsx';
 import { supabase } from '@/lib/supabase/client';
 
 interface AuthProviderProps {
@@ -57,7 +58,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   }, [setAuthState]);
 
   if (isLoading) {
-    return <div>Loading...</div>; // Replace with your loading component
+    return (
+      <div>
+        <LoadingSpinner />
+      </div>
+    ); // Replace with your loading component
   }
 
   return <>{children}</>;
