@@ -26,12 +26,7 @@ export const InstructorCard: React.FC<InstructorCardProps> = ({
                 size={42}
               />
             ) : (
-              <Avatar
-                size={42}
-                name={name}
-                colors={['#264653', '#2a9d8f', '#e9c46a', '#f4a261', '#e76f51']}
-                variant="beam"
-              />
+              <Avatar size={42} name={name} />
             )}
           </div>
           <div className="instructor-card--details">

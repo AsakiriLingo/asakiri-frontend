@@ -6,10 +6,10 @@ export interface CourseCard {
   language_taught: string;
   course_language: string;
   author_id: string;
-  author_name: string;
-  author_subtitle: string;
-  author_avatar_url: string;
-  enrolled_students: number;
+  author_name?: string;
+  author_subtitle?: string;
+  author_avatar_url?: string;
+  enrolled_students?: number;
   created_at: string;
   category: string;
 }

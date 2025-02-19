@@ -13,7 +13,10 @@ const CourseSettingsRoute: React.FC = () => {
 
   return (
     <>
-      <Head description={'Course Settings'}></Head>
+      <Head
+        title={course?.title}
+        description={course?.short_description}
+      ></Head>
       <div className="settings-header">
         <div className="settings-header__left">
           <Button type="secondary" size="small" onPress={() => navigate(-1)}>

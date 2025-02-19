@@ -8,7 +8,8 @@
   gap: var(--gap-sm);
   flex-direction: column;
   font-family: "Noto Sans", sans-serif;
-  max-width: 400px;
+  min-width: 400px;
+  border: 1px solid var(--outline-alt);
 
   &--header {
     display: flex;

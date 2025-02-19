@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
 import { BottomNavBar } from '@/components/bottom-nav-bar';
-import { Button } from '@/components/button';
 import { NavBar } from '@/components/nav-bar';
 import { Head } from '@/components/seo';
 import './my-learning.scss';
@@ -26,9 +25,6 @@ const CourseLearningRoute: React.FC = () => {
       <div className="course-grid-container">
         <div className="course-header">
           <div className="course-heading">Your Courses</div>
-          <Button type="secondary" size="small">
-            Continue Learning
-          </Button>
         </div>
         <div className="course-grid">
           {courses.map((course) => (

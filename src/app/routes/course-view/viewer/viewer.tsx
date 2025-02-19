@@ -46,6 +46,17 @@ export const Viewer: React.FC = () => {
           </Button>
           <h1 className="course-editor__title">{course?.title}</h1>
         </div>
+        <Button
+          variant="filled"
+          type="primary"
+          size="small"
+          onPress={() => {}}
+          isLink={true}
+          href={`/`}
+          target="_blank"
+        >
+          Support
+        </Button>
       </div>
       <div className="course-editor">
         <div className="course-editor__sidebar">
@@ -100,7 +111,6 @@ export const Viewer: React.FC = () => {
           </main>
         </div>
       </div>
-      );
     </>
   );
 };

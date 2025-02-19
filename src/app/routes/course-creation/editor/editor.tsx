@@ -398,7 +398,6 @@ export const Editor: React.FC = () => {
           </main>
         </div>
       </div>
-      );
     </>
   );
 };

@@ -11,13 +11,15 @@ export const CourseDescription: React.FC<CourseDescriptionProps> = ({
   description,
 }: CourseDescriptionProps): JSX.Element => {
   return (
-    <div className="course-description">
-      <SimpleTextEditor
-        content_html={description}
-        editable={false}
-        content_json={{}}
-        onEditorChange={() => {}}
-      />
-    </div>
+    <>
+      <div className="course-description">
+        <SimpleTextEditor
+          content_html={description}
+          editable={false}
+          content_json={{}}
+          onEditorChange={() => {}}
+        />
+      </div>
+    </>
   );
 };

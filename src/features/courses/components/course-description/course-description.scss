@@ -2,5 +2,8 @@
   display: flex;
   background-color: var(--surface-container-lowest);
   border-radius: var(--radius-md);
+  padding: var(--padding-lg);
   width: 100%;
+  border: 1px solid var(--outline-alt);
+  flex-direction: column;
 }

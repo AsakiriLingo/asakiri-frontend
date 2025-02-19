@@ -15,3 +15,20 @@
   flex-direction: column;
   gap: var(--gap-lg);
 }
+
+.details-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--padding-md);
+  top: 0;
+  z-index: 1000;
+  font-family: 'Noto Sans', sans-serif;
+  color: var(--on-surface);
+
+  &__left {
+    display: flex;
+    gap: var(--gap-md);
+    align-items: center;
+  }
+}
