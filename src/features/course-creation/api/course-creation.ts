@@ -7,6 +7,7 @@ import {
 import {
   CourseCard,
   HomepageCoursesResponse,
+  TeachPageCoursesResponse,
 } from '@/features/course-creation/types/course-card-type.ts';
 import { supabase } from '@/lib/supabase/client';
 import { Chapter } from '@/types/chapter.types.ts';
@@ -509,6 +510,40 @@ export const useCourseCreationAPI = () => {
       return [];
     }
   };
+  const getTeachCourses = async (): Promise<TeachPageCoursesResponse> => {
+    try {
+      const {
+        data: { user },
+        error: userError,
+      } = await supabase.auth.getUser();
+      if (userError) throw userError;
+      if (!user) throw new Error('No authenticated user');
+      const { data, error } = await supabase.rpc('get_teach_courses', {
+        input_profile_id: user.id,
+      });
+
+      if (error) throw error;
+
+      const publishedCourses: CourseCard[] = data.filter(
+        (course: CourseCard) => course.category === 'published'
+      );
+
+      const draftCourses: CourseCard[] = data.filter(
+        (course: CourseCard) => course.category === 'draft'
+      );
+
+      return {
+        publishedCourses,
+        draftCourses,
+      };
+    } catch (error) {
+      console.error('Error fetching teach courses:', error);
+      return {
+        publishedCourses: [],
+        draftCourses: [],
+      };
+    }
+  };
   return {
     createCourse,
     updateCourse,
@@ -527,5 +562,6 @@ export const useCourseCreationAPI = () => {
     checkEnrollment,
     getHomepageCourses,
     getMyLearningCourses,
+    getTeachCourses,
   };
 };

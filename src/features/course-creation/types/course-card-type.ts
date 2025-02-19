@@ -19,3 +19,8 @@ export interface HomepageCoursesResponse {
   trendingCourses: CourseCard[];
   recentCourses: CourseCard[];
 }
+
+export interface TeachPageCoursesResponse {
+  publishedCourses: CourseCard[];
+  draftCourses: CourseCard[];
+}
