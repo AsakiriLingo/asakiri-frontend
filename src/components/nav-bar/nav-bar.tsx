@@ -9,8 +9,16 @@ import { SearchField } from '@/components/search-field';
 import ThemeSwitcher from '@/components/theme-switcher/theme-switcher';
 import { useAuthStore } from '@/features/auth/stores/auth-store';
 import './nav-bar.scss';
-
-export const NavBar: React.FC = () => {
+interface NavbarProps {
+  showSearch?: boolean;
+  searchTerm?: string;
+  setSearchTerm?: React.Dispatch<React.SetStateAction<string>>;
+}
+export const NavBar: React.FC<NavbarProps> = ({
+  showSearch,
+  setSearchTerm,
+  searchTerm,
+}) => {
   const navigate = useNavigate();
   const { isAuthenticated, user, logout } = useAuthStore();
 
@@ -59,7 +67,17 @@ export const NavBar: React.FC = () => {
           ))}
         </div>
         <div className="search-field-container">
-          <SearchField placeholder="Search for Courses or Teachers" />
+          {showSearch && (
+            <SearchField
+              value={searchTerm}
+              onChange={(e) => {
+                if (setSearchTerm) {
+                  setSearchTerm(e.target.value);
+                }
+              }}
+              placeholder="Search for Courses or Teachers"
+            />
+          )}
         </div>
       </div>
       <div className="right-container">
