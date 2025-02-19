@@ -11,7 +11,6 @@ import './course-creator.scss';
 import { Button } from '@/components/button';
 import { DialogTrigger } from '@/components/dialog-trigger';
 import { Modal } from '@/components/modal';
-import { TextArea } from '@/components/text-area';
 import { TextField } from '@/components/text-field';
 import { toast } from '@/components/toast';
 import { useCourseCreationAPI } from '@/features/course-creation/api/course-creation';
@@ -34,8 +33,6 @@ export const CourseCreator: React.FC = () => {
     resolver: zodResolver(createCourseFormSchema),
     defaultValues: {
       title: '',
-      shortDescription: '',
-      description: '',
       languageTaught: null,
       courseLanguage: null,
     },
@@ -62,8 +59,6 @@ export const CourseCreator: React.FC = () => {
 
       const courseResponse = await createCourse({
         title: data.title,
-        shortDescription: data.shortDescription,
-        description: data.description,
         courseLanguage: data.courseLanguage.id,
         languageTaught: data.languageTaught.id,
       });
@@ -92,36 +87,6 @@ export const CourseCreator: React.FC = () => {
         )}
       />
       {errors.title && <span className="error">{errors.title.message}</span>}
-
-      <Controller
-        name="shortDescription"
-        control={control}
-        render={({ field }) => (
-          <TextField
-            label="Course Short Description"
-            text={field.value}
-            onChange={(e) => field.onChange(e.target.value)}
-          />
-        )}
-      />
-      {errors.shortDescription && (
-        <span className="error">{errors.shortDescription.message}</span>
-      )}
-
-      <Controller
-        name="description"
-        control={control}
-        render={({ field }) => (
-          <TextArea
-            label="Course Description"
-            text={field.value}
-            onChange={(e) => field.onChange(e.target.value)}
-          />
-        )}
-      />
-      {errors.description && (
-        <span className="error">{errors.description.message}</span>
-      )}
 
       <div className="creator-section-container">
         <div className="label-bold">Language Taught</div>
