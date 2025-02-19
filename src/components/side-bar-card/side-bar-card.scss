@@ -2,6 +2,8 @@
 
 .sidebar-container {
   font-family: 'Noto Sans', sans-serif;
+  background: #fff;
+  border-right: 1px solid var(--outline-alt);
 }
 
 .chapter {
@@ -9,10 +11,8 @@
   justify-content: space-between;
   align-items: flex-start;
   gap: var(--padding-xs);
-  padding: var(--padding-sm);
+  padding: var(--padding-xs) var(--padding-sm);
   border-radius: var(--radius-lg);
-  background-color: var(--surface-container-lowest);
-  border: 1px solid var(--outline-alt);
   cursor: pointer;
   transition: background-color 0.2s ease;
 

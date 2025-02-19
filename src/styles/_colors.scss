@@ -82,12 +82,8 @@
   --on-secondary-fixed: var(--colors-secondary-s-10);
   --secondary-fixed-dim: var(--colors-secondary-s-80);
   --on-secondary-fixed-dim: var(--colors-secondary-s-0);
-  --surface: var(--colors-neutral-n-98);
-  --surface-bright: linear-gradient(
-    90deg,
-    var(--colors-neutral-n-99) 7.44%,
-    var(--colors-neutral-n-98) 97.99%
-  );
+  --surface: var(--colors-neutral-n-100);
+  --surface-bright: #FAFAFA;
   --surface-dim: var(--colors-neutral-n-87);
   --surface-container-lowest: var(--colors-neutral-n-100);
   --surface-container-low: var(--colors-neutral-n-98);
@@ -98,7 +94,7 @@
   --on-surface-variant: var(--colors-neutral-n-50);
   --outline: var(--colors-neutral-n-50);
   --outline-variant: var(--colors-neutral-n-96);
-  --outline-alt: var(--colors-neutral-n-98);
+  --outline-alt: #F0F0F0;
   --inverse-surface: var(--colors-neutral-n-20);
   --on-inverse-surface: var(--colors-neutral-n-95);
   --error: var(--colors-error-e-40);
