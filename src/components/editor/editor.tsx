@@ -8,7 +8,13 @@ import { TableHeader } from '@tiptap/extension-table-header';
 import { TableRow } from '@tiptap/extension-table-row';
 import TextStyle from '@tiptap/extension-text-style';
 import Youtube from '@tiptap/extension-youtube';
-import { useEditor, EditorContent, NodeViewRenderer } from '@tiptap/react';
+import {
+  useEditor,
+  EditorContent,
+  ReactNodeViewRenderer,
+  NodeViewWrapper,
+  NodeViewProps,
+} from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import React from 'react';
 
@@ -22,12 +28,32 @@ import { TextFormatting } from './components/text-formatting.tsx';
 import { YouTubeControl } from './components/youtube-control.tsx';
 import { EditorProps } from './types/editor.types.ts';
 
+import AudioPlayer from '@/components/audio-player/audio-player.tsx';
+
 import './editor.scss';
 
-const Audio = Node.create({
+const AudioNodeComponent: React.FC<NodeViewProps> = ({ node }) => {
+  const { src } = node.attrs;
+
+  return (
+    <NodeViewWrapper as="span" className="audio-node">
+      <AudioPlayer
+        node={{
+          attrs: {
+            src,
+          },
+        }}
+      />
+    </NodeViewWrapper>
+  );
+};
+
+export const Audio = Node.create({
   name: 'audio',
-  group: 'block',
+  group: 'inline',
+  inline: true,
   atom: true,
+
   addAttributes() {
     return {
       src: {
@@ -41,6 +67,7 @@ const Audio = Node.create({
       },
     };
   },
+
   parseHTML() {
     return [
       {
@@ -48,25 +75,17 @@ const Audio = Node.create({
       },
     ];
   },
+
   renderHTML({ HTMLAttributes }) {
     return [
-      'audio',
-      mergeAttributes(HTMLAttributes),
-      ['source', { src: HTMLAttributes.src, type: 'audio/mpeg' }],
+      'span',
+      mergeAttributes(HTMLAttributes, { class: 'inline-audio' }),
+      ['audio', { src: HTMLAttributes.src, preload: 'none' }],
     ];
   },
-  addNodeView(): NodeViewRenderer {
-    return ({ node }) => {
-      const container = document.createElement('div');
-      const audio = document.createElement('audio');
-      audio.controls = true;
-      audio.preload = 'none';
-      audio.src = node.attrs.src;
-      container.appendChild(audio);
-      return {
-        dom: container,
-      };
-    };
+
+  addNodeView() {
+    return ReactNodeViewRenderer(AudioNodeComponent);
   },
 });
 

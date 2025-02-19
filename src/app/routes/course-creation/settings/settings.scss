@@ -35,7 +35,8 @@
   &__heading {
     display: flex;
     align-items: center;
-    width: 900px;
+    width: 800px;
+    border: 1px solid var(--outline-alt);
     justify-content: space-between;
     padding: var(--padding-lg);
     background-color: var(--surface-container-lowest);

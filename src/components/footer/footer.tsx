@@ -11,15 +11,14 @@ export const Footer: React.FC = () => {
           <div className="footer-content">
             <div className="footer-logo">
               <Image
-                width="64px"
-                height="64px"
+                width="48px"
+                height="48px"
                 alt="asakiri logo"
                 src="./asakiri-logo.svg"
               />
               <div className="footer-logo-text">
                 <h3 className="footer-heading">Asakiri</h3>
-                <p>Where language learning comes to life</p>
-                <p>&copy; 2025 Asakiri. All rights reserved.</p>
+                <p>Write. Teach. Learn - Digital Language Textbook</p>
               </div>
             </div>
             <div className="footer-section">
@@ -32,7 +31,7 @@ export const Footer: React.FC = () => {
                   <a href="./teach">Teach on Asakiri</a>
                 </li>
                 <li>
-                  <a href="./supporters">Support Asakiri</a>
+                  <a href="./partners">Partners</a>
                 </li>
                 <li>
                   <a href="./about">About Us</a>
@@ -83,6 +82,9 @@ export const Footer: React.FC = () => {
             </div>
           </div>
         </div>
+      </footer>
+      <footer className="footer">
+        <p>&copy; 2025 Asakiri. All rights reserved.</p>
       </footer>
     </>
   );

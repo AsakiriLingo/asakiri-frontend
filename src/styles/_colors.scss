@@ -1,5 +1,6 @@
 /* Tokens - Color */
 :root {
+  /* Primary and Secondary colors remain the same */
   --colors-primary-p-0: rgba(0, 0, 0, 1);
   --colors-primary-p-10: rgba(6, 91, 25, 1);
   --colors-primary-p-20: rgba(6, 118, 31, 1);
@@ -13,6 +14,7 @@
   --colors-primary-p-95: rgba(147, 227, 160, 1);
   --colors-primary-p-99: rgba(253, 254, 253, 1);
   --colors-primary-p-100: rgba(255, 255, 255, 1);
+
   --colors-secondary-s-0: rgba(0, 0, 0, 1);
   --colors-secondary-s-10: rgba(154, 122, 9, 1);
   --colors-secondary-s-20: rgba(195, 154, 9, 1);
@@ -26,6 +28,7 @@
   --colors-secondary-s-95: rgba(251, 228, 147, 1);
   --colors-secondary-s-99: rgba(255, 254, 253, 1);
   --colors-secondary-s-100: rgba(255, 255, 255, 1);
+
   --colors-error-e-0: rgba(0, 0, 0, 1);
   --colors-error-e-10: rgba(133, 9, 9, 1);
   --colors-error-e-20: rgba(166, 11, 11, 1);
@@ -39,32 +42,34 @@
   --colors-error-e-95: rgba(244, 163, 163, 1);
   --colors-error-e-99: rgba(255, 255, 255, 1);
   --colors-error-e-100: rgba(255, 255, 255, 1);
+
+  /* Updated neutral colors to pure greys */
   --colors-neutral-n-0: rgba(0, 0, 0, 1);
-  --colors-neutral-n-6: rgba(20, 19, 18, 1);
-  --colors-neutral-n-10: rgba(32, 31, 30, 1);
-  --colors-neutral-n-12: rgba(37, 36, 34, 1);
-  --colors-neutral-n-17: rgba(47, 45, 42, 1);
-  --colors-neutral-n-20: rgba(51, 49, 46, 1);
-  --colors-neutral-n-22: rgba(55, 53, 50, 1);
-  --colors-neutral-n-24: rgba(59, 57, 55, 1);
-  --colors-neutral-n-30: rgba(74, 72, 63, 1);
-  --colors-neutral-n-40: rgba(100, 98, 86, 1);
-  --colors-neutral-n-50: rgba(126, 122, 110, 1);
-  --colors-neutral-n-60: rgba(151, 147, 136, 1);
-  --colors-neutral-n-70: rgba(177, 173, 162, 1);
-  --colors-neutral-n-80: rgba(202, 197, 186, 1);
-  --colors-neutral-n-87: rgba(216, 211, 201, 1);
-  --colors-neutral-n-90: rgba(224, 220, 210, 1);
-  --colors-neutral-n-92: rgba(229, 225, 216, 1);
-  --colors-neutral-n-94: rgba(233, 230, 222, 1);
-  --colors-neutral-n-95: rgba(236, 233, 226, 1);
-  --colors-neutral-n-96: rgba(238, 233, 227, 1);
-  --colors-neutral-n-98: rgba(246, 244, 239, 1);
-  --colors-neutral-n-99: rgba(249, 249, 249, 1);
+  --colors-neutral-n-6: rgba(15, 15, 15, 1);
+  --colors-neutral-n-10: rgba(26, 26, 26, 1);
+  --colors-neutral-n-12: rgba(31, 31, 31, 1);
+  --colors-neutral-n-17: rgba(43, 43, 43, 1);
+  --colors-neutral-n-20: rgba(51, 51, 51, 1);
+  --colors-neutral-n-22: rgba(56, 56, 56, 1);
+  --colors-neutral-n-24: rgba(61, 61, 61, 1);
+  --colors-neutral-n-30: rgba(77, 77, 77, 1);
+  --colors-neutral-n-40: rgba(102, 102, 102, 1);
+  --colors-neutral-n-50: rgba(128, 128, 128, 1);
+  --colors-neutral-n-60: rgba(153, 153, 153, 1);
+  --colors-neutral-n-70: rgba(179, 179, 179, 1);
+  --colors-neutral-n-80: rgba(204, 204, 204, 1);
+  --colors-neutral-n-87: rgba(222, 222, 222, 1);
+  --colors-neutral-n-90: rgba(230, 230, 230, 1);
+  --colors-neutral-n-92: rgba(235, 235, 235, 1);
+  --colors-neutral-n-94: rgba(240, 240, 240, 1);
+  --colors-neutral-n-95: rgba(242, 242, 242, 1);
+  --colors-neutral-n-96: rgba(245, 245, 245, 1);
+  --colors-neutral-n-98: rgba(250, 250, 250, 1);
+  --colors-neutral-n-99: rgba(252, 252, 252, 1);
   --colors-neutral-n-100: rgba(255, 255, 255, 0.7);
 }
 
-/* Primitives - Light */
+/* Light and Dark theme definitions remain the same */
 .theme-light {
   --primary: var(--colors-primary-p-40);
   --on-primary: var(--colors-primary-p-100);
@@ -83,7 +88,7 @@
   --secondary-fixed-dim: var(--colors-secondary-s-80);
   --on-secondary-fixed-dim: var(--colors-secondary-s-0);
   --surface: var(--colors-neutral-n-100);
-  --surface-bright: #FAFAFA;
+  --surface-bright: var(--colors-neutral-n-99);
   --surface-dim: var(--colors-neutral-n-87);
   --surface-container-lowest: var(--colors-neutral-n-100);
   --surface-container-low: var(--colors-neutral-n-98);
@@ -93,8 +98,8 @@
   --on-surface: var(--colors-neutral-n-10);
   --on-surface-variant: var(--colors-neutral-n-50);
   --outline: var(--colors-neutral-n-50);
-  --outline-variant: var(--colors-neutral-n-96);
-  --outline-alt: #F0F0F0;
+  --outline-variant: var(--colors-neutral-n-94);
+  --outline-alt: var(--colors-neutral-n-94);
   --inverse-surface: var(--colors-neutral-n-20);
   --on-inverse-surface: var(--colors-neutral-n-95);
   --error: var(--colors-error-e-40);
@@ -103,7 +108,6 @@
   --on-error-container: var(--colors-error-e-20);
 }
 
-/* Primitives - Dark */
 .theme-dark {
   --primary: var(--colors-primary-p-60);
   --on-primary: var(--colors-primary-p-10);

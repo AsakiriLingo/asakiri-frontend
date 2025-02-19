@@ -1,13 +1,17 @@
+import { NodeViewWrapper } from '@tiptap/react';
 import React, { useState, useRef } from 'react';
 
-import './audio-player.scss';
 import { Image } from '@/components/image';
 
-interface AudioPlayerProps {
-  src: string;
+interface AudioNodeProps {
+  node: {
+    attrs: {
+      src: string;
+    };
+  };
 }
 
-const AudioPlayer: React.FC<AudioPlayerProps> = ({ src }) => {
+const AudioPlayer: React.FC<AudioNodeProps> = ({ node }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
@@ -23,25 +27,20 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ src }) => {
   };
 
   return (
-    <div className="audio-player">
-      <audio
-        ref={audioRef}
-        src={src}
-        preload="none"
-        onEnded={() => setIsPlaying(false)}
-      />
+    <NodeViewWrapper as="span" className="inline-audio">
+      <audio ref={audioRef} src={node.attrs.src} preload="none" />
       <button
         className="play-pause-button"
         onClick={togglePlayPause}
         aria-label={isPlaying ? 'Pause' : 'Play'}
       >
         {isPlaying ? (
-          <Image src="/icons/pause.svg" width="24" height="24" alt="pause" />
+          <Image src="/icons/pause.svg" width="20" height="20" alt="pause" />
         ) : (
-          <Image src="/icons/play.svg" width="24" height="24" alt="play" />
+          <Image src="/icons/play.svg" width="20" height="20" alt="play" />
         )}
       </button>
-    </div>
+    </NodeViewWrapper>
   );
 };
 

@@ -7,7 +7,7 @@ import { MenuButton } from './menu-button';
 
 import { toast } from '@/components/toast';
 import { useCourseCreationAPI } from '@/features/course-creation/api/course-creation.ts';
-const MAX_FILE_SIZE = 3 * 1024 * 1024;
+const MAX_FILE_SIZE = 1.5 * 1024 * 1024;
 
 export const ImageControl: React.FC<FeatureProps> = ({ editor }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);

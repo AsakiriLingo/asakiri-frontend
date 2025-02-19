@@ -2,7 +2,7 @@
 
 .content-card {
   background-color: var(--surface-container-lowest);
-  padding: var(--padding-md);
+  padding: var(--padding-md) var(--padding-lg);
   border-radius: var(--radius-lg);
   border: 1px solid var(--outline-alt);
   width: 100%;
@@ -11,7 +11,7 @@
   &--header {
     display: flex;
     justify-content: space-between;
-    margin-bottom: var(--gap-sm);
+    margin-bottom: 0;
     gap: var(--gap-xl);
   }
 
@@ -29,24 +29,24 @@
 
 .chapter--title {
   @extend .heading-2;
-  color: var(--on-surface);
-  margin-bottom: var(--gap-xs);
+  color: var(--primary);
+  margin-bottom: 0;
 }
 
 .chapter--subtitle {
   @extend .heading-4;
-  color: var(--on-surface-variant);
+  color: var(--on-primary-container);
   margin: 0;
 }
 
 .section--title {
   @extend .heading-3;
-  color: var(--on-surface);
+  color: var(--primary);
   margin: 0;
 }
 
 .section--subtitle {
-  @extend .body;
-  color: var(--on-surface-variant);
+  @extend .body-large;
+  color: var(--on-primary-container);
 }
 

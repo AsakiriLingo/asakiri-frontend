@@ -3,6 +3,11 @@
 .footer {
   display: flex;
   justify-content: center;
+  background-color: var(--surface-container-lowest);
+
+  p {
+    color: var(--on-surface);
+  }
 
 }
 
@@ -48,8 +53,8 @@
 
 .footer-content {
   display: flex;
-  padding: 0 20rem;
-  justify-content: space-between;
+  padding: 0 var(--padding-lg);
+  justify-content: left;
   gap: 8rem;
 }
 
@@ -59,7 +64,7 @@
 }
 
 .footer-section ul {
-  @extend .body-large;
+  @extend .body;
   list-style: none;
   padding: 0;
   margin: 0;
@@ -71,7 +76,7 @@
 
 .footer-section a {
   color: var(--on-surface);
-  @extend .body-large;
+  @extend .body;
   text-decoration: none;
 }
 

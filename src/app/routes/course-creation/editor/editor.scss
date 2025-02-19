@@ -4,17 +4,25 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: var(--padding-md);
+  padding: var(--padding-xs) var(--padding-md);
   top: 0;
   z-index: 1000;
   font-family: "Noto Sans", sans-serif;
   color: var(--on-surface);
+  background: var(--surface-container-lowest);
+  border-bottom: 1px solid var(--outline-alt);
 
   &__left {
     display: flex;
     gap: var(--gap-md);
     align-items: center;
   }
+}
+
+.chapter-add {
+  position: absolute;
+  top: 74px;
+  left: 270px;
 }
 
 .course-editor {
@@ -24,7 +32,7 @@
   display: flex;
 
   &__add-more {
-   z-index: 0;
+    z-index: 0;
     display: flex;
   }
 
@@ -34,17 +42,9 @@
     flex-shrink: 0;
     z-index: 1000;
     scroll-behavior: smooth;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-
-    scrollbar-width: none;
 
     &::-webkit-scrollbar {
-      display: none;
-      width: 0;
       background-color: var(--surface-bright);
-      -webkit-appearance: none;
-      height: 0;
     }
 
     &::-webkit-scrollbar-track {
@@ -89,8 +89,8 @@
   &__main {
     display: flex;
     flex-direction: column;
-    gap: var(--gap-md);
-    max-width: 900px;
+    gap: var(--gap-lg);
+    max-width: 800px;
     padding: 0 var(--padding-md);
     align-items: center;
     width: 100%;

@@ -4,7 +4,7 @@ import { Teacher } from '@/types/teacher.types.ts';
 interface Course {
   id: string;
   title: string;
-  author: Teacher;
+  author?: Teacher;
   short_description: string;
   description_html: string;
   description_json: object;

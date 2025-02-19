@@ -9,15 +9,26 @@ import { SearchField } from '@/components/search-field';
 import ThemeSwitcher from '@/components/theme-switcher/theme-switcher';
 import { useAuthStore } from '@/features/auth/stores/auth-store';
 import './nav-bar.scss';
-
-export const NavBar: React.FC = () => {
+interface NavbarProps {
+  showSearch?: boolean;
+  searchTerm?: string;
+  setSearchTerm?: React.Dispatch<React.SetStateAction<string>>;
+}
+export const NavBar: React.FC<NavbarProps> = ({
+  showSearch,
+  setSearchTerm,
+  searchTerm,
+}) => {
   const navigate = useNavigate();
   const { isAuthenticated, user, logout } = useAuthStore();
-
   const routes = [
     { title: 'Home', route: '/' },
-    { title: 'Teach on Asakiri', route: '/teach' },
-    { title: 'My Learning', route: '/my-learning' },
+    ...(isAuthenticated
+      ? [{ title: 'Teach on Asakiri', route: '/teach' }]
+      : []),
+    ...(isAuthenticated
+      ? [{ title: 'My Learning', route: '/my-learning' }]
+      : []),
   ];
 
   const handleSignIn = () => {
@@ -59,7 +70,17 @@ export const NavBar: React.FC = () => {
           ))}
         </div>
         <div className="search-field-container">
-          <SearchField placeholder="Search for Courses or Teachers" />
+          {showSearch && (
+            <SearchField
+              value={searchTerm}
+              onChange={(e) => {
+                if (setSearchTerm) {
+                  setSearchTerm(e.target.value);
+                }
+              }}
+              placeholder="Search for Courses or Teachers"
+            />
+          )}
         </div>
       </div>
       <div className="right-container">
@@ -89,7 +110,11 @@ export const NavBar: React.FC = () => {
               size="small"
               onPress={handleProfile}
             >
-              <Avatar size={42} username={user?.name || 'User'} />
+              <Avatar
+                size={42}
+                imageUrl={user?.avatar}
+                username={user?.name || 'User'}
+              />
             </Button>
           </div>
         ) : (

@@ -19,7 +19,7 @@ export const ChaptersCard: React.FC<ChaptersCardProps> = ({ chapters }) => {
           </div>
           <div className="content">
             <h3 className="title">{chapter.title}</h3>
-            <p className="subtitle">{chapter.subTitle}</p>
+            <p className="subtitle">{chapter.sub_title}</p>
           </div>
         </div>
       ))}

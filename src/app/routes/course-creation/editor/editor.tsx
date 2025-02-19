@@ -1,6 +1,7 @@
 import { Plus } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 import { ContentEditCard } from 'src/features/course-creation/components/content-edit-card';
 
 import { Button } from '@/components/button';
@@ -23,6 +24,7 @@ import './editor.scss';
 
 export const Editor: React.FC = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const {
     getCourseById,
     createChapter,
@@ -225,7 +227,7 @@ export const Editor: React.FC = () => {
       const editedData = editedSections[data.id ?? 'new'] || {};
 
       const sectionData = {
-        chapterId: selectedChapter.id,
+        chapter_id: selectedChapter.id,
         title: editedData.title ?? data.title,
         sub_title: editedData.sub_title ?? data.sub_title,
         serial_number: editedData.serial_number ?? (data.serial_number || 0),
@@ -258,7 +260,7 @@ export const Editor: React.FC = () => {
     <>
       <div className="header">
         <div className="header__left">
-          <Button type="secondary" size="small" onPress={() => {}}>
+          <Button type="secondary" size="small" onPress={() => navigate(-1)}>
             Back
           </Button>
           <h1 className="course-editor__title">{course?.title}</h1>
@@ -287,7 +289,7 @@ export const Editor: React.FC = () => {
                 onClick={() => setSelectedChapter(chapter)}
               />
             ))}
-            <div>
+            <div className="chapter-add">
               <Button size="small" onPress={() => createBlankChapter()}>
                 <Plus />
               </Button>
@@ -384,7 +386,11 @@ export const Editor: React.FC = () => {
                     );
                   })}
               <div className="course-editor__add-more">
-                <Button size="small" onPress={() => createBlankSection()}>
+                <Button
+                  size="small"
+                  type="tertiary"
+                  onPress={() => createBlankSection()}
+                >
                   <Plus />
                 </Button>
               </div>

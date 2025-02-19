@@ -4,6 +4,11 @@ import {
   CreateSectionData,
 } from '../types';
 
+import {
+  CourseCard,
+  HomepageCoursesResponse,
+  TeachPageCoursesResponse,
+} from '@/features/course-creation/types/course-card-type.ts';
 import { supabase } from '@/lib/supabase/client';
 import { Chapter } from '@/types/chapter.types.ts';
 import { Course } from '@/types/course.types.ts';
@@ -56,14 +61,16 @@ export const useCourseCreationAPI = () => {
   ): Promise<CourseResponse<Course>> => {
     try {
       if (!courseId) throw new Error('Course ID is required.');
-      let thumbnailUrl = data.thumbnail || null;
+      let thumbnailUrl = null;
       if (thumbnailFile) {
         thumbnailUrl = await uploadFile(thumbnailFile, 'thumbnails');
       }
-
+      if (thumbnailUrl) {
+        data.thumbnail = thumbnailUrl;
+      }
       const { data: updatedCourse, error } = await supabase
         .from('courses')
-        .update({ ...data, thumbnail: thumbnailUrl })
+        .update({ ...data })
         .eq('id', courseId)
         .select()
         .single();
@@ -282,6 +289,43 @@ export const useCourseCreationAPI = () => {
       return { data: null, error: error as Error };
     }
   };
+  const getCourseDetail = async (
+    courseId: string
+  ): Promise<CourseResponse<Course>> => {
+    try {
+      const { data, error } = await supabase
+        .from('courses')
+        .select(
+          `
+          *,
+          profiles (
+            id,
+            name,
+            subtitle,
+            avatar_url,
+            bio
+          ),
+          chapters (
+            *
+          )
+        `
+        )
+        .eq('id', courseId)
+        .order('serial_number', { foreignTable: 'chapters' })
+        .single();
+      if (error) throw error;
+      if (data && data.profiles) {
+        data.author = { ...data.profiles };
+        delete data.profiles;
+      }
+      console.log(data);
+      return { data: data as Course, error: null };
+    } catch (error) {
+      console.error('Error fetching course details:', error);
+      return { data: null, error: error as Error };
+    }
+  };
+
   const getLanguageById = async (
     id: number
   ): Promise<CourseResponse<Language>> => {
@@ -349,8 +393,8 @@ export const useCourseCreationAPI = () => {
   ): Promise<string | null> => {
     try {
       const sanitizedFileName = file.name
-        .replace(/\s+/g, '-') // Replace spaces with hyphens
-        .replace(/[^a-zA-Z0-9.-]/g, '') // Remove special characters
+        .replace(/\s+/g, '-')
+        .replace(/[^a-zA-Z0-9.-]/g, '')
         .toLowerCase();
       const filePath = `${folder}/${Date.now()}-${sanitizedFileName}`;
       const { error } = await supabase.storage
@@ -364,6 +408,159 @@ export const useCourseCreationAPI = () => {
       return null;
     }
   };
+  const enrollInCourse = async (
+    courseId: string
+  ): Promise<CourseResponse<boolean>> => {
+    try {
+      const {
+        data: { user },
+        error: userError,
+      } = await supabase.auth.getUser();
+      if (userError) throw userError;
+      if (!user) throw new Error('No authenticated user');
+
+      const { data: existingEnrollment } = await supabase
+        .from('enrollments')
+        .select('*')
+        .eq('profile_id', user.id)
+        .eq('course_id', courseId)
+        .single();
+
+      if (existingEnrollment) {
+        return { data: false, error: null };
+      }
+
+      const { error } = await supabase.from('enrollments').insert({
+        profile_id: user.id,
+        course_id: courseId,
+        created_at: new Date(),
+        updated_at: new Date(),
+      });
+
+      if (error) throw error;
+
+      return { data: true, error: null };
+    } catch (error) {
+      console.error('Enrollment error:', error);
+      return { data: null, error: error as Error };
+    }
+  };
+  const checkEnrollment = async (courseId: string) => {
+    const { data: authUser } = await supabase.auth.getUser();
+    if (!authUser?.user) return;
+
+    const profileId = authUser.user.id;
+
+    const { data: enrollment } = await supabase
+      .from('enrollments')
+      .select('*')
+      .eq('profile_id', profileId)
+      .eq('course_id', courseId)
+      .single();
+
+    return !!enrollment; // Set state based on enrollment
+  };
+  const getHomepageCourses = async (): Promise<HomepageCoursesResponse> => {
+    try {
+      const { data, error } = await supabase.rpc('get_home_page_courses');
+
+      if (error) throw error;
+
+      const popularCourses = data.filter(
+        (course: CourseCard) => course.category === 'popular'
+      );
+      const trendingCourses = data.filter(
+        (course: CourseCard) => course.category === 'trending'
+      );
+      const recentCourses = data.filter(
+        (course: CourseCard) => course.category === 'recent'
+      );
+
+      return {
+        popularCourses,
+        trendingCourses,
+        recentCourses,
+      };
+    } catch (error) {
+      console.error('Error fetching homepage courses:', error);
+      return {
+        popularCourses: [],
+        trendingCourses: [],
+        recentCourses: [],
+      };
+    }
+  };
+  const getMyLearningCourses = async () => {
+    try {
+      const {
+        data: { user },
+        error: userError,
+      } = await supabase.auth.getUser();
+      if (userError) throw userError;
+      if (!user) throw new Error('No authenticated user');
+
+      const { data, error } = await supabase.rpc('get_my_learning_courses', {
+        input_profile_id: user.id,
+      });
+
+      if (error) throw error;
+      return data as CourseCard[];
+    } catch (error) {
+      console.error('Error fetching my learning courses:', error);
+      return [];
+    }
+  };
+  const getTeachCourses = async (): Promise<TeachPageCoursesResponse> => {
+    try {
+      const {
+        data: { user },
+        error: userError,
+      } = await supabase.auth.getUser();
+      if (userError) throw userError;
+      if (!user) throw new Error('No authenticated user');
+      const { data, error } = await supabase.rpc('get_teach_courses', {
+        input_profile_id: user.id,
+      });
+
+      if (error) throw error;
+
+      const publishedCourses: CourseCard[] = data.filter(
+        (course: CourseCard) => course.category === 'published'
+      );
+
+      const draftCourses: CourseCard[] = data.filter(
+        (course: CourseCard) => course.category === 'draft'
+      );
+
+      return {
+        publishedCourses,
+        draftCourses,
+      };
+    } catch (error) {
+      console.error('Error fetching teach courses:', error);
+      return {
+        publishedCourses: [],
+        draftCourses: [],
+      };
+    }
+  };
+  const getAllPublishedCourses = async (searchTerm?: string) => {
+    let query = supabase.rpc('get_course_data_with_counts');
+
+    if (searchTerm) {
+      query = query.or(
+        `title.ilike.%${searchTerm}%,short_description.ilike.%${searchTerm}%,language_taught.ilike.%${searchTerm}%,author_name.ilike.%${searchTerm}%`
+      );
+    }
+
+    const { data, error } = await query;
+
+    if (error) {
+      console.error('Error fetching courses:', error);
+      return null;
+    }
+    return data as CourseCard[];
+  };
 
   return {
     createCourse,
@@ -371,6 +568,7 @@ export const useCourseCreationAPI = () => {
     getLanguages,
     getLanguageById,
     getCourseById,
+    getCourseDetail,
     createChapter,
     updateChapter,
     createSection,
@@ -378,5 +576,11 @@ export const useCourseCreationAPI = () => {
     deleteChapter,
     deleteSection,
     uploadFile,
+    enrollInCourse,
+    checkEnrollment,
+    getHomepageCourses,
+    getMyLearningCourses,
+    getTeachCourses,
+    getAllPublishedCourses,
   };
 };
