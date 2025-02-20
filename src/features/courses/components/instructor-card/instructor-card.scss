@@ -17,7 +17,7 @@
   }
 
   &--title {
-    @extend .heading-3;
+    @extend .label-bold;
     color: var(--on-surface);
   }
 

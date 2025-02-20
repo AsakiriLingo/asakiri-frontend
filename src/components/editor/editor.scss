@@ -276,6 +276,7 @@
       border-radius: var(--radius-sm);
       border: none;
       aspect-ratio: 16/9;
+      margin-top: var(--gap-md);
 
       iframe {
         width: 100%;
