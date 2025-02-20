@@ -5,7 +5,7 @@ interface Chapter {
   title: string;
   sub_title: string;
   serial_number: number | null;
-  sections: Array<Section>;
+  sections?: Array<Section>;
 }
 
 export type { Chapter };

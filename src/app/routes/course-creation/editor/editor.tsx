@@ -2,6 +2,7 @@ import { Plus } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import { useNavigate } from 'react-router-dom';
+import { PulseLoader as Loader } from 'react-spinners';
 import { ContentEditCard } from 'src/features/course-creation/components/content-edit-card';
 
 import { Button } from '@/components/button';
@@ -26,7 +27,8 @@ export const Editor: React.FC = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const {
-    getCourseById,
+    getCourseWithChaptersById,
+    getSectionsByChapterId,
     createChapter,
     updateChapter,
     createSection,
@@ -38,6 +40,7 @@ export const Editor: React.FC = () => {
   const [selectedChapter, setSelectedChapter] = useState<Chapter>();
   const [selectedSection, setSelectedSection] = useState<Section>();
   const [chapterEditEnabled, setChapterEditEnabled] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const [course, setCourse] = useState<Course>();
   const [editedSections, setEditedSections] = useState<
     Record<string, Partial<CreateSectionData>>
@@ -45,16 +48,33 @@ export const Editor: React.FC = () => {
 
   useEffect(() => {
     if (id) {
-      getCourseById(id).then((res) => {
-        if (res.data) {
-          setCourse(res.data);
-          if (res.data.chapters.length) {
-            setSelectedChapter(res.data.chapters[0]);
+      setLoading(true);
+      getCourseWithChaptersById(id)
+        .then((res) => {
+          if (res.data) {
+            setCourse(res.data);
+            if (res.data.chapters.length) {
+              setSelectedChapter(res.data.chapters[0]);
+            }
           }
-        }
-      });
+          setLoading(false);
+        })
+        .catch(() => setLoading(false));
     }
   }, [id]);
+  useEffect(() => {
+    if (selectedChapter && selectedChapter.id) {
+      setLoading(true);
+      getSectionsByChapterId(selectedChapter.id)
+        .then((res) => {
+          if (res.data) {
+            setSelectedChapter({ ...selectedChapter, sections: res.data });
+          }
+          setLoading(false);
+        })
+        .catch(() => setLoading(false));
+    }
+  }, [selectedChapter?.id]);
   useEffect(() => {
     if (course && course.chapters) {
       setChapters(course.chapters);
@@ -202,7 +222,7 @@ export const Editor: React.FC = () => {
 
   const refetchCourse = async () => {
     if (id) {
-      const updatedCourse = await getCourseById(id);
+      const updatedCourse = await getCourseWithChaptersById(id);
       if (updatedCourse.data) {
         setCourse(updatedCourse.data);
       }
@@ -286,7 +306,11 @@ export const Editor: React.FC = () => {
                 title={chapter.title}
                 subTitle={chapter.sub_title}
                 selected={selectedChapter && selectedChapter.id === chapter.id}
-                onClick={() => setSelectedChapter(chapter)}
+                onClick={() => {
+                  if (!selectedChapter || selectedChapter.id !== chapter.id) {
+                    setSelectedChapter(chapter);
+                  }
+                }}
               />
             ))}
             <div>
@@ -370,7 +394,7 @@ export const Editor: React.FC = () => {
                             await deleteSection(section.id);
                             await refetchCourseAndUpdateSelectedChapter();
                           } else {
-                            if (selectedChapter) {
+                            if (selectedChapter && selectedChapter.sections) {
                               const sections = Array.from(
                                 selectedChapter.sections
                               ).filter((s) => s != section);
@@ -385,6 +409,7 @@ export const Editor: React.FC = () => {
                       />
                     );
                   })}
+              {loading && <Loader color="rgba(14, 192, 43, 1)" />}
               <div className="course-editor__add-more">
                 <Button size="small" onPress={() => createBlankSection()}>
                   <Plus />

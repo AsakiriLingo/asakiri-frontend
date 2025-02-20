@@ -261,7 +261,7 @@ export const useCourseCreationAPI = () => {
     }
   };
 
-  const getCourseById = async (
+  const getCourseWithChaptersById = async (
     courseId: string
   ): Promise<CourseResponse<Course>> => {
     try {
@@ -271,19 +271,61 @@ export const useCourseCreationAPI = () => {
           `
           *,
           chapters (
-            *,
-            sections (*)
+            *
           )
         `
         )
         .eq('id', courseId)
         .order('serial_number', { foreignTable: 'chapters' })
-        .order('serial_number', { foreignTable: 'chapters.sections' })
         .single();
 
       if (error) throw error;
 
       return { data: data as Course, error: null };
+    } catch (error) {
+      console.error('Error fetching course by ID:', error);
+      return { data: null, error: error as Error };
+    }
+  };
+  const getCourseById = async (
+    courseId: string
+  ): Promise<CourseResponse<Course>> => {
+    try {
+      const { data, error } = await supabase
+        .from('courses')
+        .select(
+          `
+          *
+        `
+        )
+        .eq('id', courseId)
+        .single();
+
+      if (error) throw error;
+
+      return { data: data as Course, error: null };
+    } catch (error) {
+      console.error('Error fetching course by ID:', error);
+      return { data: null, error: error as Error };
+    }
+  };
+  const getSectionsByChapterId = async (
+    chapterId: string
+  ): Promise<CourseResponse<Section[]>> => {
+    try {
+      const { data, error } = await supabase
+        .from('sections')
+        .select(
+          `
+          *
+        `
+        )
+        .eq('chapter_id', chapterId)
+        .order('serial_number');
+
+      if (error) throw error;
+
+      return { data, error: null };
     } catch (error) {
       console.error('Error fetching course by ID:', error);
       return { data: null, error: error as Error };
@@ -568,6 +610,8 @@ export const useCourseCreationAPI = () => {
     getLanguages,
     getLanguageById,
     getCourseById,
+    getCourseWithChaptersById,
+    getSectionsByChapterId,
     getCourseDetail,
     createChapter,
     updateChapter,
