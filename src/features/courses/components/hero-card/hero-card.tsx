@@ -41,10 +41,9 @@ export const HeroCard: React.FC<HeroCardProps> = ({
               </div>
             </div>
           </div>
-          <div
-            className="hero-card--content--description"
-            dangerouslySetInnerHTML={{ __html: course.description_html }}
-          ></div>
+          <div className="hero-card--content--description">
+            {course.short_description}
+          </div>
           {!isEnrolled && (
             <div>
               <Button size="small" onPress={enrollInCourse}>

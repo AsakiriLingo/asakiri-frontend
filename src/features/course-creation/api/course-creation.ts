@@ -365,7 +365,6 @@ export const useCourseCreationAPI = () => {
         data.enrolled_students = data.enrollments?.[0]?.count ?? 0;
         delete data.enrollments;
       }
-      console.log(data);
       return { data: data as Course, error: null };
     } catch (error) {
       console.error('Error fetching course details:', error);
