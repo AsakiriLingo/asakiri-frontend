@@ -19,7 +19,7 @@ export const SearchField: React.FC<SearchFieldProps> = ({
 }: SearchFieldProps) => {
   return (
     <div className="search-field">
-      <button className="icon" type="button">
+      <button className="search-icon-outer" type="button">
         <Search size={20} className="search-icon" />
       </button>
       {label && <label>{label}</label>}
