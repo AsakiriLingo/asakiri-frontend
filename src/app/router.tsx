@@ -1,6 +1,6 @@
 import { useMemo, lazy } from 'react';
 import { useQueryClient } from 'react-query';
-import { createBrowserRouter } from 'react-router';
+import { createBrowserRouter, Navigate } from 'react-router';
 import { RouterProvider } from 'react-router/dom';
 
 const Home = lazy(() => import('./routes/landing/landing.tsx'));
@@ -51,6 +51,10 @@ const createAppRouter = () =>
     {
       path: '/',
       element: <Home />,
+    },
+    {
+      path: '/auth/callback',
+      element: <Navigate to="/" replace />,
     },
     {
       path: 'course/details/:id',
