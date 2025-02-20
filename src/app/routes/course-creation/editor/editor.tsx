@@ -229,14 +229,16 @@ export const Editor: React.FC = () => {
       return updatedCourse;
     }
   };
-  const refetchCourseAndUpdateSelectedChapter = async () => {
-    if (!selectedChapter) return;
+  const refetchCourseAndUpdateSelectedChapter = async (chapterId: string) => {
+    setSelectedChapter(undefined);
+    setLoading(true);
     const updatedCourse = await refetchCourse();
     if (updatedCourse && updatedCourse.data) {
       setSelectedChapter(
-        updatedCourse.data.chapters.find((c) => c.id === selectedChapter.id)
+        updatedCourse.data.chapters.find((c) => c.id === chapterId)
       );
     }
+    setLoading(false);
   };
   const handleSectionSave = async (data: Partial<CreateSectionData>) => {
     if (!id || !selectedChapter) {
@@ -260,9 +262,11 @@ export const Editor: React.FC = () => {
       } else {
         await createSection(sectionData);
       }
-
-      await refetchCourseAndUpdateSelectedChapter();
-
+      if (selectedChapter.id) {
+        await refetchCourseAndUpdateSelectedChapter(selectedChapter.id);
+      } else {
+        await refetchCourse();
+      }
       setEditedSections((prev) => {
         const updated = { ...prev };
         delete updated[data.id ?? 'new'];
@@ -392,7 +396,13 @@ export const Editor: React.FC = () => {
                         onDelete={async () => {
                           if (section.id) {
                             await deleteSection(section.id);
-                            await refetchCourseAndUpdateSelectedChapter();
+                            if (selectedChapter.id) {
+                              await refetchCourseAndUpdateSelectedChapter(
+                                selectedChapter.id
+                              );
+                            } else {
+                              await refetchCourse();
+                            }
                           } else {
                             if (selectedChapter && selectedChapter.sections) {
                               const sections = Array.from(
