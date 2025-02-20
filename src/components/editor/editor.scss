@@ -5,16 +5,18 @@
 }
 
 .tiptap-editor {
-  margin: 0 auto;
   padding: 1rem;
   position: relative;
   border: 1px solid var(--outline-variant);
   border-radius: var(--radius-md);
   width: 96%;
+  margin-top: var(--gap-md);
 
   &.readonly {
     padding: 0;
     border: none;
+    margin: 0;
+    width: 100%;
 
     .ProseMirror {
       padding: 0;
@@ -32,11 +34,9 @@
   .editor-menu {
     display: flex;
     align-items: center;
-    gap: 0.25rem;
     padding: 0.5rem;
     border-radius: var(--radius-md);
     border: 1px solid var(--outline-variant);
-    margin-bottom: 1rem;
     flex-wrap: wrap;
     position: relative;
 
@@ -167,6 +167,21 @@
       color: var(--on-surface);
     }
 
+    blockquote {
+      margin: 0;
+      padding-left: 1rem;
+      border-left: 3px solid var(--primary);
+      color: var(--on-surface-variant);
+      font-style: italic;
+      background-color: var(--surface-container-lowest);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+
+      p {
+        padding: 0;
+        color: var(--on-surface-variant);
+      }
+    }
+
     h1 {
       @extend .heading-3;
       margin-bottom: 0;
@@ -176,7 +191,7 @@
     h2 {
       @extend .heading-4;
       margin-bottom: 0;
-      color: var(--on-surface-variant);
+      color: var(--on-surface);
     }
 
     ul,
@@ -198,20 +213,24 @@
 
     table {
       border-collapse: collapse;
-      margin: 0;
+      margin-top: var(--gap-md);
       overflow: hidden;
       table-layout: fixed;
       width: 100%;
 
       td,
       th {
-        border: 2px solid var(--outline-variant);
+        border: 1px solid var(--outline-variant);
         box-sizing: border-box;
         min-width: 100px;
-        padding: 3px 5px;
+        padding: var(--padding-xs);
         position: relative;
         vertical-align: top;
         overflow: hidden;
+
+        p {
+          margin: 0;
+        }
 
         > * {
           margin-bottom: 0;
@@ -220,16 +239,21 @@
 
       th {
         background-color: var(--surface-bright);
-        font-weight: bold;
+        text-align: left;
+
+        p {
+          margin: 0;
+        }
       }
 
       .selectedCell:after {
-        background: rgba(200, 200, 255, 0.4);
+        background:var(--primary-container);
         content: '';
         left: 0;
         right: 0;
         top: 0;
         bottom: 0;
+        opacity: 0.3;
         pointer-events: none;
         position: absolute;
         z-index: 2;
@@ -237,12 +261,12 @@
     }
 
     .editor-link {
-      color: #2563eb;
+      color: var(--primary);
       text-decoration: underline;
       cursor: pointer;
 
       &:hover {
-        color: #1d4ed8;
+        color: var(--on-primary-container);
       }
     }
 

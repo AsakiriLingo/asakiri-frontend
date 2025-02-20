@@ -313,7 +313,7 @@ export const Editor: React.FC = () => {
                 }}
               />
             ))}
-            <div>
+            <div className="chapter-add">
               <Button size="small" onPress={() => createBlankChapter()}>
                 <Plus />
               </Button>
@@ -411,7 +411,11 @@ export const Editor: React.FC = () => {
                   })}
               {loading && <Loader color="rgba(14, 192, 43, 1)" />}
               <div className="course-editor__add-more">
-                <Button size="small" onPress={() => createBlankSection()}>
+                <Button
+                  size="small"
+                  type="tertiary"
+                  onPress={() => createBlankSection()}
+                >
                   <Plus />
                 </Button>
               </div>
@@ -419,7 +423,6 @@ export const Editor: React.FC = () => {
           </main>
         </div>
       </div>
-      );
     </>
   );
 };

@@ -3,16 +3,15 @@
 .hero-card {
   display: flex;
   gap: var(--gap-lg);
-  align-items: center;
-  justify-content: center;
-  vertical-align: center;
   background-color: var(--surface-container-lowest);
+  border: 1px solid var(--outline-alt);
   padding: var(--padding-lg);
   border-radius: var(--radius-xl);
   font-family: "Noto Sans", sans-serif;
   margin-bottom: 15px;
+
   &--thumbnail {
-    width: 500px;
+    width: 400px;
     height: 220px;
     object-fit: cover;
     border-radius: var(--radius-md);

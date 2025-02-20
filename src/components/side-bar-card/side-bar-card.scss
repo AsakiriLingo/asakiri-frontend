@@ -1,9 +1,14 @@
 @use '@styles/styles';
 
+
 .sidebar-container {
   font-family: 'Noto Sans', sans-serif;
-  background: #fff;
-  border-right: 1px solid var(--outline-alt);
+  background: var(--surface-container-lowest);
+
+  .selected-chapter {
+    background: #3b82f6 !important;
+  }
+
 }
 
 .chapter {
@@ -15,6 +20,10 @@
   border-radius: var(--radius-lg);
   cursor: pointer;
   transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: var(--surface-container-low);
+  }
 
   &-content {
     flex: 1;
@@ -74,7 +83,7 @@
     background-color: var(--surface-container-low);
     padding: var(--padding-xs);
     border-radius: var(--radius-lg);
-    color: var(--primary);
+    color: var(--outline);
     width: 18px;
     height: 18px;
     flex-shrink: 0;

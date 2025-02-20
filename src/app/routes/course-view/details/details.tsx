@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import { useNavigate } from 'react-router-dom';
 
-import { NavBar } from '@/components/nav-bar';
+import { Button } from '@/components/button';
 import { Head } from '@/components/seo';
 import { toast } from '@/components/toast';
 import { useCourseCreationAPI } from '@/features/course-creation/api/course-creation.ts';
@@ -58,8 +58,17 @@ const CourseDetailsRoute: React.FC = () => {
   }
   return (
     <>
-      <Head description={'Course Content'}></Head>
-      <NavBar />
+      <Head
+        title={course?.title}
+        description={course?.short_description}
+      ></Head>
+      <div className="details-header">
+        <div className="details-header__left">
+          <Button type="secondary" size="small" onPress={() => navigate(-1)}>
+            Back
+          </Button>
+        </div>
+      </div>
       <header className="hero-container">
         <HeroCard
           courseID={id}
