@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { AudioPlayer } from './audio-player';
+import AudioPlayer from '@/components/audio-player/audio-player.tsx';
 
 const meta: Meta<typeof AudioPlayer> = {
   component: AudioPlayer,
