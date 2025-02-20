@@ -79,6 +79,9 @@ const CourseDetailsRoute: React.FC = () => {
         />
       </header>
       <section className="section-container">
+        <div className="section-right">
+          <CourseDescription description={course.description_html} />
+        </div>
         <div className="instructor-container">
           <InstructorCard
             name={course.author?.name || ''}
@@ -87,9 +90,6 @@ const CourseDetailsRoute: React.FC = () => {
             avatar_url={course.author?.avatar_url || ''}
             id={course.author?.id || ''}
           />
-        </div>
-        <div className="section-right">
-          <CourseDescription description={course.description_html} />
           <ChaptersCard chapters={course.chapters} />
         </div>
       </section>

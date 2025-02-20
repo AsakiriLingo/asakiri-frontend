@@ -5,13 +5,16 @@
   font-family: 'Noto Sans', sans-serif;
   background: var(--surface-container-lowest);
 
-  .selected-chapter {
-    background: #3b82f6 !important;
-  }
+
 
 }
 
+.selected-chapter {
+  background-color: var(--surface-container-high);
+}
+
 .chapter {
+
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
@@ -20,9 +23,10 @@
   border-radius: var(--radius-lg);
   cursor: pointer;
   transition: background-color 0.2s ease;
+  margin-bottom: var(--gap-xs);
 
   &:hover {
-    background-color: var(--surface-container-low);
+    background-color: var(--surface-container-high);
   }
 
   &-content {

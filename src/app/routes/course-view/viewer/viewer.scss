@@ -5,12 +5,15 @@
   align-items: center;
   justify-content: space-between;
   padding: var(--padding-xs) var(--padding-md);
-  top: 0;
-  z-index: 1000;
   font-family: 'Noto Sans', sans-serif;
   color: var(--on-surface);
   background: var(--surface-container-lowest);
   border-bottom: 1px solid var(--outline-alt);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
 
   &__left {
     display: flex;
@@ -21,7 +24,7 @@
 
 .chapter-add {
   position: absolute;
-  top: 74px;
+  top: 2px;
   left: 270px;
 }
 
@@ -93,5 +96,6 @@
     padding: 0 var(--padding-md);
     align-items: center;
     width: 100%;
+    margin-top: 64px;
   }
 }
