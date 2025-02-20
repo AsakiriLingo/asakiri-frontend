@@ -6,6 +6,7 @@
   background-color: var(--surface-container-lowest);
 
   p {
+    @extend .body;
     color: var(--on-surface);
   }
 

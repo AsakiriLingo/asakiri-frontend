@@ -1,6 +1,6 @@
-import Avatar from 'boring-avatars';
 import React, { JSX } from 'react';
 
+import { Avatar } from '@/components/avatar';
 import { Teacher } from '@/types/teacher.types.ts';
 import './instructor-card.scss';
 
@@ -20,13 +20,9 @@ export const InstructorCard: React.FC<InstructorCardProps> = ({
         <div className="instructor-card--header">
           <div className="instructor-card--avatar">
             {avatar_url ? (
-              <Avatar
-                username={name || ''}
-                imageUrl={avatar_url || undefined}
-                size={42}
-              />
+              <Avatar username={name || ''} imageUrl={avatar_url} size={42} />
             ) : (
-              <Avatar size={42} name={name} />
+              <Avatar size={42} username={name} />
             )}
           </div>
           <div className="instructor-card--details">

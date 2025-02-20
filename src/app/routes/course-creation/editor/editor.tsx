@@ -6,6 +6,7 @@ import { ContentEditCard } from 'src/features/course-creation/components/content
 
 import { Button } from '@/components/button';
 import { CourseSidebar } from '@/components/course-sidebar';
+import LoadingSpinner from '@/components/loading-spinner/loading-spinner.tsx';
 import { SideBarCard } from '@/components/side-bar-card';
 import { toast } from '@/components/toast';
 import {
@@ -26,7 +27,8 @@ export const Editor: React.FC = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const {
-    getCourseById,
+    getCourseWithChaptersById,
+    getSectionsByChapterId,
     createChapter,
     updateChapter,
     createSection,
@@ -38,6 +40,7 @@ export const Editor: React.FC = () => {
   const [selectedChapter, setSelectedChapter] = useState<Chapter>();
   const [selectedSection, setSelectedSection] = useState<Section>();
   const [chapterEditEnabled, setChapterEditEnabled] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const [course, setCourse] = useState<Course>();
   const [editedSections, setEditedSections] = useState<
     Record<string, Partial<CreateSectionData>>
@@ -45,16 +48,33 @@ export const Editor: React.FC = () => {
 
   useEffect(() => {
     if (id) {
-      getCourseById(id).then((res) => {
-        if (res.data) {
-          setCourse(res.data);
-          if (res.data.chapters.length) {
-            setSelectedChapter(res.data.chapters[0]);
+      setLoading(true);
+      getCourseWithChaptersById(id)
+        .then((res) => {
+          if (res.data) {
+            setCourse(res.data);
+            if (res.data.chapters.length) {
+              setSelectedChapter(res.data.chapters[0]);
+            }
           }
-        }
-      });
+          setLoading(false);
+        })
+        .catch(() => setLoading(false));
     }
   }, [id]);
+  useEffect(() => {
+    if (selectedChapter && selectedChapter.id) {
+      setLoading(true);
+      getSectionsByChapterId(selectedChapter.id)
+        .then((res) => {
+          if (res.data) {
+            setSelectedChapter({ ...selectedChapter, sections: res.data });
+          }
+          setLoading(false);
+        })
+        .catch(() => setLoading(false));
+    }
+  }, [selectedChapter?.id]);
   useEffect(() => {
     if (course && course.chapters) {
       setChapters(course.chapters);
@@ -202,21 +222,23 @@ export const Editor: React.FC = () => {
 
   const refetchCourse = async () => {
     if (id) {
-      const updatedCourse = await getCourseById(id);
+      const updatedCourse = await getCourseWithChaptersById(id);
       if (updatedCourse.data) {
         setCourse(updatedCourse.data);
       }
       return updatedCourse;
     }
   };
-  const refetchCourseAndUpdateSelectedChapter = async () => {
-    if (!selectedChapter) return;
+  const refetchCourseAndUpdateSelectedChapter = async (chapterId: string) => {
+    setSelectedChapter(undefined);
+    setLoading(true);
     const updatedCourse = await refetchCourse();
     if (updatedCourse && updatedCourse.data) {
       setSelectedChapter(
-        updatedCourse.data.chapters.find((c) => c.id === selectedChapter.id)
+        updatedCourse.data.chapters.find((c) => c.id === chapterId)
       );
     }
+    setLoading(false);
   };
   const handleSectionSave = async (data: Partial<CreateSectionData>) => {
     if (!id || !selectedChapter) {
@@ -240,9 +262,11 @@ export const Editor: React.FC = () => {
       } else {
         await createSection(sectionData);
       }
-
-      await refetchCourseAndUpdateSelectedChapter();
-
+      if (selectedChapter.id) {
+        await refetchCourseAndUpdateSelectedChapter(selectedChapter.id);
+      } else {
+        await refetchCourse();
+      }
       setEditedSections((prev) => {
         const updated = { ...prev };
         delete updated[data.id ?? 'new'];
@@ -286,7 +310,11 @@ export const Editor: React.FC = () => {
                 title={chapter.title}
                 subTitle={chapter.sub_title}
                 selected={selectedChapter && selectedChapter.id === chapter.id}
-                onClick={() => setSelectedChapter(chapter)}
+                onClick={() => {
+                  if (!selectedChapter || selectedChapter.id !== chapter.id) {
+                    setSelectedChapter(chapter);
+                  }
+                }}
               />
             ))}
             <div className="chapter-add">
@@ -368,9 +396,15 @@ export const Editor: React.FC = () => {
                         onDelete={async () => {
                           if (section.id) {
                             await deleteSection(section.id);
-                            await refetchCourseAndUpdateSelectedChapter();
+                            if (selectedChapter.id) {
+                              await refetchCourseAndUpdateSelectedChapter(
+                                selectedChapter.id
+                              );
+                            } else {
+                              await refetchCourse();
+                            }
                           } else {
-                            if (selectedChapter) {
+                            if (selectedChapter && selectedChapter.sections) {
                               const sections = Array.from(
                                 selectedChapter.sections
                               ).filter((s) => s != section);
@@ -385,6 +419,7 @@ export const Editor: React.FC = () => {
                       />
                     );
                   })}
+              {loading && <LoadingSpinner />}
               <div className="course-editor__add-more">
                 <Button
                   size="small"

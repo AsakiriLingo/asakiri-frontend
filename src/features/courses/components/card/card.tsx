@@ -35,7 +35,7 @@ export const Card: React.FC<CourseCardProps> = ({
             alt={`${author_name}`}
           />
         ) : (
-          <Avatar size={42} username={author_name} />
+          <Avatar size={42} username={author_name || ''} />
         )}
         <div className="card--teacher-details">
           <h2 className="card--teacher-name">{author_name}</h2>

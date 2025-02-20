@@ -12,6 +12,7 @@ interface Course {
   thumbnail: string;
   course_language: number;
   language_taught: number;
+  enrolled_students?: number;
   is_published: boolean;
   published_at: Date;
   chapters: Array<Chapter>;

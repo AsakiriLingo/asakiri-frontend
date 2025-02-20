@@ -30,6 +30,7 @@ const AudioPlayer: React.FC<AudioNodeProps> = ({ node }) => {
     <NodeViewWrapper as="span" className="inline-audio">
       <audio ref={audioRef} src={node.attrs.src} preload="none" />
       <button
+        type="button"
         className="play-pause-button"
         onClick={togglePlayPause}
         aria-label={isPlaying ? 'Pause' : 'Play'}
