@@ -17,11 +17,12 @@ export const SideBarCard: React.FC<SideBarCardProps> = ({
   onClick,
 }: SideBarCardProps) => {
   return (
-    <div
-      className={`sidebar-container ${selected ? 'selected-chapter' : ''}`}
-      onClick={onClick}
-    >
-      <div className="chapter" role="button" tabIndex={0}>
+    <div className="sidebar-container" onClick={onClick}>
+      <div
+        className={`chapter ${selected ? 'selected-chapter' : ''}`}
+        role="button"
+        tabIndex={0}
+      >
         <Book className="section-icon" />
         <div className="chapter-content">
           <div className="chapter-title">{title}</div>
