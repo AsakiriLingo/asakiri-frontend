@@ -8,7 +8,7 @@ import viteTsconfigPaths from 'vite-tsconfig-paths';
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: './',
+  base: '/', // Changed from './' to '/'
   plugins: [react(), viteTsconfigPaths()],
   resolve: {
     alias: {
