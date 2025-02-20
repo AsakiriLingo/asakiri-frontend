@@ -72,9 +72,7 @@ const CourseDetailsRoute: React.FC = () => {
       <header className="hero-container">
         <HeroCard
           courseID={id}
-          title={course.title}
-          description={course.description_html}
-          thumbnail={course.thumbnail}
+          course={course}
           isEnrolled={isEnrolled}
           enrollInCourse={handleJoinCourse}
         />

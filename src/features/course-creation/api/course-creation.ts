@@ -349,6 +349,9 @@ export const useCourseCreationAPI = () => {
           ),
           chapters (
             *
+          ),
+          enrollments (
+            count
           )
         `
         )
@@ -359,6 +362,8 @@ export const useCourseCreationAPI = () => {
       if (data && data.profiles) {
         data.author = { ...data.profiles };
         delete data.profiles;
+        data.enrolled_students = data.enrollments?.[0]?.count ?? 0;
+        delete data.enrollments;
       }
       console.log(data);
       return { data: data as Course, error: null };
