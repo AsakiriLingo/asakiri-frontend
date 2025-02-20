@@ -75,6 +75,7 @@ const CourseDetailsRoute: React.FC = () => {
           course={course}
           isEnrolled={isEnrolled}
           enrollInCourse={handleJoinCourse}
+          goToCourse={() => navigate(`/course/viewer/${id}`)}
         />
       </header>
       <section className="section-container">

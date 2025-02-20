@@ -10,6 +10,7 @@ interface HeroCardProps {
   course: Course;
   isEnrolled: boolean;
   enrollInCourse: () => void;
+  goToCourse: () => void;
 }
 
 export const HeroCard: React.FC<HeroCardProps> = ({
@@ -17,6 +18,7 @@ export const HeroCard: React.FC<HeroCardProps> = ({
   course,
   isEnrolled,
   enrollInCourse,
+  goToCourse,
 }: HeroCardProps): JSX.Element => {
   return (
     <div key={`course-detail-${courseID}`}>
@@ -48,6 +50,13 @@ export const HeroCard: React.FC<HeroCardProps> = ({
             <div>
               <Button size="small" onPress={enrollInCourse}>
                 Join Course
+              </Button>
+            </div>
+          )}
+          {isEnrolled && (
+            <div>
+              <Button size="small" onPress={goToCourse}>
+                Go To Course
               </Button>
             </div>
           )}
