@@ -2,11 +2,11 @@ import { Plus } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import { useNavigate } from 'react-router-dom';
-import { PulseLoader as Loader } from 'react-spinners';
 import { ContentEditCard } from 'src/features/course-creation/components/content-edit-card';
 
 import { Button } from '@/components/button';
 import { CourseSidebar } from '@/components/course-sidebar';
+import LoadingSpinner from '@/components/loading-spinner/loading-spinner.tsx';
 import { SideBarCard } from '@/components/side-bar-card';
 import { toast } from '@/components/toast';
 import {
@@ -409,7 +409,7 @@ export const Editor: React.FC = () => {
                       />
                     );
                   })}
-              {loading && <Loader color="rgba(14, 192, 43, 1)" />}
+              {loading && <LoadingSpinner />}
               <div className="course-editor__add-more">
                 <Button
                   size="small"

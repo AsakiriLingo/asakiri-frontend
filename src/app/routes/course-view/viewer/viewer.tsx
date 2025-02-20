@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import { useNavigate } from 'react-router-dom';
-import { PulseLoader as Loader } from 'react-spinners';
 
 import { Button } from '@/components/button';
 import { CourseSidebar } from '@/components/course-sidebar';
+import LoadingSpinner from '@/components/loading-spinner/loading-spinner.tsx';
 import { SideBarCard } from '@/components/side-bar-card';
 import { useCourseCreationAPI } from '@/features/course-creation/api/course-creation.ts';
 import { ContentEditCard } from '@/features/course-creation/components/content-edit-card';
@@ -131,7 +131,7 @@ export const Viewer: React.FC = () => {
                       />
                     );
                   })}
-              {loading && <Loader color="rgba(14, 192, 43, 1)" />}
+              {loading && <LoadingSpinner />}
             </div>
           </main>
         </div>
