@@ -118,16 +118,16 @@ const SignUpPage: React.FC = () => {
       }
 
       // Create profile in profiles table
-      const { error: profileError } = await supabase.from('profiles').insert({
-        id: authData.user.id,
-        name: data.name,
-      });
-
-      if (profileError) {
-        console.error('Profile creation error:', profileError);
-        await supabase.auth.signOut();
-        throw profileError;
-      }
+      // const { error: profileError } = await supabase.from('profiles').insert({
+      //   id: authData.user.id,
+      //   name: data.name,
+      // });
+      //
+      // if (profileError) {
+      //   console.error('Profile creation error:', profileError);
+      //   await supabase.auth.signOut();
+      //   throw profileError;
+      // }
 
       toast.success('Account created successfully! You can now log in.');
       navigate('/sign-in');
