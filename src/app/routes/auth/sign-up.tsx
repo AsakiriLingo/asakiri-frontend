@@ -140,7 +140,9 @@ const SignUpPage: React.FC = () => {
 
       if (error instanceof Error) {
         if (error.message.includes('sending confirmation email')) {
-          toast.success('Account created successfully! You can now log in.');
+          toast.success(
+            'Verification email sent. Please verify account to sign in.'
+          );
           navigate('/sign-in');
           return;
         }
