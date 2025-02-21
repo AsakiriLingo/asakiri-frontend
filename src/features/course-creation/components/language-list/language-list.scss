@@ -1,7 +1,9 @@
+@use '@styles/styles';
+
 .language-list {
   &__container {
     width: 400px;
-    max-height: 400px;
+    height: 400px;
     overflow-y: auto;
     background-color: var(--surface-container-lowest);
     border-radius: var(--radius-md);
@@ -38,12 +40,12 @@
   }
 
   .language-name {
+    @extend .body;
     color: var(--on-surface);
-    font-weight: 500;
   }
 
   .language-native {
     color: var(--on-surface-variant);
-    font-size: 0.9em;
+    @extend .body-small;
   }
 }

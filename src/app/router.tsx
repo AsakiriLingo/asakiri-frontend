@@ -3,6 +3,8 @@ import { useQueryClient } from 'react-query';
 import { createBrowserRouter, Navigate } from 'react-router';
 import { RouterProvider } from 'react-router/dom';
 
+import SearchRoute from '@/app/routes/search/search.tsx';
+
 const Home = lazy(() => import('./routes/landing/landing.tsx'));
 const CourseDetails = lazy(
   () => import('@/app/routes/course-view/details/details.tsx')
@@ -115,6 +117,10 @@ const createAppRouter = () =>
     {
       path: '/partners',
       element: <PartnersPage />,
+    },
+    {
+      path: '/search',
+      element: <SearchRoute />,
     },
   ]);
 

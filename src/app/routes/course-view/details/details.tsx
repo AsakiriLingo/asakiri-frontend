@@ -49,7 +49,7 @@ const CourseDetailsRoute: React.FC = () => {
       navigate(`/course/viewer/${id}`);
     } else {
       console.error('Failed to enroll:', response.error);
-      toast.error(`Something Went Wrong`);
+      toast.error(`You need to sign in to join a course`);
     }
   };
 

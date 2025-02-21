@@ -43,6 +43,12 @@
   }
 }
 
+@media (max-width: 1024px) {
+  .course-creator {
+    padding: var(--padding-md);
+  }
+}
+
 .actions {
   display: flex;
   gap: var(--gap-md);

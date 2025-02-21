@@ -169,15 +169,15 @@ const SigninPage: React.FC = () => {
         </form>
 
         <div className="login__links">
-          <Button
-            type="primary"
-            variant="ghost"
-            size="small"
-            isLink={true}
-            href="/forgot-password"
-          >
-            Forgot Password?
-          </Button>
+          {/*<Button*/}
+          {/*  type="primary"*/}
+          {/*  variant="ghost"*/}
+          {/*  size="small"*/}
+          {/*  isLink={true}*/}
+          {/*  href="/forgot-password"*/}
+          {/*>*/}
+          {/*  Forgot Password?*/}
+          {/*</Button>*/}
           <p className="login__signup-text">
             Don't have an account?{' '}
             <Button

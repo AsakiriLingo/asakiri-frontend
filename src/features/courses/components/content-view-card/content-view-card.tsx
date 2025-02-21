@@ -36,7 +36,14 @@ export const ContentViewCard: React.FC<ContentViewProps> = ({
           </div>
         </div>
       </header>
-      {variant === 'section' && <Editor content={content} editable={false} />}
+      {variant === 'section' && (
+        <Editor
+          content_html={content}
+          editable={false}
+          content_json={{}}
+          onEditorChange={() => {}}
+        />
+      )}
     </div>
   );
 };

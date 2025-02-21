@@ -118,20 +118,22 @@ const SignUpPage: React.FC = () => {
       }
 
       // Create profile in profiles table
-      const { error: profileError } = await supabase.from('profiles').insert({
-        id: authData.user.id,
-        name: data.name,
+      // const { error: profileError } = await supabase.from('profiles').insert({
+      //   id: authData.user.id,
+      //   name: data.name,
+      // });
+      //
+      // if (profileError) {
+      //   console.error('Profile creation error:', profileError);
+      //   await supabase.auth.signOut();
+      //   throw profileError;
+      // }
+
+      toast.success('Account created successfully! You can now log in.', {
+        duration: 60000,
+        dismissible: true,
+        closeButton: true,
       });
-
-      if (profileError) {
-        console.error('Profile creation error:', profileError);
-        await supabase.auth.signOut();
-        throw profileError;
-      }
-
-      toast.success(
-        'Verification email sent. Please verify account to sign in.'
-      );
       navigate('/sign-in');
     } catch (error) {
       console.error('Sign up error:', error);
