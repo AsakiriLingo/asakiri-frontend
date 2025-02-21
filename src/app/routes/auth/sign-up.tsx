@@ -129,14 +129,18 @@ const SignUpPage: React.FC = () => {
         throw profileError;
       }
 
-      toast.success('Account created successfully! You can now log in.');
+      toast.success(
+        'Verification email sent. Please verify account to sign in.'
+      );
       navigate('/sign-in');
     } catch (error) {
       console.error('Sign up error:', error);
 
       if (error instanceof Error) {
         if (error.message.includes('sending confirmation email')) {
-          toast.success('Account created successfully! You can now log in.');
+          toast.success(
+            'Verification email sent. Please verify account to sign in.'
+          );
           navigate('/sign-in');
           return;
         }
