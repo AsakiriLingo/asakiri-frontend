@@ -43,13 +43,15 @@ const SearchRoute: React.FC = () => {
     <div className="search">
       <Head description="Search Courses" />
       <div className="search-container">
-        <Button
-          size="small"
-          variant="ghost"
-          onPress={() => window.history.back()}
-        >
-          ← Back
-        </Button>
+        <div>
+          <Button
+            size="small"
+            type="secondary"
+            onPress={() => window.history.back()}
+          >
+            Back
+          </Button>
+        </div>
 
         <Controller
           name="search"

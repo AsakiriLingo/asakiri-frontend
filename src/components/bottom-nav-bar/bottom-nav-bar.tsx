@@ -37,12 +37,12 @@ export const BottomNavBar: React.FC = () => {
                 alt="My Learning"
               />
             </a>
-            <a className="bottom-nav-item" href="./profile">
+            <a className="bottom-nav-item" href="./teach">
               <Image
                 width="24px"
                 height="24px"
-                src={`./icons/user${location.pathname === '/profile' ? '-active' : ''}.svg`}
-                alt="Profile"
+                src={`./icons/teach${location.pathname === '/teach' ? '-active' : ''}.svg`}
+                alt="Teach"
               />
             </a>
           </>

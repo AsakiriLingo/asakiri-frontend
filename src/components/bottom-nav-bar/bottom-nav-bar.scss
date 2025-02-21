@@ -15,7 +15,7 @@
   background-color: var(--surface-container-low);
   justify-content: space-between;
   padding: var(--padding-sm) var(--padding-lg);
-  height: 150px;
+  gap: var(--gap-sm);
   border-radius: var(--radius-xl);
   border: 1px solid var(--outline-variant);
   flex-direction: column;
