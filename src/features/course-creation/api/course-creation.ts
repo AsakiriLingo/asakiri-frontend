@@ -339,32 +339,35 @@ export const useCourseCreationAPI = () => {
         .from('courses')
         .select(
           `
-          *,
-          profiles (
-            id,
-            name,
-            subtitle,
-            avatar_url,
-            bio
-          ),
-          chapters (
-            *
-          ),
-          enrollments (
-            count
-          )
-        `
+        *,
+        profiles (
+          id,
+          name,
+          subtitle,
+          avatar_url,
+          bio
+        ),
+        chapters (
+          *
+        )
+      `
         )
         .eq('id', courseId)
         .order('serial_number', { foreignTable: 'chapters' })
         .single();
+
       if (error) throw error;
-      if (data && data.profiles) {
-        data.author = { ...data.profiles };
-        delete data.profiles;
-        data.enrolled_students = data.enrollments?.[0]?.count ?? 0;
-        delete data.enrollments;
+      if (!data) throw new Error('Course not found');
+
+      const { data: enrollmentData, error: enrollmentError } =
+        await supabase.rpc('get_enrollment_count', { course_uuid: courseId });
+
+      if (enrollmentError) {
+        console.error('Error fetching enrollment count:', enrollmentError);
       }
+      data.author = { ...data.profiles };
+      delete data.profiles;
+      data.enrolled_students = enrollmentData ?? 0;
       return { data: data as Course, error: null };
     } catch (error) {
       console.error('Error fetching course details:', error);
