@@ -54,6 +54,7 @@ const CourseTeachingRoute: React.FC = () => {
               author_subtitle={course.author_subtitle}
               author_avatar_url={course.author_avatar_url}
               enrolled_students={course.enrolled_students}
+              showTotalEnrolled={true}
               created_at={course.author_id}
               category={''}
               link={`/course/editor/${course.id}`}
@@ -80,6 +81,7 @@ const CourseTeachingRoute: React.FC = () => {
               author_subtitle={course.author_subtitle}
               author_avatar_url={course.author_avatar_url}
               enrolled_students={course.enrolled_students}
+              showTotalEnrolled={true}
               created_at={course.author_id}
               category={''}
               link={`/course/editor/${course.id}`}
