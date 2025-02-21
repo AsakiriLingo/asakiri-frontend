@@ -38,3 +38,10 @@
     align-items: center;
   }
 }
+
+@media (max-width: 1024px) {
+  .section-container {
+    display: flex;
+    flex-direction: column;
+  }
+}

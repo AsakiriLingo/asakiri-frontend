@@ -30,7 +30,7 @@
   &__heading {
     display: flex;
     align-items: center;
-    width: 900px;
+    width: 800px;
     justify-content: space-between;
     padding: var(--padding-lg);
     background-color: var(--surface-container-lowest);
@@ -83,4 +83,13 @@
 .actions {
   display: flex;
   gap: var(--gap-md);
+}
+
+@media (max-width: 1024px) {
+  .settings-container  {
+    width: 93%;
+  }
+  .course-settings__heading {
+      width: 93% !important;
+  }
 }
