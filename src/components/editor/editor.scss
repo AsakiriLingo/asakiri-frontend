@@ -156,6 +156,7 @@
   .ProseMirror {
     border: none;
     outline: none;
+    overflow-x: scroll;
 
     > * + * {
       margin-top: 0.75em;
