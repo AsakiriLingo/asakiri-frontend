@@ -2,7 +2,7 @@ import * as z from 'zod';
 
 const createEnv = () => {
   const EnvSchema = z.object({
-    APP_URL: z.string().optional().default('http://localhost:3000'),
+    APP_URL: z.string().optional().default('https://beta.asakiri.com'),
     AUTH0_AUDIENCE: z.string(),
     AUTH0_CLIENT_ID: z.string(),
     AUTH0_DOMAIN: z.string(),

@@ -28,9 +28,6 @@ export const Footer: React.FC = () => {
                   <a href="./">Home</a>
                 </li>
                 <li>
-                  <a href="./teach">Teach on Asakiri</a>
-                </li>
-                <li>
                   <a href="./partners">Partners</a>
                 </li>
                 <li>
