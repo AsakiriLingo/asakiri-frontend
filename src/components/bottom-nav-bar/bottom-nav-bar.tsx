@@ -1,9 +1,13 @@
 import React from 'react';
+import { useLocation } from 'react-router';
 
-import './bottom-nav-bar.scss';
 import { Image } from '@/components/image';
+import { useAuthStore } from '@/features/auth/stores/auth-store.ts';
+import './bottom-nav-bar.scss';
 
 export const BottomNavBar: React.FC = () => {
+  const { isAuthenticated } = useAuthStore();
+  const location = useLocation();
   return (
     <div className="bottom-nav-main">
       <div className="bottom-nav-bar">
@@ -11,7 +15,7 @@ export const BottomNavBar: React.FC = () => {
           <Image
             width="24px"
             height="24px"
-            src="./icons/home-active.svg"
+            src={`./icons/home${location.pathname === '/' ? '-active' : ''}.svg`}
             alt="Home"
           />
         </a>
@@ -19,26 +23,30 @@ export const BottomNavBar: React.FC = () => {
           <Image
             width="24px"
             height="24px"
-            src="./icons/search.svg"
+            src={`./icons/search${location.pathname === '/search' ? '-active' : ''}.svg`}
             alt="Search"
           />
         </a>
-        <a className="bottom-nav-item" href="./my-learning">
-          <Image
-            width="24px"
-            height="24px"
-            src="./icons/my-learning.svg"
-            alt="My Learning"
-          />
-        </a>
-        <a className="bottom-nav-item" href="./profile-settings">
-          <Image
-            width="24px"
-            height="24px"
-            src="./icons/user.svg"
-            alt="Profile"
-          />
-        </a>
+        {isAuthenticated && (
+          <>
+            <a className="bottom-nav-item" href="./my-learning">
+              <Image
+                width="24px"
+                height="24px"
+                src={`./icons/my-learning${location.pathname === '/my-learning' ? '-active' : ''}.svg`}
+                alt="My Learning"
+              />
+            </a>
+            <a className="bottom-nav-item" href="./profile">
+              <Image
+                width="24px"
+                height="24px"
+                src={`./icons/user${location.pathname === '/profile' ? '-active' : ''}.svg`}
+                alt="Profile"
+              />
+            </a>
+          </>
+        )}
       </div>
     </div>
   );
