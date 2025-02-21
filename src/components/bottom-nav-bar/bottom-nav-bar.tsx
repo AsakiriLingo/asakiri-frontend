@@ -7,7 +7,7 @@ export const BottomNavBar: React.FC = () => {
   return (
     <div className="bottom-nav-main">
       <div className="bottom-nav-bar">
-        <a className="bottom-nav-item" href="./home">
+        <a className="bottom-nav-item" href="/">
           <Image
             width="24px"
             height="24px"
