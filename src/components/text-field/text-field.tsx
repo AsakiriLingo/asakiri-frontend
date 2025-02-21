@@ -14,12 +14,14 @@ interface TextFieldProps {
   label?: string;
   isTextArea?: boolean;
   type?: 'text' | 'password' | 'email' | 'number';
+  autoFocus?: boolean;
 }
 
 export const TextField: React.FC<TextFieldProps> = ({
   text,
   onChange,
   label,
+  autoFocus,
   type = 'text',
 }: TextFieldProps) => {
   const [textValue, setTextValue] = useState<string>(() => text ?? '');
@@ -48,6 +50,7 @@ export const TextField: React.FC<TextFieldProps> = ({
           value={textValue}
           onChange={handleInputChange}
           type={inputType}
+          autoFocus={autoFocus}
         />
         {type === 'password' && (
           <button
