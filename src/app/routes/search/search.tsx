@@ -4,8 +4,8 @@ import { useNavigate } from 'react-router-dom';
 
 import { BottomNavBar } from '@/components/bottom-nav-bar';
 import { Button } from '@/components/button';
+import { SearchField } from '@/components/search-field';
 import { Head } from '@/components/seo';
-import { TextField } from '@/components/text-field';
 import { useCourseCreationAPI } from '@/features/course-creation/api/course-creation.ts';
 import { CourseCard } from '@/features/course-creation/types/course-card-type.ts';
 import { Card } from '@/features/courses/components/card';
@@ -55,11 +55,10 @@ const SearchRoute: React.FC = () => {
           name="search"
           control={control}
           render={({ field }) => (
-            <TextField
-              label="Search Courses"
-              text={field.value}
+            <SearchField
+              value={field.value}
               onChange={(e) => field.onChange(e.target.value)}
-              autoFocus
+              placeholder="Search for Courses or Teachers"
             />
           )}
         />
