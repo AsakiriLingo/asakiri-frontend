@@ -61,7 +61,7 @@ export const Footer: React.FC = () => {
                   height="16px"
                   alt="Discord icon"
                 />
-                <a href="https://discord.gg/5Hj7ytSX" target="_blank">
+                <a href="https://discord.gg/6VhDw5RXJ2" target="_blank">
                   Discord
                 </a>
               </div>
