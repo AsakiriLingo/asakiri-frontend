@@ -2,13 +2,13 @@ import React from 'react';
 
 import { Footer } from '@/components/footer';
 import { NavBar } from '@/components/nav-bar';
-import { Head } from '@/components/seo';
+import { Seo } from '@/components/seo';
 import './supporters.scss';
 
 const SupportersRoute: React.FC = () => {
   return (
     <>
-      <Head description={'Asakiri | Supporters'}></Head>
+      <Seo description={'Asakiri | Supporters'}></Seo>
       <NavBar />
       <div className="main">
         <iframe

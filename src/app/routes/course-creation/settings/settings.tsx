@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { Button } from '@/components/button';
-import { Head } from '@/components/seo';
+import { Seo } from '@/components/seo';
 import { CourseSettings } from '@/features/course-creation/components/course-settings';
 import { Course } from '@/types/course.types.ts';
 import './settings.scss';
@@ -13,10 +13,7 @@ const CourseSettingsRoute: React.FC = () => {
 
   return (
     <>
-      <Head
-        title={course?.title}
-        description={course?.short_description}
-      ></Head>
+      <Seo title={course?.title} description={course?.short_description}></Seo>
       <div className="settings-header">
         <div className="settings-header__left">
           <Button type="secondary" size="small" onPress={() => navigate(-1)}>

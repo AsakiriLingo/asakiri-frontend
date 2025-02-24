@@ -3,7 +3,7 @@ import React from 'react';
 import { BottomNavBar } from '@/components/bottom-nav-bar';
 import { Footer } from '@/components/footer';
 import { NavBar } from '@/components/nav-bar';
-import { Head } from '@/components/seo';
+import { Seo } from '@/components/seo';
 import './about.scss';
 import { AboutHero } from '@/features/about/components/about-hero';
 import { AboutValues } from '@/features/about/components/about-values';
@@ -11,7 +11,7 @@ import { AboutValues } from '@/features/about/components/about-values';
 const AboutRoute: React.FC = () => {
   return (
     <>
-      <Head description={'About Asakiri'}></Head>
+      <Seo description={'About Asakiri'}></Seo>
       <NavBar />
       <div className="about-main">
         <div className="about-container">

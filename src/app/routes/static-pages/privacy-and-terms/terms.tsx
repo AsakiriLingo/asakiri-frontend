@@ -2,13 +2,13 @@ import React from 'react';
 
 import { Footer } from '@/components/footer';
 import { NavBar } from '@/components/nav-bar';
-import { Head } from '@/components/seo';
+import { Seo } from '@/components/seo';
 import './privacy-and-terms.scss';
 
 const TermsRoute: React.FC = () => {
   return (
     <>
-      <Head description={'Asakiri | Terms'}></Head>
+      <Seo description={'Asakiri | Terms'}></Seo>
       <NavBar />
       <div className="main">
         <div className="container">

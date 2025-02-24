@@ -3,7 +3,7 @@ import { useParams } from 'react-router';
 import { useNavigate } from 'react-router-dom';
 
 import { Button } from '@/components/button';
-import { Head } from '@/components/seo';
+import { Seo } from '@/components/seo';
 import { toast } from '@/components/toast';
 import { useCourseCreationAPI } from '@/features/course-creation/api/course-creation.ts';
 import { ChaptersCard } from '@/features/courses/components/chapters-card';
@@ -58,10 +58,18 @@ const CourseDetailsRoute: React.FC = () => {
   }
   return (
     <>
-      <Head
-        title={course?.title}
-        description={course?.short_description}
-      ></Head>
+      <Seo
+        title={course.title}
+        description={course.short_description}
+        image={course.thumbnail}
+        canonical={`/course/details/${course.id}`}
+        socialTags={{
+          ogTitle: `${course.title} - Online Course | Asakiri`,
+          ogDescription: course.short_description,
+          ogImage: course.thumbnail,
+          twitterCard: 'summary_large_image',
+        }}
+      />
       <div className="details-header">
         <div className="details-header__left">
           <Button type="secondary" size="small" onPress={() => navigate(-1)}>

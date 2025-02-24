@@ -6,7 +6,7 @@ import { z } from 'zod';
 
 import { Button } from '@/components/button';
 import { Image } from '@/components/image';
-import { Head } from '@/components/seo';
+import { Seo } from '@/components/seo';
 import { TextField } from '@/components/text-field';
 import { toast } from '@/components/toast';
 import { supabase } from '@/lib/supabase/client';
@@ -107,7 +107,7 @@ const SigninPage: React.FC = () => {
 
   return (
     <div className="login">
-      <Head description="Log in to Asakiri"></Head>
+      <Seo description="Log in to Asakiri"></Seo>
       <div className="login__container">
         <h1 className="login__title">Welcome Back</h1>
 

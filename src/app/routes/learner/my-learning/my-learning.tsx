@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import { BottomNavBar } from '@/components/bottom-nav-bar';
 import { NavBar } from '@/components/nav-bar';
-import { Head } from '@/components/seo';
+import { Seo } from '@/components/seo';
 import './my-learning.scss';
 import { useCourseCreationAPI } from '@/features/course-creation/api/course-creation.ts';
 import { CourseCard } from '@/features/course-creation/types/course-card-type.ts';
@@ -20,7 +20,7 @@ const CourseLearningRoute: React.FC = () => {
   }, []);
   return (
     <div className="landing">
-      <Head description={'Welcome to Asakiri'}></Head>
+      <Seo description={'Welcome to Asakiri'}></Seo>
       <NavBar />
       <div className="course-grid-container">
         <div className="course-header">

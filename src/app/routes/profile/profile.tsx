@@ -2,14 +2,14 @@ import React from 'react';
 
 import { BottomNavBar } from '@/components/bottom-nav-bar';
 import { NavBar } from '@/components/nav-bar';
-import { Head } from '@/components/seo';
+import { Seo } from '@/components/seo';
 import './profile.scss';
 import { ProfileSettings } from '@/features/profile/components/profile-settings';
 
 const ProfileSettingsRoute: React.FC = () => {
   return (
     <>
-      <Head description={'Profile Settings'}></Head>
+      <Seo description={'Profile Settings'}></Seo>
       <NavBar />
       <div className="profile-settings">
         <ProfileSettings />

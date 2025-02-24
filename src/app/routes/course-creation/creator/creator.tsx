@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { Button } from '@/components/button';
-import { Head } from '@/components/seo';
+import { Seo } from '@/components/seo';
 import { CourseCreator } from '@/features/course-creation/components/course-creator';
 
 import './creator.scss';
@@ -11,7 +11,7 @@ const CourseCreatorRoute: React.FC = () => {
   const navigate = useNavigate();
   return (
     <>
-      <Head description={'Course Creator'}></Head>
+      <Seo description={'Course Creator'}></Seo>
       <div className="creator-header">
         <div className="creator-header__left">
           <Button type="secondary" size="small" onPress={() => navigate(-1)}>

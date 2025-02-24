@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { BottomNavBar } from '@/components/bottom-nav-bar';
 import { Button } from '@/components/button';
 import { NavBar } from '@/components/nav-bar';
-import { Head } from '@/components/seo';
+import { Seo } from '@/components/seo';
 import './teach.scss';
 import { useCourseCreationAPI } from '@/features/course-creation/api/course-creation.ts';
 import { TeachPageCoursesResponse } from '@/features/course-creation/types/course-card-type.ts';
@@ -26,7 +26,7 @@ const CourseTeachingRoute: React.FC = () => {
 
   return (
     <div className="landing">
-      <Head description={'Welcome to Asakiri'}></Head>
+      <Seo description={'Welcome to Asakiri'}></Seo>
       <NavBar />
       <div className="course-grid-container">
         <div className="course-header">

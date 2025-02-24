@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { BottomNavBar } from '@/components/bottom-nav-bar';
 import { Footer } from '@/components/footer';
 import { NavBar } from '@/components/nav-bar';
-import { Head } from '@/components/seo';
+import { Seo } from '@/components/seo';
 import { useCourseCreationAPI } from '@/features/course-creation/api/course-creation.ts';
 import {
   CourseCard,
@@ -37,7 +37,7 @@ const LandingRoute: React.FC = () => {
 
   return (
     <div className="landing">
-      <Head description={'Welcome to Asakiri'}></Head>
+      <Seo description={'Welcome to Asakiri'}></Seo>
       <NavBar
         showSearch={true}
         searchTerm={searchTerm}

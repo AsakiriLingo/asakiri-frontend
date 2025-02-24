@@ -289,17 +289,30 @@ export const Editor: React.FC = () => {
           </Button>
           <h1 className="course-editor__title">{course?.title}</h1>
         </div>
+        <div className="header__right">
+          <Button
+            variant="filled"
+            type="secondary"
+            size="small"
+            onPress={() => {}}
+            isLink={true}
+            href={`/course/viewer/${id}`}
+            target="_blank"
+          >
+            Preview
+          </Button>
 
-        <Button
-          variant="filled"
-          type="primary"
-          size="small"
-          onPress={() => {}}
-          isLink={true}
-          href={`/course/editor/settings/${id}`}
-        >
-          Course Settings
-        </Button>
+          <Button
+            variant="filled"
+            type="primary"
+            size="small"
+            onPress={() => {}}
+            isLink={true}
+            href={`/course/editor/settings/${id}`}
+          >
+            Course Settings
+          </Button>
+        </div>
       </div>
       <div className="course-editor">
         <div className="course-editor__sidebar">

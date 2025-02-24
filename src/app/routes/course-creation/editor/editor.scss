@@ -15,7 +15,7 @@
   right: 0;
   z-index: 1000;
 
-  &__left {
+  &__left, &__right {
     display: flex;
     gap: var(--gap-md);
     align-items: center;

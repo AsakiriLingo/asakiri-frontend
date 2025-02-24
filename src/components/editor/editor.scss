@@ -156,7 +156,7 @@
   .ProseMirror {
     border: none;
     outline: none;
-    overflow-x: scroll;
+    //overflow-x: scroll;
 
     > * + * {
       margin-top: 0.75em;
@@ -166,6 +166,11 @@
       @extend .body;
       margin-bottom: 0;
       color: var(--on-surface);
+    }
+
+    img {
+      width: 100%;
+      border-radius: var(--radius-sm);
     }
 
     blockquote {
